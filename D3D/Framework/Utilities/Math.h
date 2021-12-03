@@ -18,8 +18,7 @@ public:
 	static D3DXCOLOR RandomColor3();
 	static D3DXCOLOR RandomColor4();
 
-
-	static float Clamp(float value, float min, float max);
+	
 
 	static void LerpMatrix(OUT D3DXMATRIX& out, const D3DXMATRIX& m1, const D3DXMATRIX& m2, float amount);
 
@@ -27,4 +26,15 @@ public:
 	static float Gaussian(float val, UINT blurCount);
 
 	static void MatrixDecompose(const D3DXMATRIX& m, OUT Vector3& S, OUT Vector3& R, OUT Vector3& T);
+
+
+
+	template<typename T>
+	static T Clamp(T value, T min, T max)
+	{
+		value = value > max ? max : value;
+		value = value < min ? min : value;
+
+		return value;
+	}
 };

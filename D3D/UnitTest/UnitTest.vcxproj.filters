@@ -3,9 +3,19 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="VertexLineDemo.cpp" />
+    <ClCompile Include="VertexLineColorDemo.cpp" />
+    <ClCompile Include="VertexMultiLineDemo.cpp" />
+    <ClCompile Include="TriangleDemo.cpp" />
+    <ClCompile Include="RectDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="VertexLineDemo.h" />
+    <ClInclude Include="VertexLineColorDemo.h" />
+    <ClInclude Include="VertexMultiLineDemo.h" />
+    <ClInclude Include="TriangleDemo.h" />
+    <ClInclude Include="RectDemo.h" />
   </ItemGroup>
 </Project>

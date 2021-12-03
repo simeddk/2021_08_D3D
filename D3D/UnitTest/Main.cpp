@@ -1,10 +1,15 @@
 #include "stdafx.h"
 #include "Main.h"
 #include "Systems/Window.h"
+#include "VertexLineDemo.h"
+#include "VertexLineColorDemo.h"
+#include "VertexMultiLineDemo.h"
+#include "TriangleDemo.h"
+#include "RectDemo.h"
 
 void Main::Initialize()
 {
-
+	Push(new RectDemo());
 }
 
 
@@ -64,8 +69,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR param, int 
 	desc.Handle = NULL;
 	desc.Width = 1280;
 	desc.Height = 720;
-	//desc.Background = Color(0.3f, 0.3f, 0.3f, 1.0f);
-	desc.Background = Color(0.0f, 1.0f, 0.0f, 0.0f);
+	desc.Background = Color(0.3f, 0.3f, 0.3f, 1.0f);
 	D3D::SetDesc(desc);
 
 	Main* main = new Main();

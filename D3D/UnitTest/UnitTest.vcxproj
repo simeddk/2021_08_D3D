@@ -131,11 +131,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="RectDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TriangleDemo.cpp" />
+    <ClCompile Include="VertexLineColorDemo.cpp" />
+    <ClCompile Include="VertexLineDemo.cpp" />
+    <ClCompile Include="VertexMultiLineDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
+    <ClInclude Include="RectDemo.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TriangleDemo.h" />
+    <ClInclude Include="VertexLineColorDemo.h" />
+    <ClInclude Include="VertexLineDemo.h" />
+    <ClInclude Include="VertexMultiLineDemo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

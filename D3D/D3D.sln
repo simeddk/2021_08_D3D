@@ -11,6 +11,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTe
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{847EDF44-1B61-4F29-9224-A234BEF6188D}"
+	ProjectSection(SolutionItems) = preProject
+		_Shaders\01_Line.fx = _Shaders\01_Line.fx
+		_Shaders\02_LineColor.fx = _Shaders\02_LineColor.fx
+		_Shaders\03_MultiLine.fx = _Shaders\03_MultiLine.fx
+		_Shaders\04_Rect.fx = _Shaders\04_Rect.fx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

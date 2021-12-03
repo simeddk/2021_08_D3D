@@ -3,19 +3,65 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="VertexLineDemo.cpp" />
-    <ClCompile Include="VertexLineColorDemo.cpp" />
-    <ClCompile Include="VertexMultiLineDemo.cpp" />
-    <ClCompile Include="TriangleDemo.cpp" />
-    <ClCompile Include="RectDemo.cpp" />
+    <ClCompile Include="RectDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexLineColorDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexLineDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexMultiLineDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldDemo.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiWorldDemo.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBufferDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="VertexLineDemo.h" />
-    <ClInclude Include="VertexLineColorDemo.h" />
-    <ClInclude Include="VertexMultiLineDemo.h" />
-    <ClInclude Include="TriangleDemo.h" />
-    <ClInclude Include="RectDemo.h" />
+    <ClInclude Include="RectDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexLineColorDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexLineDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexMultiLineDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldDemo.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiWorldDemo.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBufferDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Vertex">
+      <UniqueIdentifier>{8044e8e2-4176-4ba1-a22a-52f64d153c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{818bb992-098e-43f3-8394-7ae0965012e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

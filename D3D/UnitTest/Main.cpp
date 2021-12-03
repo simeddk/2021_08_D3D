@@ -6,10 +6,13 @@
 #include "VertexMultiLineDemo.h"
 #include "TriangleDemo.h"
 #include "RectDemo.h"
+#include "WorldDemo.h"
+#include "MultiWorldDemo.h"
+#include "IndexBufferDemo.h"
 
 void Main::Initialize()
 {
-	Push(new RectDemo());
+	Push(new IndexBufferDemo());
 }
 
 

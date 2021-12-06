@@ -32,9 +32,9 @@ void Freedom::Update()
 		else if (Keyboard::Get()->Press('A'))
 			position -= right * moveSpeed * Time::Delta();
 
-		if (Keyboard::Get()->Press('Q'))
+		if (Keyboard::Get()->Press('E'))
 			position += up * moveSpeed * Time::Delta();
-		else if (Keyboard::Get()->Press('E'))
+		else if (Keyboard::Get()->Press('Q'))
 			position -= up * moveSpeed * Time::Delta();
 
 		Position(position);
@@ -42,7 +42,15 @@ void Freedom::Update()
 
 	//Rotation
 	{
+		Vector3 rotation;
+		Rotation(&rotation);
 
+		Vector3 value = Mouse::Get()->GetMoveValue();
+		rotation.x += value.y * rotationSpeed * Time::Delta(); //VerticalLook
+		rotation.y += value.x * rotationSpeed * Time::Delta(); //HorizontalLook
+		rotation.z = 0.0f;
+
+		Rotation(rotation);
 	}
 }
 

@@ -55,6 +55,23 @@ void Context::Update()
 void Context::Render()
 {
 	viewport->RSSetViewport();
+
+	string str = string("FPS : ") + to_string(ImGui::GetIO().Framerate);
+	Gui::Get()->RenderText(5, 5, 1, 1, 1, str);
+
+	Vector3 cameraPosition;
+	camera->Position(&cameraPosition);
+
+	Vector3 cameraRotation;
+	camera->RotationDegree(&cameraRotation);
+
+	str = "Camera(P) : ";
+	str += to_string((int)cameraPosition.x) + ", " + to_string((int)cameraPosition.y);
+	Gui::Get()->RenderText(5, 20, 1, 1, 1, str);
+
+	str = "Camera(R) : ";
+	str += to_string((int)cameraRotation.x) + ", " + to_string((int)cameraRotation.y);
+	Gui::Get()->RenderText(5, 35, 1, 1, 1, str);
 }
 
 D3DXMATRIX Context::View()

@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GridDemo.cpp" />
     <ClCompile Include="IndexBufferDemo.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MultiWorldDemo.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="WorldDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GridDemo.h" />
     <ClInclude Include="IndexBufferDemo.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MultiWorldDemo.h" />

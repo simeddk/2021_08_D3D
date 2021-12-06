@@ -3,13 +3,11 @@ matrix World, View, Projection;
 struct VertexInput
 {
     float4 Position : Position;
-    uint VertexID : SV_VertexID;
 };
 
 struct VertexOutput
 {
     float4 Position : SV_Position;
-    float4 Color : Color;
 };
 
 
@@ -20,25 +18,12 @@ VertexOutput VS(VertexInput input)
     output.Position = mul(output.Position, View);
     output.Position = mul(output.Position, Projection);
 
-    float4 colors[] =
-    {
-        float4(1, 0, 0, 1),
-        float4(0, 1, 0, 1),
-        float4(0, 0, 1, 1),
-        float4(1, 1, 0, 1)
-    };
-
-    output.Color = colors[input.VertexID];
-
     return output;
 }
 
-float4 Color;
 float4 PS(VertexOutput input) : SV_Target
 {
-    //return Color;
-    return input.Color;
-
+    return float4(1, 0, 1, 1);
 }
 
 RasterizerState FillMode_WireFrame

@@ -9,10 +9,12 @@
 #include "WorldDemo.h"
 #include "MultiWorldDemo.h"
 #include "IndexBufferDemo.h"
+#include "IndexBufferDemo.h"
+#include "GridDemo.h"
 
 void Main::Initialize()
 {
-	Push(new IndexBufferDemo());
+	Push(new GridDemo());
 }
 
 

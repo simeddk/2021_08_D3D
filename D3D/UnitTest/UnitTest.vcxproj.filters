@@ -27,6 +27,9 @@
     <ClCompile Include="IndexBufferDemo.cpp">
       <Filter>Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="GridDemo.cpp">
+      <Filter>Vertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -53,6 +56,9 @@
       <Filter>World</Filter>
     </ClInclude>
     <ClInclude Include="IndexBufferDemo.h">
+      <Filter>Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="GridDemo.h">
       <Filter>Vertex</Filter>
     </ClInclude>
   </ItemGroup>

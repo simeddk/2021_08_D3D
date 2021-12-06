@@ -11,10 +11,12 @@
 #include "IndexBufferDemo.h"
 #include "IndexBufferDemo.h"
 #include "GridDemo.h"
+#include "CubeDemo.h"
 
 void Main::Initialize()
 {
 	Push(new GridDemo());
+	Push(new CubeDemo());
 }
 
 

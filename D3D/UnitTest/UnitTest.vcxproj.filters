@@ -30,6 +30,9 @@
     <ClCompile Include="GridDemo.cpp">
       <Filter>Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="CubeDemo.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -61,6 +64,9 @@
     <ClInclude Include="GridDemo.h">
       <Filter>Vertex</Filter>
     </ClInclude>
+    <ClInclude Include="CubeDemo.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Vertex">
@@ -68,6 +74,9 @@
     </Filter>
     <Filter Include="World">
       <UniqueIdentifier>{818bb992-098e-43f3-8394-7ae0965012e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{31650935-36b6-4c54-baa2-7589880bfd57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -13,10 +13,11 @@
 #include "GridDemo.h"
 #include "CubeDemo.h"
 #include "TextureSampleDemo.h"
+#include "SamplerStateDemo.h"
 
 void Main::Initialize()
 {
-	Push(new TextureSampleDemo());
+	Push(new SamplerStateDemo());
 }
 
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Systems/IExecute.h"
 
-class TextureSampleDemo : public IExecute
+class SamplerStateDemo : public IExecute
 {
 public:
 	virtual void Initialize() override;
@@ -11,6 +11,9 @@ public:
 	virtual void Render() override;
 	virtual void PostRender() override {};
 	virtual void ResizeScreen() override {};
+
+private:
+	void LoadTexture(wstring fileName);
 
 
 private:

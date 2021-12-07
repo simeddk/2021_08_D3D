@@ -130,6 +130,7 @@ const WCHAR* Path::BinModelFilter = L"Binary Model\0*.model";
 const WCHAR* Path::FbxModelFilter = L"Fbx Model\0*.fbx;*.obj\0";
 const WCHAR* Path::ShaderFilter = L"HLSL file\0*.hlsl";
 
+
 void Path::OpenFileDialog(wstring file, const WCHAR* filter, wstring folder, function<void(wstring)> func, HWND hwnd)
 {
 	WCHAR name[255];

@@ -5,8 +5,9 @@ void SamplerStateDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(0, 0, 0);
 	Context::Get()->GetCamera()->Position(0, 0, -5);
+	((Freedom*)Context::Get()->GetCamera())->Speed(20.0f, 0.0f);
 
-	shader = new Shader(L"08_TextureSample.fx");
+	shader = new Shader(L"09_SamplerState.fx");
 
 	vertices = new Vertex[4];
 	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.0f);
@@ -14,10 +15,10 @@ void SamplerStateDemo::Initialize()
 	vertices[2].Position = Vector3(+0.5f, -0.5f, 0.0f);
 	vertices[3].Position = Vector3(+0.5f, +0.5f, 0.0f);
 
-	vertices[0].Uv = Vector2(0, 1);
+	vertices[0].Uv = Vector2(0, 2);
 	vertices[1].Uv = Vector2(0, 0);
-	vertices[2].Uv = Vector2(1, 1);
-	vertices[3].Uv = Vector2(1, 0);
+	vertices[2].Uv = Vector2(2, 2);
+	vertices[3].Uv = Vector2(2, 0);
 
 	//Create VertexBuffer
 	{
@@ -50,7 +51,9 @@ void SamplerStateDemo::Initialize()
 	SafeDeleteArray(vertices);
 	SafeDeleteArray(indices);
 
-	texture = new Texture(L"Box.png");
+	texture = new Texture(L"Bricks.png");
+	
+
 	
 }
 
@@ -66,9 +69,28 @@ void SamplerStateDemo::Destroy()
 
 void SamplerStateDemo::Update()
 {
+	//File Dialog
+	if (ImGui::Button("Load Texture"))
+	{
+		function<void(wstring)> OnButton_Pressed = bind(&SamplerStateDemo::LoadTexture, this, placeholders::_1);;
+		Path::OpenFileDialog(L"", Path::ImageFilter, L"../../_Texture/", OnButton_Pressed);
+	}
+
+
+	//Filter Test
+	static UINT Filter = 0;
+	ImGui::InputInt("Filter", (int*)&Filter);
+	Filter %= 2;
+	shader->AsScalar("Filter")->SetInt(Filter);
+
+	//Address Test
+	static UINT Address = 0;
+	ImGui::InputInt("Address", (int*)&Address);
+	Address %= 4;
+	shader->AsScalar("Address")->SetInt(Address);
+
 	Matrix world;
 	D3DXMatrixIdentity(&world);
-
 	shader->AsMatrix("World")->SetMatrix(world);
 	shader->AsMatrix("View")->SetMatrix(Context::Get()->View());
 	shader->AsMatrix("Projection")->SetMatrix(Context::Get()->Projection());
@@ -85,7 +107,13 @@ void SamplerStateDemo::Render()
 
 	shader->AsSRV("DiffuseMap")->SetResource(texture->SRV());
 
-	shader->DrawIndexed(0, 0, 6);
+	shader->DrawIndexed(0, 1, 6);
+}
+
+void SamplerStateDemo::LoadTexture(wstring fileName)
+{
+	SafeDelete(texture);
+	texture = new Texture(fileName);
 }
 
 

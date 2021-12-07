@@ -5,6 +5,7 @@ void TextureSampleDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(0, 0, 0);
 	Context::Get()->GetCamera()->Position(0, 0, -5);
+	
 
 	shader = new Shader(L"08_TextureSample.fx");
 
@@ -62,12 +63,17 @@ void TextureSampleDemo::Destroy()
 	SafeRelease(indexBuffer);
 
 	SafeDelete(texture);
+
+	
 }
 
 void TextureSampleDemo::Update()
 {
 	Matrix world;
 	D3DXMatrixIdentity(&world);
+
+
+	
 
 	shader->AsMatrix("World")->SetMatrix(world);
 	shader->AsMatrix("View")->SetMatrix(Context::Get()->View());

@@ -12,11 +12,11 @@
 #include "IndexBufferDemo.h"
 #include "GridDemo.h"
 #include "CubeDemo.h"
+#include "TextureSampleDemo.h"
 
 void Main::Initialize()
 {
-	Push(new GridDemo());
-	Push(new CubeDemo());
+	Push(new TextureSampleDemo());
 }
 
 

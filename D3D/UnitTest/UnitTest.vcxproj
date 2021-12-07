@@ -137,6 +137,7 @@
     <ClCompile Include="MultiWorldDemo.cpp" />
     <ClCompile Include="RectDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TextureSampleDemo.cpp" />
     <ClCompile Include="TriangleDemo.cpp" />
     <ClCompile Include="VertexLineColorDemo.cpp" />
     <ClCompile Include="VertexLineDemo.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="MultiWorldDemo.h" />
     <ClInclude Include="RectDemo.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TextureSampleDemo.h" />
     <ClInclude Include="TriangleDemo.h" />
     <ClInclude Include="VertexLineColorDemo.h" />
     <ClInclude Include="VertexLineDemo.h" />

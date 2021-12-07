@@ -138,6 +138,7 @@
     <ClCompile Include="RectDemo.cpp" />
     <ClCompile Include="SamplerStateDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TerrainDemo.cpp" />
     <ClCompile Include="TextureSampleDemo.cpp" />
     <ClCompile Include="TriangleDemo.cpp" />
     <ClCompile Include="VertexLineColorDemo.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="RectDemo.h" />
     <ClInclude Include="SamplerStateDemo.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TerrainDemo.h" />
     <ClInclude Include="TextureSampleDemo.h" />
     <ClInclude Include="TriangleDemo.h" />
     <ClInclude Include="VertexLineColorDemo.h" />

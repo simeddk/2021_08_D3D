@@ -25,8 +25,6 @@ public:
 	void RenderLine(float x, float y, float z, float x2, float y2, float z2, Color& color);
 
 
-
-
 private:
 	void Update();
 	void Render();

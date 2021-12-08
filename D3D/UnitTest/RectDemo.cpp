@@ -3,9 +3,6 @@
 
 void RectDemo::Initialize()
 {
-	D3D11_RASTERIZER_DESC d;
-	
-
 	shader = new Shader(L"04_Rect.fx");
 
 	vertices[0].Position = Vector3(+0.0f, +0.0f, +0.0f);

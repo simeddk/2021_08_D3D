@@ -34,6 +34,30 @@ void Terrain::Update()
 
 void Terrain::Render()
 {
+	/*static bool bVisible = false;
+	static UINT interval = 3;
+	ImGui::Checkbox("Visible Normal", &bVisible);
+	ImGui::SliderInt("Interval", (int*)&interval, 1, 5);
+
+	if (bVisible == true)
+	{
+		for (UINT z = 0; z < height; z += interval)
+		{
+			for (UINT x = 0; x < width; x += interval)
+			{
+				UINT index = width * z + x;
+
+				Vector3 start = vertices[index].Position;
+				Vector3 end = vertices[index].Position + vertices[index].Normal;
+
+				DebugLine::Get()->RenderLine(start, end);
+			}
+		}
+	}*/
+
+	if (baseMap != nullptr)
+		shader->AsSRV("BaseMap")->SetResource(baseMap->SRV());
+
 	UINT stride = sizeof(VertexTerrain);
 	UINT offset = 0;
 
@@ -42,6 +66,12 @@ void Terrain::Render()
 	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	shader->DrawIndexed(0, pass, indexCount);
+}
+
+void Terrain::BaseMap(wstring file)
+{
+	SafeDelete(baseMap);
+	baseMap = new Texture(file);
 }
 
 void Terrain::CreateVertexData()

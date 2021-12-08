@@ -58,12 +58,41 @@ void DebugLine::RenderLine(Vector3 & start, Vector3 & end, Color & color)
 	vertices[drawCount++].Position = end;
 }
 
+void DebugLine::Update()
+{
+	shader->AsMatrix("World")->SetMatrix(world);
+	shader->AsMatrix("View")->SetMatrix(Context::Get()->View());
+	shader->AsMatrix("Projection")->SetMatrix(Context::Get()->Projection());
+
+}
+
+void DebugLine::Render()
+{
+	if (drawCount < 1) return;
+
+	//GPU Write Access Control <- Default
+	D3D::GetDC()->UpdateSubresource(vertexBuffer, 0, nullptr, vertices, sizeof(VertexColor) * drawCount, 0);
+
+	UINT stride = sizeof(VertexColor);
+	UINT offset = 0;
+
+	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+
+	shader->Draw(0, 0, drawCount);
+	
+	drawCount = 0;
+	ZeroMemory(vertices, sizeof(VertexColor) * MAX_DEBUG_LINE);
+}
+
+
+
 DebugLine::DebugLine()
 {
 	shader = new Shader(L"00_DebugLine.fx");
 
 	vertices = new VertexColor[MAX_DEBUG_LINE];
-	ZeroMemory(&vertices, sizeof(VertexColor) * MAX_DEBUG_LINE);
+	ZeroMemory(vertices, sizeof(VertexColor) * MAX_DEBUG_LINE);
 
 	//Create VertexBuffer
 	{
@@ -83,4 +112,8 @@ DebugLine::DebugLine()
 
 DebugLine::~DebugLine()
 {
+	SafeDelete(shader);
+
+	SafeDeleteArray(vertices);
+	SafeRelease(vertexBuffer);
 }

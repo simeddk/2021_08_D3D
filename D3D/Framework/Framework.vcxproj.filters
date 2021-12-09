@@ -68,6 +68,9 @@
     <ClCompile Include="Renders\DebugLine.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
+    <ClCompile Include="Meshes\Mesh.cpp">
+      <Filter>Meshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -140,6 +143,9 @@
     <ClInclude Include="Renders\DebugLine.h">
       <Filter>Renders</Filter>
     </ClInclude>
+    <ClInclude Include="Meshes\Mesh.h">
+      <Filter>Meshes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -156,6 +162,9 @@
     </Filter>
     <Filter Include="Environment">
       <UniqueIdentifier>{235e7779-c778-4dd2-b026-3fe93f234af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meshes">
+      <UniqueIdentifier>{7bf77c5a-aba8-4ff2-b946-70c285f00f10}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

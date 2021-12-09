@@ -10,7 +10,7 @@ void TerrainDemo::Initialize()
 	shader = new Shader(L"11_Terrain.fx");
 
 	terrain = new Terrain(shader, L"Terrain/Gray256.png");
-	
+	terrain->BaseMap(L"Terrain/Cliff (Sandstone).jpg");
 }
 
 void TerrainDemo::Destroy()
@@ -31,6 +31,16 @@ void TerrainDemo::Update()
 	ImGui::InputInt("Pass", (int*)&pass);
 	pass %= shader->PassCount();
 	terrain->Pass() = pass;
+
+	//알베도 or 램버트 모드 테스트
+	if (pass == 5)
+	{
+		static UINT albedo = 1;
+		ImGui::RadioButton("Albedo", (int*)&albedo, 1);
+		ImGui::RadioButton("Lambert", (int*)&albedo, 2);
+		shader->AsScalar("Albedo")->SetInt(albedo);
+	}
+	
 
 	terrain->Update();
 }

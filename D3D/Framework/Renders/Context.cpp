@@ -66,7 +66,7 @@ void Context::Render()
 	camera->RotationDegree(&cameraRotation);
 
 	str = "Camera(P) : ";
-	str += to_string((int)cameraPosition.x) + ", " + to_string((int)cameraPosition.y);
+	str += to_string((int)cameraPosition.x) + ", " + to_string((int)cameraPosition.y) + ", " + to_string((int)cameraPosition.z);
 	Gui::Get()->RenderText(5, 20, 1, 1, 1, str);
 
 	str = "Camera(R) : ";

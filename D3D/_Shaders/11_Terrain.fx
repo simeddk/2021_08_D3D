@@ -11,7 +11,7 @@ SamplerState LinearSampler
 {
     Filter = MIN_MAG_MIP_LINEAR;
     AddressU = Wrap;
-    AddressV = Warp;
+    AddressV = Wrap;
 };
 
 
@@ -174,6 +174,8 @@ VertexOutput_BaseMap VS_BaseMap(VertexInput_BaseMap input)
     return output;
 }
 
+
+uint Albedo = 1;
 float4 PS_BaseMap(VertexOutput_BaseMap input) : SV_Target
 {
     float3 normal = normalize(input.Normal);
@@ -181,7 +183,13 @@ float4 PS_BaseMap(VertexOutput_BaseMap input) : SV_Target
 
     float4 base = float4(1, 1, 1, 1);
     base = BaseMap.Sample(LinearSampler, input.Uv);
-    //TODO. 베이스맵 + 램버트
+    
+    if (Albedo == 1)
+        return base;
+
+
+    return base * lambert;
+
 }
 
 
@@ -217,5 +225,11 @@ technique11 T0
     {
         SetVertexShader(CompileShader(vs_5_0, VS_Lambert()));
         SetPixelShader(CompileShader(ps_5_0, PS_HalfLambert()));
+    }
+
+    pass P5
+    {
+        SetVertexShader(CompileShader(vs_5_0, VS_BaseMap()));
+        SetPixelShader(CompileShader(ps_5_0, PS_BaseMap()));
     }
 }

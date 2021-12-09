@@ -33,17 +33,22 @@ VertexOutput VS(VertexInput input)
     return output;
 }
 
-float4 Color;
+float4 Color = float4(1, 0, 0, 1);
 float4 PS(VertexOutput input) : SV_Target
 {
-    //return Color;
-    return input.Color;
+    return Color;
+    //return input.Color;
 
 }
 
 RasterizerState FillMode_WireFrame
 {
     FillMode = WireFrame;
+};
+
+RasterizerState CullMode_None
+{
+    CullMode = None;
 };
 
 technique11 T0
@@ -57,6 +62,14 @@ technique11 T0
     pass P1
     {
         SetRasterizerState(FillMode_WireFrame);
+        
+        SetVertexShader(CompileShader(vs_5_0, VS()));
+        SetPixelShader(CompileShader(ps_5_0, PS()));
+    }
+
+    pass P2
+    {
+        SetRasterizerState(CullMode_None);
         
         SetVertexShader(CompileShader(vs_5_0, VS()));
         SetPixelShader(CompileShader(ps_5_0, PS()));

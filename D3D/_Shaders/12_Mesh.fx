@@ -45,7 +45,12 @@ VertexOutput VS(VertexInput input)
 
 float4 PS(VertexOutput input) : SV_Target
 {
-    return float4(0, 0, 1, 1);
+    float3 normal = normalize(input.Normal);
+    float lambert = dot(normal, -LightDirection);
+
+    float4 diffuse = DiffuseMap.Sample(LinearSampler, input.Uv);
+
+    return diffuse * lambert;
 }
 
 

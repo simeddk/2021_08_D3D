@@ -24,5 +24,9 @@ private:
 
 	MeshQuad* quad;
 	MeshPlane* plane;
+	MeshCube* cube;
+	MeshCylinder* cylinders[10];
+	MeshSphere* spheres[10];
+
 	
 };

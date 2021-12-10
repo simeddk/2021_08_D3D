@@ -29,6 +29,7 @@ void MeshPlane::Create()
 			vertex.Position = Vector3((float)x - w, 0, (float)z - h);
 			vertex.Uv.x = (float)x / (countX - 1) * offsetU;
 			vertex.Uv.y = (float)z / (countZ - 1) * offsetV;
+			vertex.Normal = Vector3(0, 1, 0);
 
 			v.push_back(vertex);
 		}

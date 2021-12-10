@@ -85,5 +85,8 @@ typedef D3DXPLANE Plane;
 #include "Meshes/Mesh.h"
 #include "Meshes/MeshQuad.h"
 #include "Meshes/MeshPlane.h"
+#include "Meshes/MeshCube.h"
+#include "Meshes/MeshCylinder.h"
+#include "Meshes/MeshSphere.h"
 
 #include "Environment/Terrain.h"

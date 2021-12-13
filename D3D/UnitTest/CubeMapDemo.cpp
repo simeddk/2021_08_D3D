@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "CubeMapDemo.h"
 
-//TODO
-//큐브맵 uv맵핑 원리
+
 void CubeMapDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(20, 0, 0);
@@ -10,6 +9,8 @@ void CubeMapDemo::Initialize()
 
 	shader = new Shader(L"12_Mesh.fx");
 	
+	sky = new CubeSky(L"Environment/SnowCube1024.dds");
+
 	CreateMesh();
 
 	sDirection = shader->AsVector("LightDirection");
@@ -19,6 +20,7 @@ void CubeMapDemo::Initialize()
 	cubeMap->Texture(L"Environment/SnowCube1024.dds");
 	cubeMap->Position(0, 20, 0);
 	cubeMap->Scale(10, 10, 10);
+
 }
 
 void CubeMapDemo::Destroy()
@@ -37,12 +39,23 @@ void CubeMapDemo::Destroy()
 
 	SafeDelete(cubeMapShader);
 	SafeDelete(cubeMap);
+
+	SafeDelete(sky);
 }
 
 void CubeMapDemo::Update()
 {
+	//조명 방향 테스트
 	ImGui::SliderFloat3("Direction", direction, -1, +1);
 	sDirection->SetFloatVector(direction);
+
+	sky->Update();
+
+	//패스 변경 테스트
+	static UINT pass = sky->GetShader()->PassCount() - 1;
+	ImGui::InputInt("Pass", (int*)&pass);
+	pass %= sky->GetShader()->PassCount();
+	sky->Pass(pass);
 
 	quad->Update();
 	plane->Update();
@@ -66,6 +79,8 @@ void CubeMapDemo::Render()
 	quad->Pass(bWireframe ? 1 : 0);
 	plane->Pass(bWireframe ? 1 : 0);
 	cube->Pass(bWireframe ? 1 : 0);
+
+	sky->Render();
 
 	quad->Render();
 	plane->Render();

@@ -19,6 +19,8 @@ private:
 private:
 	Shader* shader;
 
+	CubeSky* sky;
+
 	Vector3 direction = Vector3(-1, -1, +1);
 	ID3DX11EffectVectorVariable* sDirection;
 

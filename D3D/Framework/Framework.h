@@ -90,5 +90,6 @@ typedef D3DXPLANE Plane;
 #include "Meshes/MeshSphere.h"
 
 #include "Environment/Terrain.h"
+#include "Environment/CubeSky.h"
 
 #include "Objects/CubeMap.h"

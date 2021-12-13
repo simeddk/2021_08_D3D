@@ -89,6 +89,9 @@
     <ClCompile Include="Objects\CubeMap.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Environment\CubeSky.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="Objects\CubeMap.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\CubeSky.h">
+      <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

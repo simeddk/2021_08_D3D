@@ -1,4 +1,5 @@
-matrix World, View, Projection;
+#include "00_Global.fx"
+
 TextureCube SkyCubeMap;
 
 struct VertexInput
@@ -12,31 +13,14 @@ struct VertexOutput
     float3 oPosition : Position1;
 };
 
-RasterizerState FrontCounterClockwise_True
-{
-    FrontCounterClockwise = true;
-};
-
-DepthStencilState DepthEnable_False
-{
-    DepthEnable = false;
-}; 
-
-SamplerState LinearSampler
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
-
 
 VertexOutput VS(VertexInput input)
 {
     VertexOutput output;
     output.oPosition = input.Position;
-    output.Position = mul(input.Position, World);
-    output.Position = mul(output.Position, View);
-    output.Position = mul(output.Position, Projection);
+    output.Position = WorldPosition(input.Position);
+    output.Position = ViewProjection(output.Position);
+    //TODO
 
     return output;
 }

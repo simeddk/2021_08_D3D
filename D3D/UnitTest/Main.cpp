@@ -21,7 +21,7 @@
 
 void Main::Initialize()
 {
-	Push(new CubeMapDemo());
+	Push(new GetHeightDemo());
 }
 
 

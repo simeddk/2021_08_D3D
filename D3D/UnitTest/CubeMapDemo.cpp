@@ -56,6 +56,8 @@ void CubeMapDemo::Update()
 	ImGui::InputInt("Pass", (int*)&pass);
 	pass %= sky->GetShader()->PassCount();
 	sky->Pass(pass);
+	const char* name[] = { "None", "CounterClockwise", "DepthDisable" };
+	ImGui::LabelText("Mode : %s", name[pass]);
 
 	quad->Update();
 	plane->Update();
@@ -83,9 +85,6 @@ void CubeMapDemo::Render()
 	sky->Render();
 
 	quad->Render();
-	plane->Render();
-
-	cube->Render();
 
 	for (UINT i = 0; i < 10; i++)
 	{
@@ -95,6 +94,15 @@ void CubeMapDemo::Render()
 		spheres[i]->Pass(bWireframe ? 1 : 0);
 		spheres[i]->Render();
 	}
+
+	
+
+	cube->Render();
+	plane->Render();
+
+	
+
+	
 
 	cubeMap->Render();
 }

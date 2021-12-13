@@ -92,6 +92,9 @@
     <ClCompile Include="Environment\CubeSky.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="Renders\Buffers.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="Environment\CubeSky.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Buffers.h">
+      <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,7 @@
     <ClCompile Include="Meshes\MeshQuad.cpp" />
     <ClCompile Include="Meshes\MeshSphere.cpp" />
     <ClCompile Include="Objects\CubeMap.cpp" />
+    <ClCompile Include="Renders\Buffers.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
     <ClCompile Include="Renders\DebugLine.cpp" />
     <ClCompile Include="Renders\Shader.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="Meshes\MeshQuad.h" />
     <ClInclude Include="Meshes\MeshSphere.h" />
     <ClInclude Include="Objects\CubeMap.h" />
+    <ClInclude Include="Renders\Buffers.h" />
     <ClInclude Include="Renders\Context.h" />
     <ClInclude Include="Renders\DebugLine.h" />
     <ClInclude Include="Renders\Shader.h" />

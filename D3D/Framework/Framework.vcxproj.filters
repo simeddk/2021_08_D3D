@@ -86,6 +86,9 @@
     <ClCompile Include="Meshes\MeshSphere.cpp">
       <Filter>Meshes</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\CubeMap.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -176,6 +179,9 @@
     <ClInclude Include="Meshes\MeshSphere.h">
       <Filter>Meshes</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CubeMap.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -195,6 +201,9 @@
     </Filter>
     <Filter Include="Meshes">
       <UniqueIdentifier>{7bf77c5a-aba8-4ff2-b946-70c285f00f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{4770bb12-d250-4f9f-a20f-232437de6faa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,19 +1,7 @@
-matrix World, View, Projection;
+#include "00_Global.fx"
+
 float3 LightDirection = float3(-1, -1, +1);
 Texture2D BaseMap;
-
-RasterizerState FillMode_WireFrame
-{
-    FillMode = WireFrame;
-};
-
-SamplerState LinearSampler
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
-
 
 //-------------------------------------------------------------------
 //Solid Color
@@ -29,14 +17,11 @@ struct VertexOutput
 };
 
 
-
-
 VertexOutput VS(VertexInput input)
 {
     VertexOutput output;
-    output.Position = mul(input.Position, World);
-    output.Position = mul(output.Position, View);
-    output.Position = mul(output.Position, Projection);
+    output.Position = WorldPosition(input.Position);
+    output.Position = ViewProjection(output.Position);
 
     return output;
 }
@@ -75,12 +60,10 @@ VertexOutput_HeightStep VS_HeightStep(VertexInput input)
 {
     VertexOutput_HeightStep output;
 
-    output.Position = mul(input.Position, World);
+    output.Position = WorldPosition(input.Position);
     //output.Color = GetHeightColor(output.Position.y);
-    output.wPosition = input.Position.xyz;
-
-    output.Position = mul(output.Position, View);
-    output.Position = mul(output.Position, Projection);
+    output.wPosition = output.Position.xyz;
+    output.Position = ViewProjection(output.Position);
 
     return output;
 }
@@ -111,13 +94,12 @@ struct VertexOutput_Lambert
 VertexOutput_Lambert VS_Lambert(VertexInput_Lambert input)
 {
     VertexOutput_Lambert output;
-    output.Position = mul(input.Position, World);
+    output.Position = WorldPosition(input.Position);
     output.wPosition = output.Position.xyz;
 
-    output.Position = mul(output.Position, View);
-    output.Position = mul(output.Position, Projection);
+    output.Position = ViewProjection(output.Position);
 
-    output.Normal = mul(input.Normal, (float3x3)World);
+    output.Normal = WorldNormal(input.Normal);
 
 
     return output;
@@ -163,11 +145,10 @@ VertexOutput_BaseMap VS_BaseMap(VertexInput_BaseMap input)
 {
     VertexOutput_BaseMap output;
 
-    output.Position = mul(input.Position, World);
-    output.Position = mul(output.Position, View);
-    output.Position = mul(output.Position, Projection);
+    output.Position = WorldPosition(input.Position);
+    output.Position = ViewProjection(output.Position);
 
-    output.Normal = mul(input.Normal, (float3x3) World);
+    output.Normal = WorldNormal(input.Normal);
 
     output.Uv = input.Uv;
 
@@ -195,41 +176,10 @@ float4 PS_BaseMap(VertexOutput_BaseMap input) : SV_Target
 
 technique11 T0
 {
-    pass P0
-    {
-        SetVertexShader(CompileShader(vs_5_0, VS()));
-        SetPixelShader(CompileShader(ps_5_0, PS()));
-    }
-
-    pass P1
-    {
-        SetRasterizerState(FillMode_WireFrame);
-        
-        SetVertexShader(CompileShader(vs_5_0, VS()));
-        SetPixelShader(CompileShader(ps_5_0, PS()));
-    }
-
-    pass P2
-    {
-        SetVertexShader(CompileShader(vs_5_0, VS_HeightStep()));
-        SetPixelShader(CompileShader(ps_5_0, PS_HeightStep()));
-    }
-
-    pass P3
-    {
-        SetVertexShader(CompileShader(vs_5_0, VS_Lambert()));
-        SetPixelShader(CompileShader(ps_5_0, PS_Lambert()));
-    }
-
-    pass P4
-    {
-        SetVertexShader(CompileShader(vs_5_0, VS_Lambert()));
-        SetPixelShader(CompileShader(ps_5_0, PS_HalfLambert()));
-    }
-
-    pass P5
-    {
-        SetVertexShader(CompileShader(vs_5_0, VS_BaseMap()));
-        SetPixelShader(CompileShader(ps_5_0, PS_BaseMap()));
-    }
+    P_VP(P0, VS, PS)
+    P_RS_VP(P1, FillMode_WireFrame, VS, PS)
+    P_VP(P2, VS_HeightStep, PS_HeightStep)
+    P_VP(P3, VS_Lambert, PS_Lambert)
+    P_VP(P4, VS_Lambert, PS_HalfLambert)
+    P_VP(P5, VS_BaseMap, PS_BaseMap)
 }

@@ -2,7 +2,7 @@
 #include "Terrain.h"
 
 Terrain::Terrain(Shader * shader, wstring heightFile)
-	: shader(shader)
+	: Renderer(shader)
 {
 	heightMap = new Texture(heightFile);
 
@@ -12,31 +12,24 @@ Terrain::Terrain(Shader * shader, wstring heightFile)
 
 	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexTerrain));
 	indexBuffer = new IndexBuffer(indices, indexCount);
-
-	D3DXMatrixIdentity(&world);
 }
 
 Terrain::~Terrain()
 {
 	SafeDeleteArray(vertices);
-	SafeDelete(vertexBuffer);
-
 	SafeDeleteArray(indices);
-	SafeDelete(indexBuffer);
 
 	SafeDelete(heightMap);
 }
 
 void Terrain::Update()
 {
-	shader->AsMatrix("World")->SetMatrix(world);
-	shader->AsMatrix("View")->SetMatrix(Context::Get()->View());
-	shader->AsMatrix("Projection")->SetMatrix(Context::Get()->Projection());
+	Super::Update();
 }
 
 void Terrain::Render()
 {
-	/*static bool bVisible = false;
+	static bool bVisible = false;
 	static UINT interval = 3;
 	ImGui::Checkbox("Visible Normal", &bVisible);
 	ImGui::SliderInt("Interval", (int*)&interval, 1, 5);
@@ -55,19 +48,14 @@ void Terrain::Render()
 				DebugLine::Get()->RenderLine(start, end);
 			}
 		}
-	}*/
+	}
 
 	if (baseMap != nullptr)
 		shader->AsSRV("BaseMap")->SetResource(baseMap->SRV());
 
-	UINT stride = sizeof(VertexTerrain);
-	UINT offset = 0;
+	Super::Render();
 
-	vertexBuffer->Render();
-	indexBuffer->Render();
-	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	shader->DrawIndexed(0, pass, indexCount);
+	shader->DrawIndexed(0, Pass(), indexCount);
 }
 
 void Terrain::BaseMap(wstring file)

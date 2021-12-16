@@ -1,0 +1,13 @@
+RootNode,-1,-1
+tank,1,-1
+l_engine_geo,2,1
+l_back_wheel_geo,3,2
+l_steer_geo,4,2
+l_front_wheel_geo,5,4
+r_engine_geo,6,1
+r_back_wheel_geo,7,6
+r_steer_geo,8,6
+r_front_wheel_geo,9,8
+turret_geo,10,1
+canon_geo,11,10
+hatch_geo,12,10

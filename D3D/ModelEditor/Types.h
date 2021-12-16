@@ -4,8 +4,28 @@
 struct asBone
 {
 	int Index;
-	string name;
+	string Name;
 
 	int Parent;
 	Matrix Transform;
+};
+
+struct asMeshPart
+{
+	string MaterialName;
+
+	UINT StartVertex;
+	UINT VertexCount;
+	UINT StartIndex;
+	UINT IndexCount;
+};
+
+struct asMesh
+{
+	int BoneIndex;
+
+	vector<Model::VertexModel> Vertices;
+	vector<UINT> Indices;
+
+	vector<asMeshPart*> MeshParts;
 };

@@ -74,7 +74,7 @@ private:
 	} boneDesc;
 
 private:
-	Shader* shdaer;
+	Shader* shader;
 
 	Transform* transform;
 	PerFrame* perFrame;

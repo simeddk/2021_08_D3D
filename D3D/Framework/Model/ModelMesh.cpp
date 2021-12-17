@@ -54,6 +54,8 @@ void ModelMesh::Pass(UINT val)
 
 void ModelMesh::SetShader(Shader * shader)
 {
+	this->shader = shader;
+
 	SafeDelete(transform);
 	transform = new Transform(shader);
 
@@ -102,4 +104,33 @@ void ModelMesh::Transforms(Matrix * transforms)
 void ModelMesh::SetTransform(Transform * transform)
 {
 	this->transform->Set(transform);
+}
+
+//-----------------------------------------------------------------------------
+//ModelMeshPart
+//-----------------------------------------------------------------------------
+ModelMeshPart::ModelMeshPart()
+{
+}
+
+ModelMeshPart::~ModelMeshPart()
+{
+}
+
+void ModelMeshPart::Update()
+{
+}
+
+void ModelMeshPart::Render()
+{
+	shader->DrawIndexed(0, pass, indexCount, startIndex);
+}
+
+void ModelMeshPart::Binding(Model * model)
+{
+}
+
+void ModelMeshPart::SetShader(Shader * shader)
+{
+	this->shader = shader;
 }

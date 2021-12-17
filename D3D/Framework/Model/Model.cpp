@@ -119,9 +119,20 @@ void Model::BindBone()
 
 void Model::BindMesh()
 {
+	for (ModelMesh* mesh : meshes)
+	{
+		mesh->bone = bones[mesh->boneIndex];
+		mesh->Binding(this);
+	}
 }
 
 ModelBone * Model::BoneByName(wstring name)
 {
+	for (ModelBone* bone : bones)
+	{
+		if (name == bone->Name())
+			return bone;
+	}
+
 	return nullptr;
 }

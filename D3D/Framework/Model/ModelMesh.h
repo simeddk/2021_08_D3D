@@ -76,8 +76,8 @@ private:
 private:
 	Shader* shader;
 
-	Transform* transform;
-	PerFrame* perFrame;
+	Transform* transform = nullptr;
+	PerFrame* perFrame = nullptr;
 
 	int boneIndex;
 	ModelBone* bone;

@@ -9,6 +9,7 @@ class ModelMeshPart;
 class Model
 {
 public:
+	friend class ModelRender;
 	struct VertexModel;
 
 private:
@@ -20,7 +21,7 @@ private:
 
 private:
 	void BindBone(); //부모 자식 Bone 관계 형성
-	void BindMesh(); //이 모델이 보유한 Mesh -> vector meshes에 저장
+	void BindMesh(); //해당 Mesh가 붙어야 할 Bone(ModelBone::bone)에 붙는지
 
 public:
 	UINT BoneCount() { return bones.size(); }

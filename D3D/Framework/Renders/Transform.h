@@ -50,7 +50,7 @@ private:
 private:
 	Shader* shader;
 	
-	ConstantBuffer* buffer;
+	ConstantBuffer* buffer = nullptr;
 	ID3DX11EffectConstantBuffer* sBuffer;
 
 	Vector3 position;

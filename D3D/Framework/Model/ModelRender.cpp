@@ -38,6 +38,7 @@ void ModelRender::Render()
 		mesh->SetTransform(transform);
 		mesh->Render();
 	}
+	
 }
 
 void ModelRender::ReadMesh(wstring file)

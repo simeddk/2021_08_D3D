@@ -4,9 +4,12 @@
 
 void ModelDemo::Initialize()
 {
+	Context::Get()->GetCamera()->RotationDegree(7, 2, 0);
+	Context::Get()->GetCamera()->Position(1, 5, -14);
 	shader = new Shader(L"15_Model.fxo");
 
 	Tank();
+	Kachujin();
 
 	sky = new CubeSky(L"Environment/SnowCube1024.dds");
 	sky->Pass(2);
@@ -21,6 +24,7 @@ void ModelDemo::Destroy()
 {
 	SafeDelete(shader);
 	SafeDelete(tank);
+	SafeDelete(kachujin);
 	
 	SafeDelete(sky);
 	SafeDelete(planeShader);
@@ -40,6 +44,7 @@ void ModelDemo::Update()
 	ImGui::InputInt("Pass", (int *)&pass);
 	pass %= 2;
 	tank->Pass(pass);
+	kachujin->Pass(pass);
 
 	//이동 테스트
 	{
@@ -64,6 +69,9 @@ void ModelDemo::Update()
 
 	if (tank != nullptr)
 		tank->Update();
+
+	if (kachujin != nullptr)
+		kachujin->Update();
 }
 
 void ModelDemo::Render()
@@ -73,10 +81,21 @@ void ModelDemo::Render()
 
 	if (tank != nullptr)
 		tank->Render();
+
+	if (kachujin != nullptr)
+		kachujin->Render();
 }
 
 void ModelDemo::Tank()
 {
 	tank = new ModelRender(shader);
 	tank->ReadMesh(L"Tank/Tank");
+}
+
+void ModelDemo::Kachujin()
+{
+	kachujin = new ModelRender(shader);
+	kachujin->ReadMesh(L"Kachujin/Mesh");
+	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
+	kachujin->GetTransform()->Position(5, 0, 0);
 }

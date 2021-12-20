@@ -10,6 +10,8 @@ void ModelDemo::Initialize()
 
 	Tank();
 	Kachujin();
+	Tower();
+	Airplane();
 
 	sky = new CubeSky(L"Environment/SnowCube1024.dds");
 	sky->Pass(2);
@@ -25,6 +27,8 @@ void ModelDemo::Destroy()
 	SafeDelete(shader);
 	SafeDelete(tank);
 	SafeDelete(kachujin);
+	SafeDelete(tower);
+	SafeDelete(airplane);
 	
 	SafeDelete(sky);
 	SafeDelete(planeShader);
@@ -45,6 +49,8 @@ void ModelDemo::Update()
 	pass %= 2;
 	tank->Pass(pass);
 	kachujin->Pass(pass);
+	tower->Pass(pass);
+	airplane->Pass(pass);
 
 	//이동 테스트
 	{
@@ -72,6 +78,12 @@ void ModelDemo::Update()
 
 	if (kachujin != nullptr)
 		kachujin->Update();
+
+	if (tower != nullptr)
+		tower->Update();
+
+	if (airplane != nullptr)
+		airplane->Update();
 }
 
 void ModelDemo::Render()
@@ -84,6 +96,12 @@ void ModelDemo::Render()
 
 	if (kachujin != nullptr)
 		kachujin->Render();
+
+	if (tower != nullptr)
+		tower->Render();
+
+	if (airplane != nullptr)
+		airplane->Render();
 }
 
 void ModelDemo::Tank()
@@ -98,4 +116,20 @@ void ModelDemo::Kachujin()
 	kachujin->ReadMesh(L"Kachujin/Mesh");
 	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
 	kachujin->GetTransform()->Position(5, 0, 0);
+}
+
+void ModelDemo::Tower()
+{
+	tower = new ModelRender(shader);
+	tower->ReadMesh(L"Tower/Tower");
+	tower->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
+	tower->GetTransform()->Position(-5, 0, 0);
+}
+
+void ModelDemo::Airplane()
+{
+	airplane = new ModelRender(shader);
+	airplane->ReadMesh(L"B787/Airplane");
+	airplane->GetTransform()->Scale(0.001f, 0.001f, 0.001f);
+	airplane->GetTransform()->Position(-10, 0, 0);
 }

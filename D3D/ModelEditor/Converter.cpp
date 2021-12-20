@@ -292,13 +292,71 @@ void Converter::WriteMaterialData(wstring savePath)
 		element = document->NewElement("NormalFile");
 		element->SetText(WriteTexture(folder, material->NormalFile).c_str());
 		node->LinkEndChild(element);
+
+		element = document->NewElement("Ambient");
+		element->SetAttribute("R", material->Ambient.r);
+		element->SetAttribute("G", material->Ambient.g);
+		element->SetAttribute("B", material->Ambient.b);
+		element->SetAttribute("A", material->Ambient.a);
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Diffuse");
+		element->SetAttribute("R", material->Diffuse.r);
+		element->SetAttribute("G", material->Diffuse.g);
+		element->SetAttribute("B", material->Diffuse.b);
+		element->SetAttribute("A", material->Diffuse.a);
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Specular");
+		element->SetAttribute("R", material->Specular.r);
+		element->SetAttribute("G", material->Specular.g);
+		element->SetAttribute("B", material->Specular.b);
+		element->SetAttribute("A", material->Specular.a);
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Emissive");
+		element->SetAttribute("R", material->Emissive.r);
+		element->SetAttribute("G", material->Emissive.g);
+		element->SetAttribute("B", material->Emissive.b);
+		element->SetAttribute("A", material->Emissive.a);
+		node->LinkEndChild(element);
 	}
 
 	document->SaveFile((folder + file).c_str());
 	SafeDelete(document);
 }
 
-string Converter::WriteTexture(string saveFoloder, string file)
+string Converter::WriteTexture(string saveFolder, string file)
 {
-	return string();
+	if (file.length() < 1) return "";
+
+	string fileName =  Path::GetFileName(file);
+	const aiTexture* texture = scene->GetEmbeddedTexture(file.c_str());
+
+	string path = "";
+
+	if (texture != nullptr)
+	{
+		path = saveFolder + Path::GetFileNameWithoutExtension(file) + ".png";
+		BinaryWriter* w = new BinaryWriter(String::ToWString(path));
+		w->Byte(texture->pcData, texture->mWidth);
+		SafeDelete(w);
+	}
+	else
+	{
+		string directory = Path::GetDirectoryName(String::ToString(this->file));
+		string origin = directory + file;
+		String::Replace(&origin, "\\", "/");
+
+		if (Path::ExistFile(origin) == false)
+			return "";
+
+		path = saveFolder + fileName;
+		CopyFileA(origin.c_str(), path.c_str(), FALSE);
+
+		String::Replace(&path, "../../_Textures/", "");
+	}
+	
+
+	return Path::GetFileName(path);
 }

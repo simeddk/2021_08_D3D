@@ -101,9 +101,81 @@ public:
 			BoneWeights.push_back(Pair(boneIndex, boneWeights));
 	}
 
-	//TODO
+	void GetBlendWeights(asBlendWeight& blendWeights)
+	{
+		for (UINT i = 0; i < BoneWeights.size(); i++)
+		{
+			if (i >= 4)
+				return;
+
+			blendWeights.Set(i, BoneWeights[i].first, BoneWeights[i].second);
+		}
+	}
+
+
+	void Normalize()
+	{
+		float totalWeight = 0.0f;
+
+		int i = 0;
+		vector<Pair>::iterator it = BoneWeights.begin();
+
+		while (it != BoneWeights.end())
+		{
+			if (i < 4)
+			{
+				totalWeight += it->second;
+				i++; it++;
+			}
+			else
+				it = BoneWeights.erase(it);
+		}
+
+		float scale = 1.0f / totalWeight;
+
+		it = BoneWeights.begin();
+		while (it != BoneWeights.end())
+		{
+			it->second *= scale;
+			it++;
+		}
+	}
 };
 
 //-----------------------------------------------------------------------------
 //Animation
 //-----------------------------------------------------------------------------
+//1 Bone, 1 Frame
+struct asKeyFrameData
+{
+	float Frame;
+
+	Vector3 Scale;
+	Quaternion Rotation;
+	Vector3 Translation;
+};
+
+//1 Bone, All Frame
+struct asKeyFrame
+{
+	string BoneName;
+	vector<asKeyFrameData> Transforms;
+};
+
+//All Bone, All Frame(최종 저장될 타입)
+struct asClip
+{
+	string Name;
+
+	UINT FrameCount;
+	float FrameRate;
+
+	vector<asKeyFrame*> KeyFrames;
+};
+
+//중간 노드(임시 거처)
+struct asClipNode
+{
+	aiString Name;
+	vector<asKeyFrameData> KeyFrame;
+};

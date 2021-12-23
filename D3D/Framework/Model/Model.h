@@ -1,15 +1,19 @@
 #pragma once
 
 #define MAX_MODEL_TRANSFORMS 250
+#define MAX_MODEL_KEYFRAMES 500
 
 class ModelBone;
 class ModelMesh;
 class ModelMeshPart;
+class ModelClip;
 
 class Model
 {
 public:
 	friend class ModelRender;
+	friend class ModelAnimator;
+
 	struct VertexModel;
 
 private:
@@ -19,6 +23,7 @@ private:
 private:
 	void ReadMesh(wstring file);
 	void ReadMaterial(wstring file);
+	void ReadClip(wstring file);
 
 private:
 	void BindBone(); //부모 자식 Bone 관계 형성
@@ -38,6 +43,11 @@ public:
 	vector<Material*>& Materials() { return materials; }
 	Material* MaterialByIndex(UINT index) { return materials[index]; }
 	Material* MaterialByName(wstring name);
+
+	UINT ClipCount() { return clips.size(); }
+	vector<ModelClip*>& Clips() { return clips; }
+	ModelClip* ClipByIndex(UINT index) { return clips[index]; }
+	ModelClip* ClipByName(wstring name);
 
 public:
 	struct VertexModel
@@ -66,4 +76,5 @@ private:
 	vector<ModelBone*> bones;
 	vector<ModelMesh*> meshes;
 	vector<Material*> materials;
+	vector<ModelClip*> clips;
 };

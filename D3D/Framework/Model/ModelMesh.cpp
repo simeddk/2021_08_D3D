@@ -73,7 +73,7 @@ void ModelMesh::Update()
 	boneDesc.BoneIndex = boneIndex;
 
 	perFrame->Update();
-	transform->Up();
+	transform->Update();
 
 	for (ModelMeshPart* part : meshParts)
 		part->Update();

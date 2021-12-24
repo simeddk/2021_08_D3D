@@ -9,7 +9,6 @@ void ModelDemo::Initialize()
 	shader = new Shader(L"15_Model.fxo");
 
 	Tank();
-	Kachujin();
 	Tower();
 	Airplane();
 
@@ -26,7 +25,6 @@ void ModelDemo::Destroy()
 {
 	SafeDelete(shader);
 	SafeDelete(tank);
-	SafeDelete(kachujin);
 	SafeDelete(tower);
 	SafeDelete(airplane);
 	
@@ -48,7 +46,6 @@ void ModelDemo::Update()
 	ImGui::InputInt("Pass", (int *)&pass);
 	pass %= 2;
 	tank->Pass(pass);
-	kachujin->Pass(pass);
 	tower->Pass(pass);
 	airplane->Pass(pass);
 
@@ -75,10 +72,7 @@ void ModelDemo::Update()
 
 	if (tank != nullptr)
 		tank->Update();
-
-	if (kachujin != nullptr)
-		kachujin->Update();
-
+	
 	if (tower != nullptr)
 		tower->Update();
 
@@ -93,10 +87,7 @@ void ModelDemo::Render()
 
 	if (tank != nullptr)
 		tank->Render();
-
-	if (kachujin != nullptr)
-		kachujin->Render();
-
+	
 	if (tower != nullptr)
 		tower->Render();
 
@@ -109,15 +100,6 @@ void ModelDemo::Tank()
 	tank = new ModelRender(shader);
 	tank->ReadMesh(L"Tank/Tank");
 	tank->ReadMaterial(L"Tank/Tank");
-}
-
-void ModelDemo::Kachujin()
-{
-	kachujin = new ModelRender(shader);
-	kachujin->ReadMesh(L"Kachujin/Mesh");
-	kachujin->ReadMaterial(L"Kachujin/Mesh");
-	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
-	kachujin->GetTransform()->Position(5, 0, 0);
 }
 
 void ModelDemo::Tower()

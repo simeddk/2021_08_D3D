@@ -133,7 +133,7 @@ void Converter::ReadMeshData(aiNode * node, int index)
 	}//for(i)
 
 	meshes.push_back(mesh);
-	
+
 }
 
 void Converter::ReadSkinData()
@@ -151,13 +151,13 @@ void Converter::ReadSkinData()
 
 		for (UINT b = 0; b < aiMesh->mNumBones; b++)
 		{
-			aiBone* aiMeshBone =  aiMesh->mBones[b];
+			aiBone* aiMeshBone = aiMesh->mBones[b];
 
 			UINT boneIndex = 0;
 
 			for (asBone* bone : bones)
 			{
-				if (bone->Name == aiMeshBone->mName.C_Str())
+				if (bone->Name == (string)aiMeshBone->mName.C_Str())
 				{
 					boneIndex = bone->Index;
 					break;
@@ -169,7 +169,7 @@ void Converter::ReadSkinData()
 				UINT index = aiMeshBone->mWeights[w].mVertexId;
 				float weight = aiMeshBone->mWeights[w].mWeight;
 
-				boneWeights[index].AddWeights(index, weight);
+				boneWeights[index].AddWeights(boneIndex, weight);
 			}//for(w)
 		}//for(b)
 
@@ -211,7 +211,7 @@ void Converter::WriteMeshData(wstring savePath)
 
 		w->UInt(meshData->Vertices.size());
 		w->Byte(&meshData->Vertices[0], sizeof(Model::VertexModel) * meshData->Vertices.size());
-		
+
 		w->UInt(meshData->Indices.size());
 		w->Byte(&meshData->Indices[0], sizeof(UINT) * meshData->Indices.size());
 
@@ -227,7 +227,7 @@ void Converter::WriteMeshData(wstring savePath)
 			w->UInt(part->IndexCount);
 		}
 	}
-	
+
 	SafeDelete(w);
 }
 
@@ -382,7 +382,7 @@ string Converter::WriteTexture(string saveFolder, string file)
 {
 	if (file.length() < 1) return "";
 
-	string fileName =  Path::GetFileName(file);
+	string fileName = Path::GetFileName(file);
 	const aiTexture* texture = scene->GetEmbeddedTexture(file.c_str());
 
 	string path = "";
@@ -408,7 +408,7 @@ string Converter::WriteTexture(string saveFolder, string file)
 
 		String::Replace(&path, "../../_Textures/", "");
 	}
-	
+
 
 	return Path::GetFileName(path);
 }
@@ -533,9 +533,9 @@ void Converter::ReadKeyFrameData(asClip * clip, aiNode * node, vector<asClipNode
 
 			Matrix transform(node->mTransformation[0]);
 			D3DXMatrixTranspose(&transform, &transform);
-			
+
 			D3DXMatrixDecompose(&frameData.Scale, &frameData.Rotation, &frameData.Translation, &transform);
-			
+
 		}
 		else
 		{
@@ -568,9 +568,9 @@ void Converter::WriteClipData(asClip * clip, wstring savePath)
 
 		w->UInt(keyframe->Transforms.size());
 		w->Byte(&keyframe->Transforms[0], sizeof(asKeyFrameData) * keyframe->Transforms.size());
-		
+
 		SafeDelete(keyframe);
 	}
-	
+
 	SafeDelete(w);
 }

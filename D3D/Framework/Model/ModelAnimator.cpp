@@ -7,7 +7,8 @@ ModelAnimator::ModelAnimator(Shader * shader)
 	model = new Model();
 	transform = new Transform(shader);
 
-	frameBuffer = new ConstantBuffer(&keyFrameDesc, sizeof(KeyFrameDesc));
+	frameBuffer = new ConstantBuffer(&tweenDesc, sizeof(TweenDesc));
+	blendBuffer = new ConstantBuffer(&blendDesc, sizeof(BlendDesc));
 }
 
 ModelAnimator::~ModelAnimator()
@@ -20,15 +21,38 @@ ModelAnimator::~ModelAnimator()
 	SafeRelease(transformSRV);
 
 	SafeDelete(frameBuffer);
+	SafeDelete(blendBuffer);
 }
 
 void ModelAnimator::Update()
 {
+	////ImGui Test
+	//{
+	//	//Clip Index
+	//	ImGui::Spacing();
+	//	ImGui::Text("Clip");
+	//	ImGui::Separator();
+	//	ModelClip* clip = model->ClipByIndex(keyFrameDesc.Clip);
+	//	ImGui::InputInt("Clip Index", &keyFrameDesc.Clip);
+	//	keyFrameDesc.Clip %= model->ClipCount();
+
+	//	//KeyFrame 
+	//	ImGui::Text("Frame");
+	//	ImGui::Separator();
+	//	ImGui::SliderInt("CurrFrame", (int*)&keyFrameDesc.CurrFrame, 0, clip->FrameCount() - 1);
+	//	ImGui::SliderFloat("Speed", &keyFrameDesc.Speed, 0.1f, 4.0f);
+	//}
+
 	if (texture == nullptr)
 	{
 		SetShader(shader, true);
 		CreateTexture();
 	}
+
+	if (blendDesc.Mode == 0)
+		UpdateAnimationFrame();
+	else
+		UpdateBlendingFrame();
 
 	for (ModelMesh* mesh : model->Meshes())
 		mesh->Update();
@@ -39,6 +63,9 @@ void ModelAnimator::Render()
 	frameBuffer->Render();
 	sFrameBuffer->SetConstantBuffer(frameBuffer->Buffer());
 
+	blendBuffer->Render();
+	sBlendBuffer->SetConstantBuffer(blendBuffer->Buffer());
+
 	sTransformSRV->SetResource(transformSRV);
 
 	for (ModelMesh* mesh : model->Meshes())
@@ -46,6 +73,89 @@ void ModelAnimator::Render()
 		mesh->SetTransform(transform);
 		mesh->Render();
 	}
+}
+
+void ModelAnimator::UpdateAnimationFrame()
+{
+	TweenDesc& desc = tweenDesc;
+	ModelClip* clip = model->ClipByIndex(desc.Curr.Clip);
+
+	desc.Curr.RunningTime += Time::Delta();
+
+	float time = 1.0f / clip->FrameRate() / desc.Curr.Speed;
+
+	if (desc.Curr.Time >= 1.0f)
+	{
+		desc.Curr.RunningTime = 0.0f;
+
+		desc.Curr.CurrFrame = (desc.Curr.CurrFrame + 1) % clip->FrameCount();
+		desc.Curr.NextFrame = (desc.Curr.CurrFrame + 1) % clip->FrameCount();
+	}
+	desc.Curr.Time = desc.Curr.RunningTime / time;
+
+	if (desc.Next.Clip > -1)
+	{
+		ModelClip* clip = model->ClipByIndex(desc.Next.Clip);
+
+		desc.ChangeTime += Time::Delta();
+		desc.TweenTime = desc.ChangeTime / desc.TakeTime; //요구시간 0~1사이의 비율값으로
+
+		//동작 전환이 완료됨
+		if (desc.TweenTime >= 1.0f)
+		{
+			desc.Curr = desc.Next;
+
+			desc.Next.Clip = -1;
+			desc.Next.CurrFrame = 0;
+			desc.Next.NextFrame = 0;
+			desc.Next.Time = 0;
+			desc.Next.RunningTime = 0;
+
+			desc.ChangeTime = 0.0f;
+			desc.TweenTime = 0.0f;
+		}
+		//동작 전환이 진행 중
+		else
+		{
+			desc.Next.RunningTime += Time::Delta();
+
+			float time = 1.0f / clip->FrameRate() / desc.Next.Speed;
+
+			if (desc.Next.Time >= 1.0f)
+			{
+				desc.Next.RunningTime = 0.0f;
+
+				desc.Next.CurrFrame = (desc.Next.CurrFrame + 1) % clip->FrameCount();
+				desc.Next.NextFrame = (desc.Next.CurrFrame + 1) % clip->FrameCount();
+			}
+			desc.Next.Time = desc.Next.RunningTime / time;
+		}
+	}
+	
+}
+
+void ModelAnimator::UpdateBlendingFrame()
+{
+	BlendDesc& desc = blendDesc;
+
+	for (UINT i = 0; i < 3; i++)
+	{
+		ModelClip* clip = model->ClipByIndex(desc.Clip[i].Clip);
+
+		desc.Clip[i].RunningTime += Time::Delta();
+
+		float time = 1.0f / clip->FrameRate() / desc.Clip[i].Speed;
+
+		if (desc.Clip[i].Time >= 1.0f)
+		{
+			desc.Clip[i].RunningTime = 0.0f;
+
+			desc.Clip[i].CurrFrame = (desc.Clip[i].CurrFrame + 1) % clip->FrameCount();
+			desc.Clip[i].NextFrame = (desc.Clip[i].CurrFrame + 1) % clip->FrameCount();
+		}
+		desc.Clip[i].Time = desc.Clip[i].RunningTime / time;
+	}
+	
 }
 
 void ModelAnimator::ReadMaterial(wstring file)
@@ -63,6 +173,31 @@ void ModelAnimator::ReadClip(wstring file)
 	model->ReadClip(file);
 }
 
+void ModelAnimator::PlayTweenMode(UINT clip, float speed, float takeTime)
+{
+	blendDesc.Mode = 0;
+
+	tweenDesc.TakeTime = takeTime;
+	tweenDesc.Next.Clip = clip;
+	tweenDesc.Next.Speed = speed;
+}
+
+void ModelAnimator::PlayBlendMode(UINT clip0, UINT clip1, UINT clip2)
+{
+	blendDesc.Mode = 1;
+
+	blendDesc.Clip[0].Clip = clip0;
+	blendDesc.Clip[1].Clip = clip1;
+	blendDesc.Clip[2].Clip = clip2;
+}
+
+void ModelAnimator::SetBlendAlpha(float alpha)
+{
+	alpha = Math::Clamp<float>(alpha, 0.0f, 2.0f);
+
+	blendDesc.Alpha = alpha;
+}
+
 void ModelAnimator::SetShader(Shader * shader, bool bFirst)
 {
 	this->shader = shader;
@@ -74,7 +209,8 @@ void ModelAnimator::SetShader(Shader * shader, bool bFirst)
 	}
 
 	sTransformSRV = shader->AsSRV("TransformsMap");
-	sFrameBuffer = shader->AsConstantBuffer("CB_KeyFrames");
+	sFrameBuffer = shader->AsConstantBuffer("CB_AnimationFrame");
+	sBlendBuffer = shader->AsConstantBuffer("CB_BlendingFrame");
 
 	for (ModelMesh* mesh : model->Meshes())
 		mesh->SetShader(shader);

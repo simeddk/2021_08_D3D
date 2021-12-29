@@ -143,6 +143,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TerrainDemo.cpp" />
     <ClCompile Include="TextureSampleDemo.cpp" />
+    <ClCompile Include="ThreadDemo.cpp" />
     <ClCompile Include="TriangleDemo.cpp" />
     <ClCompile Include="VertexLineColorDemo.cpp" />
     <ClCompile Include="VertexLineDemo.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TerrainDemo.h" />
     <ClInclude Include="TextureSampleDemo.h" />
+    <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="TriangleDemo.h" />
     <ClInclude Include="VertexLineColorDemo.h" />
     <ClInclude Include="VertexLineDemo.h" />

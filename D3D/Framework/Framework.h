@@ -1,5 +1,8 @@
 #pragma once
 
+#include <WinSock2.h>
+#pragma comment(lib, "ws2_32")
+
 #include <Windows.h>
 #include <assert.h>
 
@@ -10,6 +13,7 @@
 #include <map>
 #include <unordered_map>
 #include <functional>
+#include <queue>
 #include <iterator>
 #include <thread>
 #include <mutex>

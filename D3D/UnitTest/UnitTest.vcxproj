@@ -140,6 +140,7 @@
     <ClCompile Include="MultiWorldDemo.cpp" />
     <ClCompile Include="RectDemo.cpp" />
     <ClCompile Include="SamplerStateDemo.cpp" />
+    <ClCompile Include="SocketDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TerrainDemo.cpp" />
     <ClCompile Include="TextureSampleDemo.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="MultiWorldDemo.h" />
     <ClInclude Include="RectDemo.h" />
     <ClInclude Include="SamplerStateDemo.h" />
+    <ClInclude Include="SocketDemo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TerrainDemo.h" />
     <ClInclude Include="TextureSampleDemo.h" />

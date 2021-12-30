@@ -1,6 +1,15 @@
 #pragma once
 #include "Systems/IExecute.h"
 
+class Macaroon
+{
+public:
+	static string* Tasts() { return tasts; }
+
+private:
+	static string tasts[5];
+};
+
 class ThreadDemo : public IExecute
 {
 public:
@@ -35,10 +44,23 @@ private:
 	void Thread_Deadlock2(mutex& m1, mutex& m2);
 	void Deadlock();
 
+	void Provide(queue<string>* receives, mutex* m, int index);
+	void Consumer(queue<string>* receives, mutex* m, int* count);
+	void Provide_Consumer();
+
+	void ExecuteTimer();
+	void PerformanceMeasurement();
+
 private:
 	float progress = 0.f;
 	mutex m;
 
 	mutex m1;
 	mutex m2;
+
+	queue<string> receives;
+	mutex m3;
+
+
+	Timer timer[2];
 };

@@ -54,6 +54,9 @@
     <ClCompile Include="ThreadDemo.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="SocketDemo.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -107,6 +110,9 @@
       <Filter>Mesh</Filter>
     </ClInclude>
     <ClInclude Include="ThreadDemo.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketDemo.h">
       <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>

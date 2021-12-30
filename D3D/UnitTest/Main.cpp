@@ -19,10 +19,11 @@
 #include "MeshDemo.h"
 #include "CubeMapDemo.h"
 #include "ThreadDemo.h"
+#include "SocketDemo.h"
 
 void Main::Initialize()
 {
-	Push(new ThreadDemo());
+	Push(new SocketDemo());
 }
 
 

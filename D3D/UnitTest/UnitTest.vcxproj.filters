@@ -57,6 +57,9 @@
     <ClCompile Include="SocketDemo.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="RawBufferDemo.cpp">
+      <Filter>ComputeShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -115,6 +118,9 @@
     <ClInclude Include="SocketDemo.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="RawBufferDemo.h">
+      <Filter>ComputeShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Vertex">
@@ -134,6 +140,9 @@
     </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{fd375b81-c99f-404c-a30a-b191683d2224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComputeShader">
+      <UniqueIdentifier>{6cd484e0-6690-4bc5-b7a7-55e9873ec01b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

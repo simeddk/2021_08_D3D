@@ -1,7 +1,7 @@
 #pragma once
 
-#include <WinSock2.h>
-#pragma comment(lib, "ws2_32")
+//#include <WinSock2.h>
+//#pragma comment(lib, "ws2_32")
 
 #include <Windows.h>
 #include <assert.h>

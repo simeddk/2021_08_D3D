@@ -67,3 +67,59 @@ private:
 	void* data;
 	UINT dataSize;
 };
+
+//-----------------------------------------------------------------------------
+//ComputeShaderBuffer(Super)
+//-----------------------------------------------------------------------------
+class CsReosource
+{
+public:
+	CsReosource();
+	~CsReosource();
+
+protected:
+	virtual void CreateInput() {}
+	virtual void CreateSRV() {}
+
+	virtual void CreateOutput() {}
+	virtual void CreateUAV() {}
+
+	void CreateBuffer();
+
+public:
+	ID3D11ShaderResourceView* SRV() { return srv; }
+	ID3D11UnorderedAccessView* UAV() { return uav; }
+
+protected:
+	ID3D11Resource* input = nullptr;
+	ID3D11ShaderResourceView* srv = nullptr;
+
+	ID3D11Resource* output = nullptr;
+	ID3D11UnorderedAccessView* uav = nullptr;
+};
+
+//-----------------------------------------------------------------------------
+//RawBuffer
+//-----------------------------------------------------------------------------
+class RawBuffer : public CsReosource
+{
+public:
+	RawBuffer(void* inputData, UINT inputByte, UINT outputByte);
+	~RawBuffer();
+
+private:
+	void CreateInput() override;
+	void CreateSRV() override;
+
+	void CreateOutput() override;
+	void CreateUAV() override;
+
+public:
+	void CopyToInput(void* data);
+	void CopyFromOutput(void* data);
+
+private:
+	void* inputData;
+	UINT inputByte;
+	UINT outputByte;
+};

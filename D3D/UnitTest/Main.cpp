@@ -20,10 +20,11 @@
 #include "CubeMapDemo.h"
 #include "ThreadDemo.h"
 #include "SocketDemo.h"
+#include "RawBufferDemo.h"
 
 void Main::Initialize()
 {
-	Push(new SocketDemo());
+	Push(new RawBufferDemo());
 }
 
 

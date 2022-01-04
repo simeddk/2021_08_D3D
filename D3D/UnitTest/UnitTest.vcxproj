@@ -146,6 +146,7 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TerrainDemo.cpp" />
+    <ClCompile Include="TextureBufferDemo.cpp" />
     <ClCompile Include="TextureSampleDemo.cpp" />
     <ClCompile Include="ThreadDemo.cpp" />
     <ClCompile Include="TriangleDemo.cpp" />
@@ -171,6 +172,7 @@
     </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TerrainDemo.h" />
+    <ClInclude Include="TextureBufferDemo.h" />
     <ClInclude Include="TextureSampleDemo.h" />
     <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="TriangleDemo.h" />

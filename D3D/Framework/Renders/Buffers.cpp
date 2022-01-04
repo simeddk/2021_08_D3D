@@ -364,3 +364,66 @@ ID3D11Texture2D * TextureBuffer::CopyFromOutput()
 
 	return result;
 }
+
+//-----------------------------------------------------------------------------
+//StructuredBuffer
+//-----------------------------------------------------------------------------
+StructuredBuffer::StructuredBuffer(void * inputData, UINT inputStride, UINT inputCount, UINT outputStride, UINT outputCount)
+	: CsReosource()
+	, inputData(inputData)
+	, inputStride(inputStride)
+	, inputCount(inputCount)
+	, outputStride(outputStride)
+	, outputCount(outputCount)
+{
+	if (outputStride == 0 || outputCount == 0)
+	{
+		this->outputStride = inputStride;
+		this->outputCount = inputCount;
+	}
+
+	CreateBuffer();
+}
+
+StructuredBuffer::~StructuredBuffer()
+{
+}
+
+void StructuredBuffer::CreateInput()
+{
+	ID3D11Buffer* buffer = nullptr;
+
+	D3D11_BUFFER_DESC desc;
+	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
+	desc.ByteWidth = InputByteWidth();
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+	desc.StructureByteStride = inputStride;
+	desc.Usage = D3D11_USAGE_DYNAMIC;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+	//TODO
+
+
+	input = (ID3D11Resource*)buffer;
+}
+
+void StructuredBuffer::CreateSRV()
+{
+}
+
+void StructuredBuffer::CreateOutput()
+{
+}
+
+void StructuredBuffer::CreateUAV()
+{
+}
+
+void StructuredBuffer::CopyToInput(void * data)
+{
+}
+
+void StructuredBuffer::CopyFromOutput(void * data)
+{
+}

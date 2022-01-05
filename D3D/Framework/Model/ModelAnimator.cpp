@@ -17,7 +17,7 @@ ModelAnimator::ModelAnimator(Shader * shader)
 		sComputeWorld = computeShader->AsMatrix("World");
 
 		sComputeFrameBuffer = computeShader->AsConstantBuffer("CB_AnimationFrame");
-		sComputeBlendBuffer = computeShader->AsConstantBuffer("CB_BlendFrame");
+		sComputeBlendBuffer = computeShader->AsConstantBuffer("CB_BlendingFrame");
 		sComputeTransformSRV = computeShader->AsSRV("TransformsMap");
 
 		computeBoneBuffer = new StructuredBuffer(nullptr, sizeof(Matrix), MAX_MODEL_TRANSFORMS, sizeof(Matrix), MAX_MODEL_TRANSFORMS);
@@ -75,6 +75,8 @@ void ModelAnimator::Update()
 
 		sComputeInputBoneBuffer->SetResource(computeBoneBuffer->SRV());
 		sComputeOutputBoneBuffer->SetUnorderedAccessView(computeBoneBuffer->UAV());
+
+		computeShader->Dispatch(0, 0, 1, 1, 1);
 	}
 	frameTime = fmod(frameTime, (1.0f / frameRate));
 

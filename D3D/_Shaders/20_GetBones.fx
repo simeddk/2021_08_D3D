@@ -62,7 +62,6 @@ void SetAnimationWorld(inout matrix world, uint3 id)
     float4 c0, c1, c2, c3; //->이 4개로 curr를 만들거임
     float4 n0, n1, n2, n3; //->이 4개로 next를 만들거임
 
-    matrix transform = 0; //가중치가 적용된 누적 매트릭스
     matrix curr = 0, next = 0; //'현재 프레임' + '다음 프레임' 에서 정점이 변환되어야 할 트랜스폼
     matrix currAnim = 0, nextAnim = 0;
 
@@ -100,10 +99,9 @@ void SetAnimationWorld(inout matrix world, uint3 id)
         currAnim = lerp(currAnim, nextAnim, TweenFrames.TweenTime);
     }
 
-    world = mul(transform, World);
+    world = mul(currAnim, World);
 }
 
-//TODO
 struct BlendDesc
 {
     uint Mode;
@@ -118,57 +116,72 @@ cbuffer CB_BlendingFrame
     BlendDesc BlendingFrames;
 }
 
-void SetBlendingWorld(inout matrix world, VertexModel input)
+void SetBlendingWorld(inout matrix world, uint3 id)
 {
-    //Skin 정보 읽어오기
-    float indices[4] = { input.BlendIndices.x, input.BlendIndices.y, input.BlendIndices.z, input.BlendIndices.w };
-    float weights[4] = { input.BlendWeights.x, input.BlendWeights.y, input.BlendWeights.z, input.BlendWeights.w };
-
     float4 c0, c1, c2, c3; //->이 4개로 curr를 만들거임
     float4 n0, n1, n2, n3; //->이 4개로 next를 만들거임
 
-    matrix transform = 0; //가중치가 적용된 누적 매트릭스
     matrix curr = 0;
     matrix next = 0;
     matrix anim = 0;
     matrix currAnim[3];
 
-	[unroll(4)]
-    for (int i = 0; i < 4; i++)
+	
+	[unroll(3)]
+    for (int k = 0; k < 3; k++)
     {
-		[unroll(3)]
-        for (int k = 0; k < 3; k++)
-        {
-            c0 = TransformsMap.Load(int4(indices[i] * 4 + 0, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
-            c1 = TransformsMap.Load(int4(indices[i] * 4 + 1, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
-            c2 = TransformsMap.Load(int4(indices[i] * 4 + 2, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
-            c3 = TransformsMap.Load(int4(indices[i] * 4 + 3, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
-            curr = matrix(c0, c1, c2, c3);
+        c0 = TransformsMap.Load(int4(id.x * 4 + 0, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
+        c1 = TransformsMap.Load(int4(id.x * 4 + 1, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
+        c2 = TransformsMap.Load(int4(id.x * 4 + 2, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
+        c3 = TransformsMap.Load(int4(id.x * 4 + 3, BlendingFrames.Clip[k].CurrFrame, BlendingFrames.Clip[k].Clip, 0));
+        curr = matrix(c0, c1, c2, c3);
 
-            n0 = TransformsMap.Load(int4(indices[i] * 4 + 0, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
-            n1 = TransformsMap.Load(int4(indices[i] * 4 + 1, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
-            n2 = TransformsMap.Load(int4(indices[i] * 4 + 2, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
-            n3 = TransformsMap.Load(int4(indices[i] * 4 + 3, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
-            next = matrix(n0, n1, n2, n3);
+        n0 = TransformsMap.Load(int4(id.x * 4 + 0, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
+        n1 = TransformsMap.Load(int4(id.x * 4 + 1, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
+        n2 = TransformsMap.Load(int4(id.x * 4 + 2, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
+        n3 = TransformsMap.Load(int4(id.x * 4 + 3, BlendingFrames.Clip[k].NextFrame, BlendingFrames.Clip[k].Clip, 0));
+        next = matrix(n0, n1, n2, n3);
 
-            currAnim[k] = lerp(curr, next, BlendingFrames.Clip[k].Time);
-        }
-
-        float alpha = BlendingFrames.Alpha;
-        int clipIndex[2] = { 0, 1 };
-
-        if (alpha > 1)
-        {
-            clipIndex[0] = 1;
-            clipIndex[1] = 2;
-            alpha -= 1.0f;
-        }
-
-        anim = lerp(currAnim[clipIndex[0]], currAnim[clipIndex[1]], alpha);
-
-        transform += mul(weights[i], anim);
-
+        currAnim[k] = lerp(curr, next, BlendingFrames.Clip[k].Time);
     }
 
-    world = mul(transform, world);
+    float alpha = BlendingFrames.Alpha;
+    int clipIndex[2] = { 0, 1 };
+
+    if (alpha > 1)
+    {
+        clipIndex[0] = 1;
+        clipIndex[1] = 2;
+        alpha -= 1.0f;
+    }
+
+    anim = lerp(currAnim[clipIndex[0]], currAnim[clipIndex[1]], alpha);
+
+    world = mul(anim, world);
+}
+
+[numthreads(MAX_MODEL_TRANSFORMS, 1, 1)]
+void CS(uint3 id : SV_GroupThreadID)
+{
+    matrix world = World;
+
+    if (BlendingFrames.Mode == 0)
+        SetAnimationWorld(world, id); //Tween
+    else
+        SetBlendingWorld(world, id); //Blend
+
+    world = mul(InputBones[id.x].Transform, world);
+
+    OutputBones[id.x].Transform = world;
+}
+
+technique11 T0
+{
+    pass P0
+    {
+        SetVertexShader(NULL);
+        SetPixelShader(NULL);
+
+        SetComputeShader(CompileShader(cs_5_0, CS()));
+    }
 }

@@ -125,6 +125,9 @@
     <ClCompile Include="Objects\Render2D.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Collider.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -252,6 +255,9 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Render2D.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Collider.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

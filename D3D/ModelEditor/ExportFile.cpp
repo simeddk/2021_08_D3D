@@ -8,6 +8,7 @@ void ExportFile::Initialize()
 	//Kachujin();
 	//Tower();
 	//Airplane();
+	//Weapons();
 }
 
 void ExportFile::Tank()
@@ -74,4 +75,34 @@ void ExportFile::Airplane()
 	conv->ExportMaterial(L"B787/Airplane");
 
 	SafeDelete(conv);
+}
+
+void ExportFile::Weapons()
+{
+	vector<wstring> names;
+	names.push_back(L"Cutter.FBX");
+	names.push_back(L"Cutter2.FBX");
+	names.push_back(L"Dagger_epic.FBX");
+	names.push_back(L"Dagger_small.FBX");
+	names.push_back(L"Katana.FBX");
+	names.push_back(L"LongArrow.obj");
+	names.push_back(L"LongBow.obj");
+	names.push_back(L"Rapier.FBX");
+	names.push_back(L"Sword.FBX");
+	names.push_back(L"Sword_epic.FBX");
+	names.push_back(L"Sword2.FBX");
+
+	for (wstring name : names)
+	{
+		Converter* conv = new Converter();
+		conv->ReadFile(L"Weapon/" + name);
+
+		String::Replace(&name, L".FBX", L"");
+		String::Replace(&name, L".obj", L"");
+
+		conv->ExportMesh(L"Weapon/" + name);
+		conv->ExportMaterial(L"Weapon/" + name, false);
+
+		SafeDelete(conv);
+	}
 }

@@ -9,6 +9,21 @@ ModelAnimator::ModelAnimator(Shader * shader)
 
 	frameBuffer = new ConstantBuffer(&tweenDesc, sizeof(TweenDesc));
 	blendBuffer = new ConstantBuffer(&blendDesc, sizeof(BlendDesc));
+
+	//Create ComputeShader
+	{
+		computeShader = new Shader(L"20_GetBones.fxo");
+
+		sComputeWorld = computeShader->AsMatrix("World");
+
+		sComputeFrameBuffer = computeShader->AsConstantBuffer("CB_AnimationFrame");
+		sComputeBlendBuffer = computeShader->AsConstantBuffer("CB_BlendFrame");
+		sComputeTransformSRV = computeShader->AsSRV("TransformsMap");
+
+		computeBoneBuffer = new StructuredBuffer(nullptr, sizeof(Matrix), MAX_MODEL_TRANSFORMS, sizeof(Matrix), MAX_MODEL_TRANSFORMS);
+		sComputeInputBoneBuffer = computeShader->AsSRV("InputBones"); //CS input
+		sComputeOutputBoneBuffer = computeShader->AsUAV("OutputBones"); //CS output
+	}
 }
 
 ModelAnimator::~ModelAnimator()
@@ -22,31 +37,23 @@ ModelAnimator::~ModelAnimator()
 
 	SafeDelete(frameBuffer);
 	SafeDelete(blendBuffer);
+
+	SafeDelete(computeShader);
+	SafeDelete(computeBoneBuffer);
 }
 
 void ModelAnimator::Update()
 {
-	////ImGui Test
-	//{
-	//	//Clip Index
-	//	ImGui::Spacing();
-	//	ImGui::Text("Clip");
-	//	ImGui::Separator();
-	//	ModelClip* clip = model->ClipByIndex(keyFrameDesc.Clip);
-	//	ImGui::InputInt("Clip Index", &keyFrameDesc.Clip);
-	//	keyFrameDesc.Clip %= model->ClipCount();
-
-	//	//KeyFrame 
-	//	ImGui::Text("Frame");
-	//	ImGui::Separator();
-	//	ImGui::SliderInt("CurrFrame", (int*)&keyFrameDesc.CurrFrame, 0, clip->FrameCount() - 1);
-	//	ImGui::SliderFloat("Speed", &keyFrameDesc.Speed, 0.1f, 4.0f);
-	//}
-
 	if (texture == nullptr)
 	{
 		SetShader(shader, true);
 		CreateTexture();
+
+		Matrix bones[MAX_MODEL_TRANSFORMS];
+		for (UINT i = 0; i < model->BoneCount(); i++)
+			bones[i] = model->BoneByIndex(i)->Transform();
+
+		computeBoneBuffer->CopyToInput(bones);
 	}
 
 	if (blendDesc.Mode == 0)
@@ -54,16 +61,30 @@ void ModelAnimator::Update()
 	else
 		UpdateBlendingFrame();
 
+	frameBuffer->Render();
+	blendBuffer->Render();
+
+	frameTime += Time::Delta();
+	if (frameTime > (1.0f / frameRate))
+	{
+		sComputeWorld->SetMatrix(transform->World());
+
+		sComputeFrameBuffer->SetConstantBuffer(frameBuffer->Buffer());
+		sComputeBlendBuffer->SetConstantBuffer(blendBuffer->Buffer());
+		sComputeTransformSRV->SetResource(transformSRV);
+
+		sComputeInputBoneBuffer->SetResource(computeBoneBuffer->SRV());
+		sComputeOutputBoneBuffer->SetUnorderedAccessView(computeBoneBuffer->UAV());
+	}
+	frameTime = fmod(frameTime, (1.0f / frameRate));
+
 	for (ModelMesh* mesh : model->Meshes())
 		mesh->Update();
 }
 
 void ModelAnimator::Render()
 {
-	frameBuffer->Render();
 	sFrameBuffer->SetConstantBuffer(frameBuffer->Buffer());
-
-	blendBuffer->Render();
 	sBlendBuffer->SetConstantBuffer(blendBuffer->Buffer());
 
 	sTransformSRV->SetResource(transformSRV);
@@ -220,6 +241,11 @@ void ModelAnimator::Pass(UINT val)
 {
 	for (ModelMesh* mesh : model->Meshes())
 		mesh->Pass(val);
+}
+
+void ModelAnimator::GetAttachBones(Matrix * matrix)
+{
+	computeBoneBuffer->CopyFromOutput(matrix);
 }
 
 void ModelAnimator::CreateTexture()

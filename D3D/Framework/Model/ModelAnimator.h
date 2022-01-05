@@ -28,6 +28,8 @@ public:
 	Transform* GetTransform() { return transform; }
 	Model* GetModel() { return model; }
 
+	void GetAttachBones(Matrix* matrix);
+
 private:
 	void CreateTexture();
 	void CreateClipTransform(UINT clipIndex);
@@ -116,4 +118,19 @@ private:
 	Model* model;
 
 	Transform* transform;
+
+private:
+	float frameRate = 30.0f;
+	float frameTime = 0.0f;
+
+	Shader* computeShader;
+
+	ID3DX11EffectMatrixVariable* sComputeWorld; //모델 월드 매트릭스
+	ID3DX11EffectConstantBuffer* sComputeFrameBuffer; //트윈모드용 cbuffer
+	ID3DX11EffectConstantBuffer* sComputeBlendBuffer; //블렌모드용 cbuffer
+	ID3DX11EffectShaderResourceVariable* sComputeTransformSRV; //Texture2D(bone, frame, clip -> 2DArray)
+
+	StructuredBuffer* computeBoneBuffer; //컴퓨트쉐이더 처리된 뽄 인/아웃할 버퍼
+	ID3DX11EffectShaderResourceVariable* sComputeInputBoneBuffer; //..를 SRV로 보내줄 파람
+	ID3DX11EffectUnorderedAccessViewVariable* sComputeOutputBoneBuffer; //..를 UAV로 받을 파람
 };

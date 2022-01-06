@@ -24,10 +24,11 @@
 #include "TextureBufferDemo.h"
 #include "ViewportDemo.h"
 #include "ProjectDemo.h"
+#include "UnprojectDemo.h"
 
 void Main::Initialize()
 {
-	Push(new ProjectDemo());
+	Push(new UnprojectDemo());
 }
 
 

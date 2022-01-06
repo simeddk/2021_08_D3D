@@ -42,3 +42,23 @@ Vector3 Viewport::Project(Vector3 & source, Matrix & W, Matrix & V, Matrix & P)
 
 	return result;
 }
+
+Vector3 Viewport::Unproject(Vector3 & source, Matrix & W, Matrix & V, Matrix & P)
+{
+	Vector3 position = source;
+	Vector3 result;
+
+	result.x = ((position.x - x) / width) * 2.0f - 1.0f;
+	result.y = (((position.y - y) / height) * 2.0f + -1.0f) * -1.0f;
+	result.z = (position.z - minDepth) / (maxDepth - minDepth);
+
+	Matrix wvp = W * V * P;
+	D3DXMatrixInverse(&wvp, nullptr, &wvp);
+	D3DXVec3TransformCoord(&result, &result, &wvp);
+	//위치 * W -> TransformMatrix
+	//W위치 * V -> W와 V의 RelativeMatrix
+	//V위치 * P -> NDC 상에서 RelativeMatrix
+
+
+	return result;
+}

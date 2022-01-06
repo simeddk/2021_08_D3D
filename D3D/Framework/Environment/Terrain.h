@@ -12,6 +12,7 @@ public:
 	void BaseMap(wstring file);
 	float GetHeight(Vector3& position);
 	float GetHeight_Raycast(Vector3& position);
+	Vector3 GetCursorPosition();
 
 private:
 	void CreateVertexData();

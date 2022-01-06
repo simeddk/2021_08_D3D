@@ -135,7 +135,7 @@ Vector3 Transform::Right()
 
 void Transform::World(Matrix & matrix)
 {
-	Math::MatrixDecompose(bufferDesc.World, scale, rotation, position);
+	Math::MatrixDecompose(matrix, scale, rotation, position);
 	
 	bufferDesc.World = matrix;
 }

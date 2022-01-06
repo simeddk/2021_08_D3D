@@ -66,6 +66,9 @@
     <ClCompile Include="ViewportDemo.cpp">
       <Filter>Project</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectDemo.cpp">
+      <Filter>Project</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -131,6 +134,9 @@
       <Filter>ComputeShader</Filter>
     </ClInclude>
     <ClInclude Include="ViewportDemo.h">
+      <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectDemo.h">
       <Filter>Project</Filter>
     </ClInclude>
   </ItemGroup>

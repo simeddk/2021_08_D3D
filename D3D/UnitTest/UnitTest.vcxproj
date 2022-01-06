@@ -79,7 +79,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>./;../../_Libraries/;../Framework/</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -138,6 +138,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshDemo.cpp" />
     <ClCompile Include="MultiWorldDemo.cpp" />
+    <ClCompile Include="ProjectDemo.cpp" />
     <ClCompile Include="RawBufferDemo.cpp" />
     <ClCompile Include="RectDemo.cpp" />
     <ClCompile Include="SamplerStateDemo.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="MeshDemo.h" />
     <ClInclude Include="MultiWorldDemo.h" />
+    <ClInclude Include="ProjectDemo.h" />
     <ClInclude Include="RawBufferDemo.h" />
     <ClInclude Include="RectDemo.h" />
     <ClInclude Include="SamplerStateDemo.h" />

@@ -27,3 +27,18 @@ void Viewport::Set(float width, float height, float x, float y, float minDepth, 
 
 	RSSetViewport();
 }
+
+Vector3 Viewport::Project(Vector3 & source, Matrix & W, Matrix & V, Matrix & P)
+{
+	Vector3 position = source;
+	Vector3 result;
+
+	Matrix wvp = W * V * P;
+	D3DXVec3TransformCoord(&result, &position, &wvp); //position * wvp
+
+	result.x = ((result.x + 1) * 0.5f) * width + x;
+	result.y = ((-result.y + 1) * 0.5f) * height + y;
+	result.z = (result.z * (maxDepth - minDepth)) + minDepth;
+
+	return result;
+}

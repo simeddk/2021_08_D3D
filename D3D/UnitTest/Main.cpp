@@ -23,10 +23,11 @@
 #include "RawBufferDemo.h"
 #include "TextureBufferDemo.h"
 #include "ViewportDemo.h"
+#include "ProjectDemo.h"
 
 void Main::Initialize()
 {
-	Push(new ViewportDemo());
+	Push(new ProjectDemo());
 }
 
 

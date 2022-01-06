@@ -12,6 +12,9 @@ public:
 	float GetWidth() { return width; }
 	float GetHeight() { return height; }
 
+	//3D(WVP) -> 2D(SS)
+	Vector3 Project(Vector3& source, Matrix& W, Matrix& V, Matrix& P);
+
 private:
 	float x, y;
 	float width, height;

@@ -7,8 +7,12 @@
       <Filter>Converter</Filter>
     </ClCompile>
     <ClCompile Include="ExportFile.cpp" />
-    <ClCompile Include="ModelDemo.cpp" />
-    <ClCompile Include="AnimationDemo.cpp" />
+    <ClCompile Include="AnimationDemo.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelDemo.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -18,12 +22,19 @@
     </ClInclude>
     <ClInclude Include="ExportFile.h" />
     <ClInclude Include="Types.h" />
-    <ClInclude Include="ModelDemo.h" />
-    <ClInclude Include="AnimationDemo.h" />
+    <ClInclude Include="AnimationDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Converter">
       <UniqueIdentifier>{e86b988c-043a-45b1-886a-da665c385b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo">
+      <UniqueIdentifier>{04ae1941-16a5-46b6-9a0e-7c4e1d225286}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

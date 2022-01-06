@@ -13,7 +13,6 @@ void ModelDemo::Initialize()
 	Airplane();
 
 	sky = new CubeSky(L"Environment/SnowCube1024.dds");
-	sky->Pass(2);
 
 	planeShader = new Shader(L"12_Mesh.fxo");
 	plane = new MeshPlane(planeShader, 6, 6);

@@ -22,10 +22,11 @@
 #include "SocketDemo.h"
 #include "RawBufferDemo.h"
 #include "TextureBufferDemo.h"
+#include "ViewportDemo.h"
 
 void Main::Initialize()
 {
-	Push(new TextureBufferDemo());
+	Push(new ViewportDemo());
 }
 
 

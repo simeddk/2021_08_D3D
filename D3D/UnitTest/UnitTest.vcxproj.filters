@@ -63,6 +63,9 @@
     <ClCompile Include="TextureBufferDemo.cpp">
       <Filter>ComputeShader</Filter>
     </ClCompile>
+    <ClCompile Include="ViewportDemo.cpp">
+      <Filter>Project</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -127,6 +130,9 @@
     <ClInclude Include="TextureBufferDemo.h">
       <Filter>ComputeShader</Filter>
     </ClInclude>
+    <ClInclude Include="ViewportDemo.h">
+      <Filter>Project</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Vertex">
@@ -149,6 +155,9 @@
     </Filter>
     <Filter Include="ComputeShader">
       <UniqueIdentifier>{6cd484e0-6690-4bc5-b7a7-55e9873ec01b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project">
+      <UniqueIdentifier>{bc58c388-bd92-44d1-80a3-d18d86c74446}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

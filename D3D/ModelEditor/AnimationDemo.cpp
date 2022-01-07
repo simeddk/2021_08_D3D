@@ -55,6 +55,7 @@ void AnimationDemo::Update()
 		}
 	}
 
+
 	if (kachujin != nullptr)
 	{
 		kachujin->Update();

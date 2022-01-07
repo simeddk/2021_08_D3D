@@ -72,6 +72,12 @@
     <ClCompile Include="UnprojectDemo.cpp">
       <Filter>Project</Filter>
     </ClCompile>
+    <ClCompile Include="NoInstanceDemo.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="InstanceDemo.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -144,6 +150,12 @@
     </ClInclude>
     <ClInclude Include="UnprojectDemo.h">
       <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="NoInstanceDemo.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceDemo.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

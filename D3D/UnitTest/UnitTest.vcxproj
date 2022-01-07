@@ -135,9 +135,11 @@
     <ClCompile Include="GetHeightDemo.cpp" />
     <ClCompile Include="GridDemo.cpp" />
     <ClCompile Include="IndexBufferDemo.cpp" />
+    <ClCompile Include="InstanceDemo.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshDemo.cpp" />
     <ClCompile Include="MultiWorldDemo.cpp" />
+    <ClCompile Include="NoInstanceDemo.cpp" />
     <ClCompile Include="ProjectDemo.cpp" />
     <ClCompile Include="RawBufferDemo.cpp" />
     <ClCompile Include="RectDemo.cpp" />
@@ -164,9 +166,11 @@
     <ClInclude Include="GetHeightDemo.h" />
     <ClInclude Include="GridDemo.h" />
     <ClInclude Include="IndexBufferDemo.h" />
+    <ClInclude Include="InstanceDemo.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MeshDemo.h" />
     <ClInclude Include="MultiWorldDemo.h" />
+    <ClInclude Include="NoInstanceDemo.h" />
     <ClInclude Include="ProjectDemo.h" />
     <ClInclude Include="RawBufferDemo.h" />
     <ClInclude Include="RectDemo.h" />

@@ -25,10 +25,12 @@
 #include "ViewportDemo.h"
 #include "ProjectDemo.h"
 #include "UnprojectDemo.h"
+#include "NoInstanceDemo.h"
+#include "InstanceDemo.h"
 
 void Main::Initialize()
 {
-	Push(new UnprojectDemo());
+	Push(new InstanceDemo());
 }
 
 

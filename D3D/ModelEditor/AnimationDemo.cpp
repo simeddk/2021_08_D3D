@@ -7,17 +7,10 @@ void AnimationDemo::Initialize()
 	Context::Get()->GetCamera()->RotationDegree(12, 0, 0);
 	Context::Get()->GetCamera()->Position(2, 4, -12);
 	
-	shader = new Shader(L"16_Animation.fxo");
-	weaponShader = new Shader(L"15_Model.fxo");
+	shader = new Shader(L"21_Framework.fxo");
 
 	Kachujin();
-
-	sky = new CubeSky(L"Environment/SnowCube1024.dds");
-
-	planeShader = new Shader(L"12_Mesh.fxo");
-	plane = new MeshPlane(planeShader, 6, 6);
-	plane->GetTransform()->Scale(12, 1, 12);
-	plane->DiffuseMap(L"Floor.png");
+	
 }
 
 void AnimationDemo::Destroy()
@@ -25,14 +18,6 @@ void AnimationDemo::Destroy()
 	SafeDelete(shader);
 	SafeDelete(kachujin);
 	SafeDelete(colliderObject);
-	
-	SafeDelete(sky);
-	SafeDelete(planeShader);
-	SafeDelete(plane);
-
-	SafeDelete(weapon);
-	SafeDelete(weaponShader);
-	SafeDelete(weaponInitTransform);
 }
 
 void AnimationDemo::Update()
@@ -68,40 +53,13 @@ void AnimationDemo::Update()
 			if (ImGui::Button("Apply"))
 				kachujin->PlayBlendMode(0, 1, 2);
 		}
-		
-
 	}
 
-
-	//램버트 테스트
-	{
-		static Vector3 LightDirection = Vector3(-1, -1, +1);
-		ImGui::SliderFloat3("LightDirection", LightDirection, -1, +1);
-		shader->AsVector("LightDirection")->SetFloatVector(LightDirection);
-		planeShader->AsVector("LightDirection")->SetFloatVector(LightDirection);
-	}
-
-	//와이어프레임 테스트
-	{
-		static UINT pass = 0;
-		ImGui::InputInt("Pass", (int *)&pass);
-		pass %= 2;
-		kachujin->Pass(pass);
-	}
-
-	sky->Update();
-	plane->Update();
-
-	
 	if (kachujin != nullptr)
 	{
 		kachujin->Update();
 
 		kachujin->GetAttachBones(bones);
-
-		Transform* weaponTransform = weapon->GetTransform();
-		weaponTransform->World(weaponInitTransform->World() * bones[40]);
-		weapon->Update();
 
 		colliderObject->World->World(bones[40]);
 		colliderObject->Collision->Update();
@@ -110,15 +68,12 @@ void AnimationDemo::Update()
 
 void AnimationDemo::Render()
 {
-	sky->Render();
-	plane->Render();
-
-	
 	if (kachujin != nullptr)
 	{
+		kachujin->Pass(2);
 		kachujin->Render();
+
 		colliderObject->Collision->Render();
-		weapon->Render();
 	}
 }
 
@@ -135,19 +90,10 @@ void AnimationDemo::Kachujin()
 	kachujin->ReadClip(L"Kachujin/Uprock");
 
 	kachujin->GetTransform()->Scale(0.025f, 0.025f, 0.025f);
-	kachujin->GetTransform()->Position(0, 0, 0);
+	kachujin->GetTransform()->Position(5, 0, 0);
 
 	colliderObject = new ColliderObject();
 	colliderObject->Init->Position(-2.9f, 1.45f, -50.0f);
 	colliderObject->Init->Scale(5, 5, 75);
 	colliderObject->Init->Rotation(0, 0, 1);
-
-	weapon = new ModelRender(weaponShader);
-	weapon->ReadMesh(L"Weapon/Sword");
-	weapon->ReadMaterial(L"Weapon/Sword");
-
-	weaponInitTransform = new Transform();
-	weaponInitTransform->Position(-2.9f, 1.45f, -6.45f);
-	weaponInitTransform->Scale(0.5f, 0.5f, 0.75f);
-	weaponInitTransform->Rotation(0, 0, 1);
 }

@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{84
 		_Shaders\00_DebugLine.fx = _Shaders\00_DebugLine.fx
 		_Shaders\00_Global.fx = _Shaders\00_Global.fx
 		_Shaders\00_Light.fx = _Shaders\00_Light.fx
+		_Shaders\00_Render.fx = _Shaders\00_Render.fx
 		_Shaders\01_Line.fx = _Shaders\01_Line.fx
 		_Shaders\02_LineColor.fx = _Shaders\02_LineColor.fx
 		_Shaders\03_MultiLine.fx = _Shaders\03_MultiLine.fx
@@ -35,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{84
 		_Shaders\18_TextureBuffer.fx = _Shaders\18_TextureBuffer.fx
 		_Shaders\19_Render2D.fx = _Shaders\19_Render2D.fx
 		_Shaders\20_GetBones.fx = _Shaders\20_GetBones.fx
+		_Shaders\21_Framework.fx = _Shaders\21_Framework.fx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}"

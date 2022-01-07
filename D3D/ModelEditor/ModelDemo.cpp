@@ -6,7 +6,7 @@ void ModelDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(7, 2, 0);
 	Context::Get()->GetCamera()->Position(1, 5, -14);
-	shader = new Shader(L"15_Model.fxo");
+	shader = new Shader(L"21_Framework.fxo");
 
 	Tank();
 	Tower();
@@ -14,8 +14,7 @@ void ModelDemo::Initialize()
 
 	sky = new CubeSky(L"Environment/SnowCube1024.dds");
 
-	planeShader = new Shader(L"12_Mesh.fxo");
-	plane = new MeshPlane(planeShader, 6, 6);
+	plane = new MeshPlane(shader, 6, 6);
 	plane->GetTransform()->Scale(12, 1, 12);
 	plane->DiffuseMap(L"Floor.png");
 }
@@ -28,7 +27,6 @@ void ModelDemo::Destroy()
 	SafeDelete(airplane);
 	
 	SafeDelete(sky);
-	SafeDelete(planeShader);
 	SafeDelete(plane);
 }
 
@@ -38,34 +36,7 @@ void ModelDemo::Update()
 	static Vector3 LightDirection = Vector3(-1, -1, +1);
 	ImGui::SliderFloat3("LightDirection", LightDirection, -1, +1);
 	shader->AsVector("LightDirection")->SetFloatVector(LightDirection);
-	planeShader->AsVector("LightDirection")->SetFloatVector(LightDirection);
-
-	//와이어프레임 테스트
-	static UINT pass = 0;
-	ImGui::InputInt("Pass", (int *)&pass);
-	pass %= 2;
-	tank->Pass(pass);
-	tower->Pass(pass);
-	airplane->Pass(pass);
-
-	//이동 테스트
-	{
-		Vector3 P;
-		tank->GetTransform()->Position(&P);
 	
-		if (Keyboard::Get()->Press(VK_UP))
-			P += Context::Get()->GetCamera()->Forward() * 20.0f * Time::Delta();
-		else if (Keyboard::Get()->Press(VK_DOWN))
-			P -= Context::Get()->GetCamera()->Forward() * 20.0f * Time::Delta();
-		if (Keyboard::Get()->Press(VK_RIGHT))
-			P += Context::Get()->GetCamera()->Right() * 20.0f * Time::Delta();
-		else if (Keyboard::Get()->Press(VK_LEFT))
-			P -= Context::Get()->GetCamera()->Right() * 20.0f * Time::Delta();
-	
-		P.y = 0.0f;
-		tank->GetTransform()->Position(P);
-	}
-
 	sky->Update();
 	plane->Update();
 
@@ -82,16 +53,27 @@ void ModelDemo::Update()
 void ModelDemo::Render()
 {
 	sky->Render();
+
+	plane->Pass(0);
 	plane->Render();
 
 	if (tank != nullptr)
+	{
+		tank->Pass(1);
 		tank->Render();
+	}
 	
 	if (tower != nullptr)
+	{
+		tower->Pass(1);
 		tower->Render();
+	}
 
 	if (airplane != nullptr)
+	{
+		airplane->Pass(1);
 		airplane->Render();
+	}
 }
 
 void ModelDemo::Tank()

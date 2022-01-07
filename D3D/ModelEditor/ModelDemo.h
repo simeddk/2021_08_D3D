@@ -24,6 +24,5 @@ private:
 	ModelRender* airplane = nullptr;
 
 	CubeSky* sky;
-	Shader* planeShader;
 	MeshPlane* plane;
 };

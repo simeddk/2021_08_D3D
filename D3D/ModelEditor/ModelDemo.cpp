@@ -12,11 +12,6 @@ void ModelDemo::Initialize()
 	Tower();
 	Airplane();
 
-	sky = new CubeSky(L"Environment/SnowCube1024.dds");
-
-	plane = new MeshPlane(shader, 6, 6);
-	plane->GetTransform()->Scale(12, 1, 12);
-	plane->DiffuseMap(L"Floor.png");
 }
 
 void ModelDemo::Destroy()
@@ -25,9 +20,6 @@ void ModelDemo::Destroy()
 	SafeDelete(tank);
 	SafeDelete(tower);
 	SafeDelete(airplane);
-	
-	SafeDelete(sky);
-	SafeDelete(plane);
 }
 
 void ModelDemo::Update()
@@ -37,9 +29,7 @@ void ModelDemo::Update()
 	ImGui::SliderFloat3("LightDirection", LightDirection, -1, +1);
 	shader->AsVector("LightDirection")->SetFloatVector(LightDirection);
 	
-	sky->Update();
-	plane->Update();
-
+	
 	if (tank != nullptr)
 		tank->Update();
 	
@@ -52,11 +42,6 @@ void ModelDemo::Update()
 
 void ModelDemo::Render()
 {
-	sky->Render();
-
-	plane->Pass(0);
-	plane->Render();
-
 	if (tank != nullptr)
 	{
 		tank->Pass(1);

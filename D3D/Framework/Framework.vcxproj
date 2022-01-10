@@ -29,6 +29,7 @@
     <ClCompile Include="Meshes\MeshCylinder.cpp" />
     <ClCompile Include="Meshes\MeshPlane.cpp" />
     <ClCompile Include="Meshes\MeshQuad.cpp" />
+    <ClCompile Include="Meshes\MeshRender.cpp" />
     <ClCompile Include="Meshes\MeshSphere.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\ModelAnimator.cpp" />
@@ -36,7 +37,6 @@
     <ClCompile Include="Model\ModelMesh.cpp" />
     <ClCompile Include="Model\ModelRender.cpp" />
     <ClCompile Include="Objects\Collider.cpp" />
-    <ClCompile Include="Objects\CubeMap.cpp" />
     <ClCompile Include="Objects\Render2D.cpp" />
     <ClCompile Include="Renders\Buffers.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
@@ -74,6 +74,7 @@
     <ClInclude Include="Meshes\MeshCylinder.h" />
     <ClInclude Include="Meshes\MeshPlane.h" />
     <ClInclude Include="Meshes\MeshQuad.h" />
+    <ClInclude Include="Meshes\MeshRender.h" />
     <ClInclude Include="Meshes\MeshSphere.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\ModelAnimator.h" />
@@ -81,7 +82,6 @@
     <ClInclude Include="Model\ModelMesh.h" />
     <ClInclude Include="Model\ModelRender.h" />
     <ClInclude Include="Objects\Collider.h" />
-    <ClInclude Include="Objects\CubeMap.h" />
     <ClInclude Include="Objects\Render2D.h" />
     <ClInclude Include="Renders\Buffers.h" />
     <ClInclude Include="Renders\Context.h" />

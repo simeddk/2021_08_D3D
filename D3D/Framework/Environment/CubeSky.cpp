@@ -4,7 +4,8 @@
 CubeSky::CubeSky(wstring file)
 {
 	shader = new Shader(L"14_CubeSky.fx");
-	sphere = new MeshSphere(shader, 0.5f);
+	sphere = new MeshRender(shader, new MeshSphere(0.5f));
+	sphere->AddTransform();
 
 	file = L"../../_Textures/" + file;
 	Check(D3DX11CreateShaderResourceViewFromFile
@@ -27,7 +28,7 @@ void CubeSky::Update()
 {
 	Vector3 cameraPosition;
 	Context::Get()->GetCamera()->Position(&cameraPosition);
-	sphere->GetTransform()->Position(cameraPosition);
+	sphere->GetTransform(0)->Position(cameraPosition);
 
 	sphere->Update();
 }

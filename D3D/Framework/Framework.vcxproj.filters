@@ -86,9 +86,6 @@
     <ClCompile Include="Meshes\MeshSphere.cpp">
       <Filter>Meshes</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CubeMap.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Environment\CubeSky.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
@@ -127,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="Objects\Collider.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Meshes\MeshRender.cpp">
+      <Filter>Meshes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +218,6 @@
     <ClInclude Include="Meshes\MeshSphere.h">
       <Filter>Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CubeMap.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Environment\CubeSky.h">
       <Filter>Environment</Filter>
     </ClInclude>
@@ -259,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="Objects\Collider.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Meshes\MeshRender.h">
+      <Filter>Meshes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

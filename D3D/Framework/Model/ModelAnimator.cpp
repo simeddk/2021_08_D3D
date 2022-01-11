@@ -152,7 +152,7 @@ void ModelAnimator::Render()
 
 	for (ModelMesh* mesh : model->Meshes())
 	{
-		mesh->Render();
+		mesh->Render(transforms.size());
 	}
 }
 
@@ -322,6 +322,8 @@ void ModelAnimator::SetColor(UINT instance, Color & color)
 void ModelAnimator::GetAttachBones(UINT instance, Matrix * matrix)
 {
 	memcpy(matrix, attachBones[instance], sizeof(Matrix) * MAX_MODEL_TRANSFORMS);
+
+	int a = 0;
 }
 
 void ModelAnimator::CreateTexture()

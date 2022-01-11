@@ -89,10 +89,15 @@ void AnimationDemo::Render()
 {
 	if (kachujin != nullptr)
 	{
+		UINT count = kachujin->GetTransformCount();
+		for (UINT i = 0; i < count; i++)
+			colliderObject[i]->Collision->Render();
+		
 		kachujin->Pass(2);
 		kachujin->Render();
 
-		//colliderObject->Collision->Render();
+		weapon->Pass(1);
+		weapon->Render();
 	}
 }
 
@@ -114,6 +119,8 @@ void AnimationDemo::Kachujin()
 		transform->Scale(0.01f, 0.01f, 0.01f);
 		transform->Position(x, 0, -5);
 	}
+
+
 	kachujin->UpdateSubResource();
 
 	UINT count = kachujin->GetTransformCount();

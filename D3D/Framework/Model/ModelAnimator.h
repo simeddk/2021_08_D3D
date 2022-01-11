@@ -87,7 +87,7 @@ private:
 private:
 	struct TweenDesc
 	{
-		float TakeTime = 1.0f; //두 동작 간 전환이 이뤄질 '요구'시간
+		float TakeTime = 0.1f; //두 동작 간 전환이 이뤄질 '요구'시간
 		float TweenTime = 0.0f; //바뀌는 구간 내에서 진행 중인 런닝타임
 		float ChangeTime = 0.0; //델타타임 누적
 		float Padding;

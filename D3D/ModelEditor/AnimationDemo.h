@@ -19,6 +19,9 @@ private:
 	Shader* shader;
 	ModelAnimator* kachujin = nullptr;
 
-	ColliderObject* colliderObject;
+	ColliderObject** colliderObject;
 	Matrix bones[MAX_MODEL_TRANSFORMS];
+
+	Transform* weaponInitTransform;
+	ModelRender* weapon;
 };

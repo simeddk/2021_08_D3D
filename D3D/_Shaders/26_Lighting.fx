@@ -5,11 +5,12 @@
 
 float4 PS(MeshOutput input) : SV_Target
 {
-    float3 normal = normalize(input.Normal);
-    float lambert = dot(normal, -GlobalLight.Direction);
-    float4 diffuse = DiffuseMap.Sample(LinearSampler, input.Uv);
+    Texture(Material.Diffuse, DiffuseMap, input.Uv);
     
-	return diffuse * lambert + input.Color;
+    MaterialDesc output;
+    ComputePhong(output, input.Normal, input.wPosition);
+
+    return float4(MaterialToColor(output), 1.0f);
 }
 
 technique11 T0

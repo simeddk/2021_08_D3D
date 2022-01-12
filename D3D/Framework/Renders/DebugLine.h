@@ -63,7 +63,8 @@ private:
 private:
 	Shader* shader;
 
-	Matrix world;
+	class PerFrame* perFrame;
+	class Transform* transform;
 
 	ID3D11Buffer* vertexBuffer;
 	VertexColor* vertices;

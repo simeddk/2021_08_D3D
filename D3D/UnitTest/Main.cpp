@@ -1,36 +1,13 @@
 #include "stdafx.h"
 #include "Main.h"
 #include "Systems/Window.h"
-#include "VertexLineDemo.h"
-#include "VertexLineColorDemo.h"
-#include "VertexMultiLineDemo.h"
-#include "TriangleDemo.h"
-#include "RectDemo.h"
-#include "WorldDemo.h"
-#include "MultiWorldDemo.h"
-#include "IndexBufferDemo.h"
-#include "IndexBufferDemo.h"
-#include "GridDemo.h"
-#include "CubeDemo.h"
-#include "TextureSampleDemo.h"
-#include "SamplerStateDemo.h"
-#include "TerrainDemo.h"
-#include "GetHeightDemo.h"
-#include "MeshDemo.h"
-#include "CubeMapDemo.h"
-#include "ThreadDemo.h"
-#include "SocketDemo.h"
-#include "RawBufferDemo.h"
-#include "TextureBufferDemo.h"
-#include "ViewportDemo.h"
-#include "ProjectDemo.h"
-#include "UnprojectDemo.h"
-#include "NoInstanceDemo.h"
-#include "InstanceDemo.h"
+#include "FrameworkDemo.h"
+#include "LightingDemo.h"
+
 
 void Main::Initialize()
 {
-	Push(new InstanceDemo());
+	Push(new LightingDemo());
 }
 
 

@@ -60,10 +60,8 @@ void DebugLine::RenderLine(Vector3 & start, Vector3 & end, Color & color)
 
 void DebugLine::Update()
 {
-	shader->AsMatrix("World")->SetMatrix(world);
-	shader->AsMatrix("View")->SetMatrix(Context::Get()->View());
-	shader->AsMatrix("Projection")->SetMatrix(Context::Get()->Projection());
-
+	transform->Update();
+	perFrame->Update();
 }
 
 void DebugLine::Render()
@@ -79,13 +77,15 @@ void DebugLine::Render()
 	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
+	transform->Render();
+	perFrame->Render();
+
+
 	shader->Draw(0, 0, drawCount);
 	
 	drawCount = 0;
 	ZeroMemory(vertices, sizeof(VertexColor) * MAX_DEBUG_LINE);
 }
-
-
 
 DebugLine::DebugLine()
 {
@@ -107,7 +107,8 @@ DebugLine::DebugLine()
 		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
 	}
 
-	D3DXMatrixIdentity(&world);
+	transform = new Transform(shader);
+	perFrame = new PerFrame(shader);
 }
 
 DebugLine::~DebugLine()
@@ -116,4 +117,7 @@ DebugLine::~DebugLine()
 
 	SafeDeleteArray(vertices);
 	SafeRelease(vertexBuffer);
+
+	SafeDelete(transform);
+	SafeDelete(perFrame);
 }

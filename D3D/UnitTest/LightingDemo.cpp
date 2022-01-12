@@ -43,7 +43,7 @@ void LightingDemo::Update()
 {
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Context::Get()->Direction(), -1, +1);
-	
+
 	sky->Update();
 
 	plane->Update();
@@ -62,6 +62,7 @@ void LightingDemo::Update()
 	}
 	weapon->UpdateSubResource();
 	weapon->Update();
+
 }
 
 void LightingDemo::Render()
@@ -91,17 +92,22 @@ void LightingDemo::Mesh()
 {
 	//Create Material
 	{
+		//TODO 반사벡터가 스칼라임..
 		floor = new Material(shader);
 		floor->DiffuseMap("Floor.png");
+		floor->Specular(1, 1, 1, 20);
 
 		stone = new Material(shader);
 		stone->DiffuseMap("Stones.png");
+		stone->Specular(1, 1, 1, 20);
 
 		brick = new Material(shader);
 		brick->DiffuseMap("Bricks.png");
+		brick->Specular(1, 1, 1, 20);
 
 		wall = new Material(shader);
 		wall->DiffuseMap("Wall.png");
+		wall->Specular(1, 1, 1, 20);
 	}
 
 	//Create Mesh

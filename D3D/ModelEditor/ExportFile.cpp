@@ -28,7 +28,7 @@ void ExportFile::Kachujin()
 	conv = new Converter();
 	conv->ReadFile(L"Kachujin/Mesh.fbx");
 	conv->ExportMesh(L"Kachujin/Mesh");
-	conv->ExportMaterial(L"Kachujin/Mesh");
+	conv->ExportMaterial(L"Kachujin/Mesh", false);
 	SafeDelete(conv);
 
 	conv = new Converter();
@@ -72,7 +72,7 @@ void ExportFile::Airplane()
 	Converter* conv = new Converter();
 	conv->ReadFile(L"B787/Airplane.fbx");
 	conv->ExportMesh(L"B787/Airplane");
-	conv->ExportMaterial(L"B787/Airplane");
+	conv->ExportMaterial(L"B787/Airplane", false);
 
 	SafeDelete(conv);
 }

@@ -44,6 +44,7 @@ void LightingDemo::Update()
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Context::Get()->Direction(), -1, +1);
 
+	/*
 	//스펙큘러 테스트
 	ImGui::ColorEdit3("SpecularColor", wall->Specular());
 	ImGui::ColorEdit3("SpecularColor2", brick->Specular());
@@ -60,6 +61,14 @@ void LightingDemo::Update()
 		stone->SpecularMap(L"White.png");
 	if (ImGui::Button("Stone SpecularMap"))
 		stone->SpecularMap(L"Stones_Specular.png");
+
+	//이미시브 테스트
+	static Color EmissiveColor = Color(0, 1, 1, 1);
+	ImGui::ColorEdit3("EmissiveColor", EmissiveColor);
+	ImGui::SliderFloat("EmissiveAlpha", &EmissiveColor.a, 1e-6f, 2);
+	wall->Emissive(EmissiveColor);
+	brick->Emissive(EmissiveColor);
+	*/
 
 	sky->Update();
 
@@ -118,16 +127,19 @@ void LightingDemo::Mesh()
 		stone->DiffuseMap("Stones.png");
 		stone->Specular(1, 1, 1, 20);
 		stone->SpecularMap("Stones_Specular.png");
+		stone->Emissive(0.15f, 0.15f, 0.15f, 0.3f);
 
 		brick = new Material(shader);
 		brick->DiffuseMap("Bricks.png");
 		brick->Specular(1, 1, 1, 20);
 		brick->SpecularMap("Bricks_Specular.png");
+		brick->Emissive(0.15f, 0.15f, 0.15f, 0.3f);
 
 		wall = new Material(shader);
 		wall->DiffuseMap("Wall.png");
 		wall->Specular(1, 1, 1, 20);
 		wall->SpecularMap("Wall_Specular.png");
+		wall->Emissive(0.15f, 0.15f, 0.15f, 0.3f);
 	}
 
 	//Create Mesh

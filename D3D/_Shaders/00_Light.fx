@@ -54,7 +54,7 @@ void Texture(inout float4 color, Texture2D t, float2 uv)
 
 float3 MaterialToColor(MaterialDesc result)
 {
-    return (result.Ambient + result.Diffuse + result.Specular).rgb;
+    return (result.Ambient + result.Diffuse + result.Specular + result.Emissive).rgb;
 }
 
 //-----------------------------------------------------------------------------
@@ -87,5 +87,38 @@ void ComputePhong(out MaterialDesc output, float3 normal, float3 wPosition)
         }
     }
 
+	[flatten]
+    if (Material.Emissive.a > 0.0f)
+    {
+        float NdotE = dot(normalize(normal), E);
 
+        float emissive = smoothstep(1.0f - Material.Emissive.a, 1.0f, 1.0f - NdotE);
+        output.Emissive = Material.Emissive * emissive;
+
+    }
+}
+
+void NormalMapping(float2 uv, float3 normal, float3 tangent, SamplerState samp)
+{
+    float3 map = NormalMap.Sample(samp, uv).rgb;
+
+	[flatten]
+    if (any(map.rgb) == false)
+        return;
+
+    float3 coord = map.rgb * 2.0f - 1.0f; //0~1 -> -1~1
+
+    float3 N;
+    float3 T;
+    float3 B;
+    
+    float3x3 TBN = float3x3(T, B, N);
+
+    coord = mul(coord, TBN);
+
+}
+
+void NormalMapping(float uv, float3 normal, float3 tangent)
+{
+    NormalMapping(uv, normal, tangent, LinearSampler);
 }

@@ -6,6 +6,7 @@
 float4 PS(MeshOutput input) : SV_Target
 {
     Texture(Material.Diffuse, DiffuseMap, input.Uv);
+    Texture(Material.Specular, SpecularMap, input.Uv);
     
     MaterialDesc output;
     ComputePhong(output, input.Normal, input.wPosition);

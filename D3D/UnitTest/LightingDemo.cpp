@@ -44,6 +44,23 @@ void LightingDemo::Update()
 	//·¥¹öÆ® Å×½ºÆ®
 	ImGui::SliderFloat3("LightDirection", Context::Get()->Direction(), -1, +1);
 
+	//½ºÆåÅ§·¯ Å×½ºÆ®
+	ImGui::ColorEdit3("SpecularColor", wall->Specular());
+	ImGui::ColorEdit3("SpecularColor2", brick->Specular());
+	ImGui::SliderFloat("SpecularShiness", &wall->Specular().a, 0.1f, 50.0f);
+	ImGui::SliderFloat("SpecularShiness2", &brick->Specular().a, 0.1f, 50.0f);
+
+	//½ºÆåÅ§·¯¸Ê Å×½ºÆ®
+	if (ImGui::Button("No Floor SpecularMap"))
+		floor->SpecularMap(L"White.png");
+	if (ImGui::Button("Floor SpecularMap"))
+		floor->SpecularMap(L"Floor_Specular.png");
+
+	if (ImGui::Button("No Stone SpecularMap"))
+		stone->SpecularMap(L"White.png");
+	if (ImGui::Button("Stone SpecularMap"))
+		stone->SpecularMap(L"Stones_Specular.png");
+
 	sky->Update();
 
 	plane->Update();
@@ -90,24 +107,27 @@ void LightingDemo::Render()
 
 void LightingDemo::Mesh()
 {
-	//Create Material
+	//Create Materiald
 	{
-		//TODO ¹Ý»çº¤ÅÍ°¡ ½ºÄ®¶óÀÓ..
 		floor = new Material(shader);
 		floor->DiffuseMap("Floor.png");
 		floor->Specular(1, 1, 1, 20);
+		floor->SpecularMap("Floor_Specular.png");
 
 		stone = new Material(shader);
 		stone->DiffuseMap("Stones.png");
 		stone->Specular(1, 1, 1, 20);
+		stone->SpecularMap("Stones_Specular.png");
 
 		brick = new Material(shader);
 		brick->DiffuseMap("Bricks.png");
 		brick->Specular(1, 1, 1, 20);
+		brick->SpecularMap("Bricks_Specular.png");
 
 		wall = new Material(shader);
 		wall->DiffuseMap("Wall.png");
 		wall->Specular(1, 1, 1, 20);
+		wall->SpecularMap("Wall_Specular.png");
 	}
 
 	//Create Mesh

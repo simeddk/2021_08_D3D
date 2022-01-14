@@ -128,6 +128,9 @@
     <ClCompile Include="Meshes\MeshRender.cpp">
       <Filter>Meshes</Filter>
     </ClCompile>
+    <ClCompile Include="Renders\Lighting.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="Meshes\MeshRender.h">
       <Filter>Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Lighting.h">
+      <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AreaLightingDemo.cpp" />
     <ClCompile Include="FrameworkDemo.cpp" />
     <ClCompile Include="LightingDemo.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AreaLightingDemo.h" />
     <ClInclude Include="FrameworkDemo.h" />
     <ClInclude Include="LightingDemo.h" />
     <ClInclude Include="Main.h" />

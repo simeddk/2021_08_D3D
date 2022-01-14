@@ -42,7 +42,7 @@ void FrameworkDemo::Destroy()
 void FrameworkDemo::Update()
 {
 	//램버트 테스트
-	ImGui::SliderFloat3("LightDirection", Context::Get()->Direction(), -1, +1);
+	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 	
 	sky->Update();
 

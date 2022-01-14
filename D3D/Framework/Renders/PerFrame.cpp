@@ -9,12 +9,16 @@ PerFrame::PerFrame(Shader * shader)
 
 	lightBuffer = new ConstantBuffer(&lightDesc, sizeof(LightDesc));
 	sLightBuffer = shader->AsConstantBuffer("CB_Light");
+
+	pointLightBuffer = new ConstantBuffer(&pointLightsDesc, sizeof(PointLightsDesc));
+	sPointLightBuffer = shader->AsConstantBuffer("CB_PointLights");
 }
 
 PerFrame::~PerFrame()
 {
 	SafeDelete(buffer);
 	SafeDelete(lightBuffer);
+	SafeDelete(pointLightBuffer);
 }
 
 void PerFrame::Update()
@@ -27,10 +31,12 @@ void PerFrame::Update()
 	desc.Projection = Context::Get()->Projection();
 	desc.VP = desc.View * desc.Projection;
 
-	lightDesc.Ambient = Context::Get()->Ambient();
-	lightDesc.Specular = Context::Get()->Specular();
-	lightDesc.Direction = Context::Get()->Direction();
-	lightDesc.Position = Context::Get()->Position();
+	lightDesc.Ambient = Lighting::Get()->Ambient();
+	lightDesc.Specular = Lighting::Get()->Specular();
+	lightDesc.Direction = Lighting::Get()->Direction();
+	lightDesc.Position = Lighting::Get()->Position();
+
+	pointLightsDesc.Count = Lighting::Get()->PointLights(pointLightsDesc.Lights);
 }
 
 void PerFrame::Render()
@@ -40,4 +46,7 @@ void PerFrame::Render()
 
 	lightBuffer->Render();
 	sLightBuffer->SetConstantBuffer(lightBuffer->Buffer());
+
+	pointLightBuffer->Render();
+	sPointLightBuffer->SetConstantBuffer(pointLightBuffer->Buffer());
 }

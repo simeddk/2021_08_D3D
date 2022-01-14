@@ -22,6 +22,8 @@ WPARAM Window::Run(IExecute * main)
 	Context::Create();
 	DebugLine::Create();
 
+	Lighting::Create();
+
 	mainExecute->Initialize();
 
 
@@ -44,6 +46,7 @@ WPARAM Window::Run(IExecute * main)
 	}
 	mainExecute->Destroy();
 
+	Lighting::Delete();
 	DebugLine::Delete();
 	Context::Delete();
 	Gui::Delete();
@@ -189,6 +192,7 @@ void Window::MainRender()
 	Gui::Get()->Update();
 	Context::Get()->Update();
 	DebugLine::Get()->Update();
+	Lighting::Get()->Update();
 
 	mainExecute->Update();
 

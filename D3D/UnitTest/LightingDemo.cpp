@@ -42,7 +42,7 @@ void LightingDemo::Destroy()
 void LightingDemo::Update()
 {
 	//램버트 테스트
-	ImGui::SliderFloat3("LightDirection", Context::Get()->Direction(), -1, +1);
+	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
 	/*
 	//스펙큘러 테스트

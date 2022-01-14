@@ -12,6 +12,9 @@
     <ClCompile Include="NormalMapDemo.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="AreaLightingDemo.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -23,6 +26,9 @@
       <Filter>Lighting</Filter>
     </ClInclude>
     <ClInclude Include="NormalMapDemo.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaLightingDemo.h">
       <Filter>Lighting</Filter>
     </ClInclude>
   </ItemGroup>

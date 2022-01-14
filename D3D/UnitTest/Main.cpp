@@ -4,11 +4,12 @@
 #include "FrameworkDemo.h"
 #include "LightingDemo.h"
 #include "NormalMapDemo.h"
+#include "AreaLightingDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new NormalMapDemo());
+	Push(new AreaLightingDemo());
 }
 
 

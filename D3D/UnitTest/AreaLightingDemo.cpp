@@ -1,22 +1,24 @@
 #include "stdafx.h"
-#include "NormalMapDemo.h"
+#include "AreaLightingDemo.h"
 
-void NormalMapDemo::Initialize()
+void AreaLightingDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(20, 0, 0);
 	Context::Get()->GetCamera()->Position(1, 36, -85);
 	((Freedom*)Context::Get()->GetCamera())->Speed(50, 2);
 	
-	shader = new Shader(L"27_NormalMap.fxo");
+	shader = new Shader(L"28_AreaLighting.fxo");
 	sky = new CubeSky(L"Environment/SunsetCube1024.dds");
 
 	Mesh();
 	Airplane();
 	Kachujin();
 	Weapon();
+
+	PointLights();
 }
 
-void NormalMapDemo::Destroy()
+void AreaLightingDemo::Destroy()
 {
 	SafeDelete(shader);
 	SafeDelete(sky);
@@ -39,7 +41,7 @@ void NormalMapDemo::Destroy()
 	SafeDelete(weapon);
 }
 
-void NormalMapDemo::Update()
+void AreaLightingDemo::Update()
 {
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
@@ -72,7 +74,7 @@ void NormalMapDemo::Update()
 
 }
 
-void NormalMapDemo::Render()
+void AreaLightingDemo::Render()
 {
 	sky->Render();
 
@@ -95,7 +97,7 @@ void NormalMapDemo::Render()
 	weapon->Render();
 }
 
-void NormalMapDemo::Mesh()
+void AreaLightingDemo::Mesh()
 {
 	//Create Materiald
 	{
@@ -173,7 +175,7 @@ void NormalMapDemo::Mesh()
 	meshes.push_back(sphere);
 }
 
-void NormalMapDemo::Airplane()
+void AreaLightingDemo::Airplane()
 {
 	airplane = new ModelRender(shader);
 	airplane->ReadMesh(L"B787/Airplane");
@@ -187,7 +189,7 @@ void NormalMapDemo::Airplane()
 	models.push_back(airplane);
 }
 
-void NormalMapDemo::Kachujin()
+void AreaLightingDemo::Kachujin()
 {
 	kachujin = new ModelAnimator(shader);
 	kachujin->ReadMesh(L"Kachujin/Mesh");
@@ -232,7 +234,7 @@ void NormalMapDemo::Kachujin()
 
 }
 
-void NormalMapDemo::Weapon()
+void AreaLightingDemo::Weapon()
 {
 	weapon = new ModelRender(shader);
 	weapon->ReadMesh(L"Weapon/Sword");
@@ -252,7 +254,52 @@ void NormalMapDemo::Weapon()
 	weaponInitTransform->Rotation(0, 0, 1);
 }
 
-void NormalMapDemo::Pass(UINT val)
+void AreaLightingDemo::PointLights()
+{
+	PointLight light;
+	light =
+	{
+		Color(0.0f, 0.0f, 0.0f, 1.0f), //Ambient
+		Color(0.0f, 0.3f, 1.0f, 1.0f), //Diffuse
+		Color(0.0f, 0.0f, 0.7f, 1.0f), //Specular
+		Color(0.0f, 0.0f, 0.7f, 1.0f), //Emissive
+		Vector3(-30, 10, -30), 15.0f, 0.9f
+	};
+	Lighting::Get()->AddPointLight(light);
+
+	light =
+	{
+		Color(0.0f, 0.0f, 0.0f, 1.0f),
+		Color(1.0f, 0.0f, 0.0f, 1.0f),
+		Color(0.6f, 0.2f, 0.0f, 1.0f),
+		Color(0.6f, 0.3f, 0.0f, 1.0f),
+		Vector3(15, 10, -30), 10.0f, 0.3f
+	};
+	Lighting::Get()->AddPointLight(light);
+
+	light =
+	{
+		Color(0.0f, 0.0f, 0.0f, 1.0f), //Ambient
+		Color(0.0f, 1.0f, 0.0f, 1.0f), //Diffuse
+		Color(0.0f, 0.7f, 0.0f, 1.0f), //Specular
+		Color(0.0f, 0.7f, 0.0f, 1.0f), //Emissive
+		Vector3(-5, 1, -17.5f), 5.0f, 0.9f
+	};
+	Lighting::Get()->AddPointLight(light);
+
+	light =
+	{
+		Color(0.0f, 0.0f, 0.0f, 1.0f),
+		Color(0.0f, 0.0f, 1.0f, 1.0f),
+		Color(0.0f, 0.0f, 0.7f, 1.0f),
+		Color(0.0f, 0.0f, 0.7f, 1.0f),
+		Vector3(-10, 1, -17.5f), 5.0f, 0.9f
+	};
+	Lighting::Get()->AddPointLight(light);
+}
+
+
+void AreaLightingDemo::Pass(UINT val)
 {
 	for (MeshRender* mesh : meshes)
 		mesh->Pass(val);

@@ -47,7 +47,8 @@ void AreaLightingDemo::Update()
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
 	//³ë¸Ö¸Ê Å×½ºÆ®
-	Pass(3);
+	//TODO
+	//Pass(3);
 	static int selected = 0;
 	ImGui::InputInt("Selected", &selected);
 	selected %= 4;
@@ -78,7 +79,8 @@ void AreaLightingDemo::Render()
 {
 	sky->Render();
 
-	//Pass(0);
+	//TODO -_-;
+	Pass(0);
 
 	wall->Render();
 	sphere->Render();

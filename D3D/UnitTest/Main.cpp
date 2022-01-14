@@ -3,11 +3,12 @@
 #include "Systems/Window.h"
 #include "FrameworkDemo.h"
 #include "LightingDemo.h"
+#include "NormalMapDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new LightingDemo());
+	Push(new NormalMapDemo());
 }
 
 

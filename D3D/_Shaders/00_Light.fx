@@ -108,17 +108,19 @@ void NormalMapping(float2 uv, float3 normal, float3 tangent, SamplerState samp)
 
     float3 coord = map.rgb * 2.0f - 1.0f; //0~1 -> -1~1
 
-    float3 N;
-    float3 T;
-    float3 B;
+    float3 N = normalize(normal);
+    float3 T = normalize(tangent - dot(tangent, N) * N);
+    float3 B = cross(N, T);
     
     float3x3 TBN = float3x3(T, B, N);
 
     coord = mul(coord, TBN);
 
+    Material.Diffuse *= saturate(dot(coord, -GlobalLight.Direction));
+
 }
 
-void NormalMapping(float uv, float3 normal, float3 tangent)
+void NormalMapping(float2 uv, float3 normal, float3 tangent)
 {
     NormalMapping(uv, normal, tangent, LinearSampler);
 }

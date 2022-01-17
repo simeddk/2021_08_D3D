@@ -41,6 +41,7 @@
     <ClCompile Include="Renders\Buffers.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
     <ClCompile Include="Renders\DebugLine.cpp" />
+    <ClCompile Include="Renders\Gizmo.cpp" />
     <ClCompile Include="Renders\Lighting.cpp" />
     <ClCompile Include="Renders\Material.cpp" />
     <ClCompile Include="Renders\PerFrame.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Renders\Buffers.h" />
     <ClInclude Include="Renders\Context.h" />
     <ClInclude Include="Renders\DebugLine.h" />
+    <ClInclude Include="Renders\Gizmo.h" />
     <ClInclude Include="Renders\Lighting.h" />
     <ClInclude Include="Renders\Material.h" />
     <ClInclude Include="Renders\PerFrame.h" />

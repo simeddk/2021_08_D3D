@@ -142,7 +142,7 @@ struct PointLight
     float4 Ambient;
     float4 Diffuse;
     float4 Specular;
-    float4 Emssive;
+    float4 Emissive;
 
     float3 Position;
     float Range;
@@ -202,7 +202,7 @@ void ComputePointLight(out MaterialDesc output, float3 normal, float3 wPosition)
             float NdotE = dot(normalize(normal), E);
             float emissive = smoothstep(1.0f - Material.Emissive.a, 1.0f, 1.0f - NdotE);
 
-            result.Emissive = Material.Emissive * emissive * PointLights[i].Emssive;
+            result.Emissive = Material.Emissive * emissive * PointLights[i].Emissive;
         }
 
         float temp = 1.0f / saturate(dist / PointLights[i].Range);

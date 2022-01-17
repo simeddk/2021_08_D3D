@@ -7,7 +7,7 @@ struct PointLight
 	Color Ambient;
 	Color Diffuse;
 	Color Specular;
-	Color Emssive;
+	Color Emissive;
 
 	Vector3 Position;
 	float Range;

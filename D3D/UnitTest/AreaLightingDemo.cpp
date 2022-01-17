@@ -16,6 +16,8 @@ void AreaLightingDemo::Initialize()
 	Weapon();
 
 	PointLights();
+
+	//Gizmo::Get()->SetTranform(kachujin->GetTrasnform(0));
 }
 
 void AreaLightingDemo::Destroy()
@@ -46,13 +48,26 @@ void AreaLightingDemo::Update()
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
-	//노멀맵 테스트
-	//TODO
-	//Pass(3);
-	static int selected = 0;
-	ImGui::InputInt("Selected", &selected);
-	selected %= 4;
-	shader->AsScalar("Selected")->SetInt(selected);
+	//포인트라이트 테스트
+	ImGui::Separator();
+	{
+		static UINT pointIndex = 0;
+		ImGui::InputInt("PointLight Index", (int*)&pointIndex);
+		pointIndex %= Lighting::Get()->PointLightCount();
+
+		Transform* transform = Lighting::Get()->GetPointLightTransform(pointIndex);
+		Gizmo::Get()->SetTranform(transform);
+
+		PointLight& pointLight = Lighting::Get()->GetPointLight(pointIndex);
+
+		ImGui::ColorEdit3("PointLight Ambient", pointLight.Ambient);
+		ImGui::ColorEdit3("PointLight Diffuse", pointLight.Diffuse);
+		ImGui::ColorEdit3("PointLight Specular", pointLight.Specular);
+		ImGui::ColorEdit3("PointLight Emissive", pointLight.Emissive);
+
+		ImGui::SliderFloat("PointLight Range", &pointLight.Range, 0, 20);
+		ImGui::SliderFloat("PointLight Intensity", &pointLight.Intensity, 0, 1);
+	}
 
 	sky->Update();
 
@@ -63,6 +78,7 @@ void AreaLightingDemo::Update()
 
 	airplane->Update();
 	kachujin->Update();
+	//kachujin->UpdateSubResource();
 
 	Matrix worlds[MAX_MODEL_TRANSFORMS];
 	for (UINT i = 0; i < kachujin->GetTransformCount(); i++)
@@ -79,7 +95,6 @@ void AreaLightingDemo::Render()
 {
 	sky->Render();
 
-	//TODO -_-;
 	Pass(0);
 
 	wall->Render();

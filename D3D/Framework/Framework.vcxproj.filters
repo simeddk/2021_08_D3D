@@ -131,6 +131,9 @@
     <ClCompile Include="Renders\Lighting.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
+    <ClCompile Include="Renders\Gizmo.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -264,6 +267,9 @@
       <Filter>Meshes</Filter>
     </ClInclude>
     <ClInclude Include="Renders\Lighting.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Gizmo.h">
       <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>

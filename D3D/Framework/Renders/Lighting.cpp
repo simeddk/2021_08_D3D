@@ -32,6 +32,9 @@ void Lighting::Update()
 {
 	for (UINT i = 0; i < pointLightCount; i++)
 		pointLightTransforms[i]->Position(&pointLights[i].Position);
+
+	for (UINT i = 0; i < spotLightCount; i++)
+		spotLightTransforms[i]->Position(&spotLights[i].Position);
 }
 
 void Lighting::AddPointLight(PointLight & light)
@@ -59,4 +62,32 @@ PointLight & Lighting::GetPointLight(UINT index)
 Transform * Lighting::GetPointLightTransform(UINT index)
 {
 	return pointLightTransforms[index];
+}
+
+void Lighting::AddSpotLight(SpotLight & light)
+{
+	spotLights[spotLightCount] = light;
+	spotLightCount++;
+
+	Transform* t = new Transform();
+	t->Position(spotLights[spotLightCount - 1].Position);
+
+	spotLightTransforms.push_back(t);
+}
+
+UINT Lighting::SpotLights(OUT SpotLight * lights)
+{
+	memcpy(lights, spotLights, sizeof(SpotLight) * spotLightCount);
+
+	return spotLightCount;
+}
+
+SpotLight & Lighting::GetSpotLight(UINT index)
+{
+	return spotLights[index];
+}
+
+Transform * Lighting::GetSpotLightTransform(UINT index)
+{
+	return spotLightTransforms[index];
 }

@@ -16,6 +16,7 @@ void AreaLightingDemo::Initialize()
 	Weapon();
 
 	PointLights();
+	SpotLights();
 
 	//Gizmo::Get()->SetTranform(kachujin->GetTrasnform(0));
 }
@@ -49,7 +50,7 @@ void AreaLightingDemo::Update()
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
 	//포인트라이트 테스트
-	ImGui::Separator();
+	/*ImGui::Separator();
 	{
 		static UINT pointIndex = 0;
 		ImGui::InputInt("PointLight Index", (int*)&pointIndex);
@@ -67,6 +68,30 @@ void AreaLightingDemo::Update()
 
 		ImGui::SliderFloat("PointLight Range", &pointLight.Range, 0, 20);
 		ImGui::SliderFloat("PointLight Intensity", &pointLight.Intensity, 0, 1);
+	}*/
+
+	//스팟라이트 테스트
+	ImGui::Separator();
+	{
+		static UINT spotIndex = 0;
+		ImGui::InputInt("SpotLight Index", (int *)&spotIndex);
+		spotIndex %= Lighting::Get()->SpotLightCount();
+
+		SpotLight& spotLight = Lighting::Get()->GetSpotLight(spotIndex);
+
+		Transform* transform = Lighting::Get()->GetSpotLightTransform(spotIndex);
+		Gizmo::Get()->SetTranform(transform);
+
+		ImGui::ColorEdit3("SpotLight Ambient", spotLight.Ambient);
+		ImGui::ColorEdit3("SpotLight Diffuse", spotLight.Diffuse);
+		ImGui::ColorEdit3("SpotLight Specular", spotLight.Specular);
+		ImGui::ColorEdit3("SpotLight Emissive", spotLight.Emissive);
+
+		ImGui::SliderFloat3("SpotLight Direciton", spotLight.Direction, -1, 1);
+		ImGui::SliderFloat("SpotLight Range", &spotLight.Range, 1, 50);
+		ImGui::SliderFloat("SpotLight Angle", &spotLight.Angle, 1, 90);
+
+		ImGui::SliderFloat("SpotLight Intensity", &spotLight.Intensity, 0, 1);
 	}
 
 	sky->Update();
@@ -313,6 +338,32 @@ void AreaLightingDemo::PointLights()
 		Vector3(-10, 1, -17.5f), 5.0f, 0.9f
 	};
 	Lighting::Get()->AddPointLight(light);
+}
+
+void AreaLightingDemo::SpotLights()
+{
+	SpotLight light;
+	light =
+	{
+		Color(0.3f, 1.0f, 0.0f, 1.0f),
+		Color(0.7f, 1.0f, 0.0f, 1.0f),
+		Color(0.3f, 1.0f, 0.0f, 1.0f),
+		Color(0.3f, 1.0f, 0.0f, 1.0f),
+		Vector3(-15, 20, -30), 25.0f,
+		Vector3(0, -1, 0), 30.0f, 0.9f
+	};
+	Lighting::Get()->AddSpotLight(light);
+
+	light =
+	{
+		Color(1.0f, 0.2f, 0.9f, 1.0f),
+		Color(1.0f, 0.2f, 0.9f, 1.0f),
+		Color(1.0f, 0.2f, 0.9f, 1.0f),
+		Color(1.0f, 0.2f, 0.9f, 1.0f),
+		Vector3(0, 20, -30), 30.0f,
+		Vector3(0, -1, 0), 40.0f, 0.9f
+	};
+	Lighting::Get()->AddSpotLight(light);
 }
 
 

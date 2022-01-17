@@ -43,6 +43,14 @@ private:
 		PointLight Lights[MAX_POINT_LIGHTS];
 	} pointLightsDesc;
 
+	struct SpotLightsDesc
+	{
+		UINT Count;
+		float Padding[3];
+
+		SpotLight Lights[MAX_POINT_LIGHTS];
+	} spotLightsDesc;
+
 private:
 	Shader* shader;
 
@@ -54,5 +62,8 @@ private:
 
 	ConstantBuffer* pointLightBuffer;
 	ID3DX11EffectConstantBuffer* sPointLightBuffer;
+
+	ConstantBuffer* spotLightBuffer;
+	ID3DX11EffectConstantBuffer* sSpotLightBuffer;
 };
 

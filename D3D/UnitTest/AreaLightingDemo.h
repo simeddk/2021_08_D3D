@@ -19,6 +19,7 @@ private:
 	void Weapon();
 
 	void PointLights();
+	void SpotLights();
 
 	void Pass(UINT val);
 

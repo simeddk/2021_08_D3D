@@ -18,6 +18,9 @@ float4 PS(MeshOutput input) : SV_Target
     ComputePointLight(output, input.Normal, input.wPosition);
     AddMaterial(result, output);
 
+    ComputeSpotLight(output, input.Normal, input.wPosition);
+    AddMaterial(result, output);
+
     return float4(MaterialToColor(result), 1.0f);
 }
 

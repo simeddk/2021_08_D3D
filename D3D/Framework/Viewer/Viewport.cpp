@@ -62,3 +62,27 @@ Vector3 Viewport::Unproject(Vector3 & source, Matrix & W, Matrix & V, Matrix & P
 
 	return result;
 }
+
+void Viewport::GetMouseRay(Vector3 * pOutPosition, Vector3 * pOutDirection, Matrix * world)
+{
+	Matrix W;
+	if (world != nullptr)
+		memcpy(&W, world, sizeof(Matrix));
+	else
+		D3DXMatrixIdentity(&W);
+
+	Matrix V = Context::Get()->View();
+	Matrix P = Context::Get()->Projection();
+	Viewport* Vp = Context::Get()->GetViewport();
+
+	Vector3 mouse = Mouse::Get()->GetPosition();
+	
+	mouse.z = 0.0f;
+	Vector3 n = Vp->Unproject(mouse, W, V, P);
+
+	mouse.z = 1.0f;
+	Vector3 f = Vp->Unproject(mouse, W, V, P);
+
+	*pOutPosition = n;
+	*pOutDirection = f - n;
+}

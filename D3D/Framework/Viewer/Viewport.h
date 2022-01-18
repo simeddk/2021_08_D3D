@@ -18,6 +18,8 @@ public:
 	//2D(SS) -> 3D(WVP)
 	Vector3 Unproject(Vector3& source, Matrix& W, Matrix& V, Matrix& P);
 
+	void GetMouseRay(Vector3* pOutPosition, Vector3* pOutDirection, Matrix* world = nullptr);
+
 private:
 	float x, y;
 	float width, height;

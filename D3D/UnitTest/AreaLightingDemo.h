@@ -46,4 +46,7 @@ private:
 	vector<MeshRender*> meshes;
 	vector<ModelRender*> models;
 	vector<ModelAnimator*> animators;
+
+	bool bIntersect = false;
+	ColliderObject* colliderObject;
 };

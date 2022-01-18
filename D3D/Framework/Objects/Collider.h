@@ -1,6 +1,29 @@
 #pragma once
 
 //-----------------------------------------------------------------------------
+//Ray
+//-----------------------------------------------------------------------------
+struct Ray
+{
+	Ray()
+		: Position(0, 0, 0)
+		, Direction(0, 0, 0)
+	{
+
+	};
+
+	Ray(Vector3& position, Vector3& direction)
+		: Position(position)
+		, Direction(direction)
+	{
+
+	};
+
+	Vector3 Position;
+	Vector3 Direction;
+};
+
+//-----------------------------------------------------------------------------
 //ColliderObject
 //-----------------------------------------------------------------------------
 struct ColliderObject
@@ -26,6 +49,9 @@ public:
 
 	void Update();
 	void Render(Color color = Color(0, 1, 0, 1));
+
+	bool Intersection(Vector3& position, Vector3& direction, float* outDistance = nullptr);
+	bool Intersection(Ray& ray, float* outDistance = nullptr);
 
 private:
 	Transform* init = nullptr;

@@ -42,6 +42,8 @@ void AreaLightingDemo::Destroy()
 	SafeDelete(airplane);
 	SafeDelete(kachujin);
 	SafeDelete(weapon);
+
+	SafeDelete(colliderObject);
 }
 
 void AreaLightingDemo::Update()
@@ -103,7 +105,6 @@ void AreaLightingDemo::Update()
 
 	airplane->Update();
 	kachujin->Update();
-	//kachujin->UpdateSubResource();
 
 	Matrix worlds[MAX_MODEL_TRANSFORMS];
 	for (UINT i = 0; i < kachujin->GetTransformCount(); i++)
@@ -111,6 +112,19 @@ void AreaLightingDemo::Update()
 		kachujin->GetAttachBones(i, worlds);
 		weapon->GetTransform(i)->World(weaponInitTransform->World() * worlds[40]);
 	}
+
+	//마우스 AABB 테스트
+	if (Mouse::Get()->Down(0))
+	{
+		Vector3 position, direction;
+		Context::Get()->GetViewport()->GetMouseRay(&position, &direction);
+
+		float distance;
+		bIntersect = colliderObject->Collision->Intersection(position, direction, &distance);
+	}
+	kachujin->GetAttachBones(0, worlds);
+	colliderObject->World->World(worlds[40]);
+	
 	weapon->UpdateSubResource();
 	weapon->Update();
 
@@ -137,6 +151,8 @@ void AreaLightingDemo::Render()
 	airplane->Render();
 	kachujin->Render();
 	weapon->Render();
+
+	colliderObject->Collision->Render(bIntersect ? Color(1, 0, 0, 1) : Color(0, 1, 0, 1));
 }
 
 void AreaLightingDemo::Mesh()
@@ -289,11 +305,15 @@ void AreaLightingDemo::Weapon()
 	weapon->UpdateSubResource();
 	models.push_back(weapon);
 
-
 	weaponInitTransform = new Transform();
 	weaponInitTransform->Position(-2.9f, 1.45f, -6.45f);
 	weaponInitTransform->Scale(0.5f, 0.5f, 0.75f);
 	weaponInitTransform->Rotation(0, 0, 1);
+
+	colliderObject = new ColliderObject();
+	colliderObject->Init->Position(-2.9f, 1.45f, -50.0f);
+	colliderObject->Init->Scale(5, 5, 75);
+	colliderObject->Init->Rotation(0, 0, 1);
 }
 
 void AreaLightingDemo::PointLights()

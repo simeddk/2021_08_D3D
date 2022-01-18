@@ -5,11 +5,12 @@
 #include "LightingDemo.h"
 #include "NormalMapDemo.h"
 #include "AreaLightingDemo.h"
+#include "ObbDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new AreaLightingDemo());
+	Push(new ObbDemo());
 }
 
 

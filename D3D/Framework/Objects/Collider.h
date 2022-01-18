@@ -43,6 +43,9 @@ public:
 //-----------------------------------------------------------------------------
 class Collider
 {
+private:
+	struct Bounding;
+
 public:
 	Collider(Transform* transform, Transform* init = nullptr);
 	~Collider();
@@ -52,6 +55,24 @@ public:
 
 	bool Intersection(Vector3& position, Vector3& direction, float* outDistance = nullptr);
 	bool Intersection(Ray& ray, float* outDistance = nullptr);
+	bool Intersection(Collider* other);
+
+private:
+	bool SeparatingPlane(Vector3& distance, Vector3& direction, Bounding& box1, Bounding& box2);
+	bool Collision(Bounding& box1, Bounding& box2);
+	Vector3 Cross(Vector3& vec1, Vector3& vec2);
+
+private:
+	struct Bounding
+	{
+		Vector3 Position;
+
+		Vector3 AxisX;
+		Vector3 AxisY;
+		Vector3 AxisZ;
+
+		Vector3 HalfSize;
+	} bounding;
 
 private:
 	Transform* init = nullptr;

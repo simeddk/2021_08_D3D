@@ -15,6 +15,9 @@
     <ClCompile Include="AreaLightingDemo.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="ObbDemo.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -30,6 +33,9 @@
     </ClInclude>
     <ClInclude Include="AreaLightingDemo.h">
       <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="ObbDemo.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

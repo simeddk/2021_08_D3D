@@ -134,6 +134,9 @@
     <ClCompile Include="Renders\Gizmo.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Billboard.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="Renders\Gizmo.h">
       <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Billboard.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

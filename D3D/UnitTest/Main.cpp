@@ -6,11 +6,12 @@
 #include "NormalMapDemo.h"
 #include "AreaLightingDemo.h"
 #include "ObbDemo.h"
+#include "BillboardDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new ObbDemo());
+	Push(new BillboardDemo());
 }
 
 

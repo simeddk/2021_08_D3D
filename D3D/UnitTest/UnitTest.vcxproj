@@ -138,6 +138,7 @@
     <ClCompile Include="NormalMapDemo.cpp" />
     <ClCompile Include="ObbDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="WeatherDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AreaLightingDemo.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="NormalMapDemo.h" />
     <ClInclude Include="ObbDemo.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="WeatherDemo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

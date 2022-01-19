@@ -21,6 +21,9 @@
     <ClCompile Include="BillboardDemo.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="WeatherDemo.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -43,6 +46,9 @@
     <ClInclude Include="BillboardDemo.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="WeatherDemo.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -50,6 +56,9 @@
     </Filter>
     <Filter Include="Lighting">
       <UniqueIdentifier>{60e2f72a-843a-4c9a-af4e-401355433862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{1d48bfe7-52c1-4a2f-9c9c-fda79204417c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

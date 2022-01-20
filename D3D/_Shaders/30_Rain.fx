@@ -34,9 +34,9 @@ VertexOutput VS(VertexInput input)
 
     float3 velocity = Velocity;
     velocity.xz /= input.Scale.y * 0.1f;
-    Velocity *= Time;
+    velocity *= Time;
 
-    input.Position.xyz = Origin + (input.Position.xyz + Velocity) % Extent;
+    input.Position.xyz = Origin + (Extent + (input.Position.xyz + velocity) % Extent) % Extent - (Extent * 0.5f);
 
     float4 position = input.Position;
 
@@ -58,10 +58,16 @@ VertexOutput VS(VertexInput input)
 
 float4 PS(VertexOutput input) : SV_Target
 {
-    return DiffuseMap.Sample(LinearSampler, input.Uv);
+    float4 diffuse = DiffuseMap.Sample(LinearSampler, input.Uv);
+
+    return diffuse;
 }
 
 technique11 T0
 {
-	P_VP(P0, VS, PS)
+	P_BS_VP(P0, AlphaBlend, VS, PS)
+	P_BS_VP(P1, AlphaBlend_AlphaToCoverageEnable, VS, PS)
+
+	P_BS_VP(P2, AdditiveBlend, VS, PS)
+	P_BS_VP(P3, AdditiveBlend_AlphaToCoverageEnable, VS, PS)
 }

@@ -54,6 +54,22 @@ void WeatherDemo::Update()
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
+	//레인 패스 테스트
+	{
+		static UINT rainPass = 0;
+		ImGui::InputInt("Rain", (int*)&rainPass);
+		rainPass %= 4;
+		rain->Pass(rainPass);
+	}
+
+	//빌보드 패스 테스트
+	{
+		static UINT billPass = 0;
+		ImGui::InputInt("Billboard", (int*)&billPass);
+		billPass %= 4;
+		billboard->Pass(billPass);
+	}
+
 	sky->Update();
 
 	plane->Update();

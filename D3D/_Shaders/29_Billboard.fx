@@ -40,7 +40,7 @@ float4 PS(VertexOutput input) : SV_Target
 {
     float4 diffuse = DiffuseMap.Sample(LinearSampler, input.Uv);
 
-    clip(diffuse.a - 0.3f);
+    //clip(diffuse.a - 0.3f);
     //if (diffuse.a < 0.3f)
     //    discard;
 
@@ -49,5 +49,9 @@ float4 PS(VertexOutput input) : SV_Target
 
 technique11 T0
 {
-	P_VP(P0, VS, PS)
+	P_BS_VP(P0, AlphaBlend, VS, PS)
+	P_BS_VP(P1, AlphaBlend_AlphaToCoverageEnable, VS, PS)
+
+	P_BS_VP(P2, AdditiveBlend, VS, PS)
+	P_BS_VP(P3, AdditiveBlend_AlphaToCoverageEnable, VS, PS)
 }

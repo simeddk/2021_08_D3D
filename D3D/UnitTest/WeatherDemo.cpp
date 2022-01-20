@@ -46,6 +46,7 @@ void WeatherDemo::Destroy()
 
 	SafeDelete(billboard);
 	SafeDelete(rain);
+	SafeDelete(snow);
 
 }
 
@@ -60,6 +61,14 @@ void WeatherDemo::Update()
 		ImGui::InputInt("Rain", (int*)&rainPass);
 		rainPass %= 4;
 		rain->Pass(rainPass);
+	}
+
+	//스노우 패스 테스트
+	{
+		static UINT snowPass = 0;
+		ImGui::InputInt("Snow", (int*)&snowPass);
+		snowPass %= 4;
+		snow->Pass(snowPass);
 	}
 
 	//빌보드 패스 테스트
@@ -92,7 +101,19 @@ void WeatherDemo::Update()
 	weapon->Update();
 
 	billboard->Update();
-	rain->Update();
+	
+	UINT weatherSelected = (UINT)weatherType;
+	ImGui::Separator();
+	ImGui::InputInt("WeatherType", (int*)&weatherSelected);
+	weatherSelected %= (UINT)EWeatherType::Max;
+	weatherType = (EWeatherType)weatherSelected;
+	
+	switch (weatherType)
+	{
+		case WeatherDemo::EWeatherType::Rain: rain->Update(); break;
+		case WeatherDemo::EWeatherType::Snow: snow->Update(); break;
+	}
+
 }
 
 void WeatherDemo::Render()
@@ -118,7 +139,12 @@ void WeatherDemo::Render()
 	weapon->Render();
 
 	billboard->Render();
-	rain->Render();
+	
+	switch (weatherType)
+	{
+		case WeatherDemo::EWeatherType::Rain: rain->Render(); break;
+		case WeatherDemo::EWeatherType::Snow: snow->Render(); break;
+	}
 }
 
 void WeatherDemo::Mesh()
@@ -363,6 +389,8 @@ void WeatherDemo::Billboards()
 void WeatherDemo::Weather()
 {
 	rain = new Rain(Vector3(300, 100, 500), 10000, L"Environment/Rain.png");
+	snow = new Snow(Vector3(300, 100, 500), 100000, L"Environment/Snow.png");
+	
 }
 
 

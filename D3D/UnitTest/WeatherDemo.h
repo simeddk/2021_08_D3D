@@ -47,7 +47,14 @@ private:
 	Transform* weaponInitTransform;
 
 	Billboard* billboard;
+	
+	enum class EWeatherType
+	{
+		None, Rain, Snow, Max
+	} weatherType;
+
 	Rain* rain;
+	Snow* snow;
 
 	vector<MeshRender*> meshes;
 	vector<ModelRender*> models;

@@ -69,6 +69,9 @@ Snow::~Snow()
 	SafeDelete(indices);
 	SafeDelete(texture);
 
+	SafeDeleteArray(vertices);
+	SafeDeleteArray(indices);
+
 }
 
 void Snow::Update()

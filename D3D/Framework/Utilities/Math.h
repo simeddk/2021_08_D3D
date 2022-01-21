@@ -27,8 +27,6 @@ public:
 
 	static void MatrixDecompose(const D3DXMATRIX& m, OUT Vector3& S, OUT Vector3& R, OUT Vector3& T);
 
-
-
 	template<typename T>
 	static T Clamp(T value, T min, T max)
 	{
@@ -36,5 +34,12 @@ public:
 		value = value < min ? min : value;
 
 		return value;
+	}
+
+	template<typename T>
+	static T Lerp(T value1, T value2, T t)
+	{
+		//return (1 - t) * value1 + t * value2;
+		return value1 + (value2 - value1) * t;
 	}
 };

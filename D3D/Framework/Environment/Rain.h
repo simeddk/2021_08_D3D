@@ -2,6 +2,7 @@
 
 class Rain : public Renderer
 {
+
 public:
 	Rain(Vector3& extent, UINT count, wstring file);
 	~Rain();

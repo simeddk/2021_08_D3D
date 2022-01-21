@@ -64,6 +64,9 @@ Rain::~Rain()
 	SafeDelete(indices);
 	SafeDelete(texture);
 
+	SafeDeleteArray(vertices);
+	SafeDeleteArray(indices);
+
 }
 
 void Rain::Update()

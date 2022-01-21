@@ -143,6 +143,9 @@
     <ClCompile Include="Environment\Snow.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="Particle\Particle.cpp">
+      <Filter>Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -290,6 +293,12 @@
     <ClInclude Include="Environment\Snow.h">
       <Filter>Environment</Filter>
     </ClInclude>
+    <ClInclude Include="Particle\ParticleData.h">
+      <Filter>Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\Particle.h">
+      <Filter>Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -315,6 +324,9 @@
     </Filter>
     <Filter Include="Model">
       <UniqueIdentifier>{fd94cd68-a122-482a-89a2-78803730d5c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{b637c202-404a-4d0b-b8d3-e83de374efbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

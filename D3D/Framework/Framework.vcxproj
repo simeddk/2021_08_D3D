@@ -41,6 +41,7 @@
     <ClCompile Include="Objects\Billboard.cpp" />
     <ClCompile Include="Objects\Collider.cpp" />
     <ClCompile Include="Objects\Render2D.cpp" />
+    <ClCompile Include="Particle\Particle.cpp" />
     <ClCompile Include="Renders\Buffers.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
     <ClCompile Include="Renders\DebugLine.cpp" />
@@ -91,6 +92,8 @@
     <ClInclude Include="Objects\Billboard.h" />
     <ClInclude Include="Objects\Collider.h" />
     <ClInclude Include="Objects\Render2D.h" />
+    <ClInclude Include="Particle\Particle.h" />
+    <ClInclude Include="Particle\ParticleData.h" />
     <ClInclude Include="Renders\Buffers.h" />
     <ClInclude Include="Renders\Context.h" />
     <ClInclude Include="Renders\DebugLine.h" />

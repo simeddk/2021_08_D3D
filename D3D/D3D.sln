@@ -47,9 +47,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{84
 		_Shaders\29_Billboard.fx = _Shaders\29_Billboard.fx
 		_Shaders\30_Rain.fx = _Shaders\30_Rain.fx
 		_Shaders\31_Snow.fx = _Shaders\31_Snow.fx
+		_Shaders\32_Particle.fx = _Shaders\32_Particle.fx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3D316DE2-4381-4EF3-9183-1742FF1988C6} = {3D316DE2-4381-4EF3-9183-1742FF1988C6}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParticleEditor", "ParticleEditor\ParticleEditor.vcxproj", "{6346075C-5F13-441C-8F30-52745CA35D46}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3D316DE2-4381-4EF3-9183-1742FF1988C6} = {3D316DE2-4381-4EF3-9183-1742FF1988C6}
 	EndProjectSection
@@ -72,6 +78,10 @@ Global
 		{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}.Debug|x86.Build.0 = Debug|Win32
 		{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}.Release|x86.ActiveCfg = Release|Win32
 		{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}.Release|x86.Build.0 = Release|Win32
+		{6346075C-5F13-441C-8F30-52745CA35D46}.Debug|x86.ActiveCfg = Debug|Win32
+		{6346075C-5F13-441C-8F30-52745CA35D46}.Debug|x86.Build.0 = Debug|Win32
+		{6346075C-5F13-441C-8F30-52745CA35D46}.Release|x86.ActiveCfg = Release|Win32
+		{6346075C-5F13-441C-8F30-52745CA35D46}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

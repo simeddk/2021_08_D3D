@@ -5,7 +5,7 @@
 Particle::Particle(wstring file)
 	: Renderer(L"32_Particle.fxo")
 {
-	ReadFile(L"../_Textures/Particles" + file + L".xml");
+	ReadFile(L"../../_Textures/Particles/" + file + L".xml");
 
 	buffer = new ConstantBuffer(&desc, sizeof(Desc));
 	sBuffer = shader->AsConstantBuffer("CB_Particle");
@@ -219,11 +219,38 @@ void Particle::Deactivation()
 
 void Particle::Render()
 {
-	//TODO.
+	Super::Render();
+
+	desc.CurrentTime = currentTime;
+
+	buffer->Render();
+	sBuffer->SetConstantBuffer(buffer->Buffer());
+
+	sMap->SetResource(map->SRV());
+
+	UINT pass = 0;
+
+	if (activeCount != gpuCount)
+	{
+		if (gpuCount > activeCount)
+		{
+			shader->DrawIndexed(0, pass, (gpuCount - activeCount) * 6, activeCount * 6);
+		}
+		else
+		{
+			shader->DrawIndexed(0, pass, (data.MaxParticles - activeCount) * 6, activeCount * 6);
+
+			if (gpuCount > 0)
+				shader->DrawIndexed(0, pass, gpuCount * 6);
+		}
+	}
+
 }
 
 void Particle::SetTexture(wstring file)
 {
+	SafeDelete(map);
+	map = new Texture(file);
 }
 
 void Particle::ReadFile(wstring file)

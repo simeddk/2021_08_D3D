@@ -94,9 +94,9 @@ void Particle::Emit(Vector3 & position)
 	float horizontalVelocity = Math::Lerp<float>(data.MinHorizontalVelocity, data.MaxHorizontalVelocity, Math::Random(0.f, 1.f));
 	float horizontalAngle = Math::PI * 2.0f * Math::Random(0.f, 1.f);
 
-	velocity.x = horizontalVelocity * cos(horizontalAngle);
-	velocity.y = horizontalVelocity * sin(horizontalAngle);
-	velocity.z = Math::Lerp<float>(data.MinVerticalVelocity, data.MaxVerticalVelocity, Math::Random(0.f, 1.f));
+	velocity.x += horizontalVelocity * cos(horizontalAngle);
+	velocity.y += horizontalVelocity * sin(horizontalAngle);
+	velocity.z += Math::Lerp<float>(data.MinVerticalVelocity, data.MaxVerticalVelocity, Math::Random(0.f, 1.f));
 
 	Vector4 random = Math::RandomColor4();
 
@@ -228,7 +228,7 @@ void Particle::Render()
 
 	sMap->SetResource(map->SRV());
 
-	UINT pass = 0;
+	UINT pass = (UINT)data.Type;
 
 	if (activeCount != gpuCount)
 	{
@@ -245,6 +245,7 @@ void Particle::Render()
 		}
 	}
 
+	D3D11_DEPTH_STENCIL_DESC;
 }
 
 void Particle::SetTexture(wstring file)

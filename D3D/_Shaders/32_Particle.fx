@@ -109,5 +109,23 @@ float4 PS(VertexOutput input) : SV_Target
 
 technique11 T0
 {
-	P_VP(P0, VS, PS)
+	//P_VP(P0, VS, PS)
+	
+	////알파 적용 -> 알파소팅 문제가 있음
+	//P_BS_VP(P1, AdditiveBlend, VS, PS)
+	//P_BS_VP(P2, AlphaBlend, VS, PS)
+
+	////알파커버리지 적용 -> 오토 픽셀 잘못 그려짐
+	//P_BS_VP(P3, AdditiveBlend_AlphaToCoverageEnable, VS, PS)
+	//P_BS_VP(P4, AlphaBlend_AlphaToCoverageEnable, VS, PS)
+
+	////깊이끄기 -> 파티클이 무조건 앞에 그려짐(땅속에서)
+	//P_DSS_VP(P5, DepthEnable_False, VS, PS)
+	//P_DSS_BS_VP(P6, DepthEnable_False, AdditiveBlend, VS, PS)
+	//P_DSS_BS_VP(P7, DepthEnable_False, AlphaBlend, VS, PS)
+
+	//Pixel Write Mask Zero
+	P_DSS_VP(P0, PixelDepthEnable_False, VS, PS)
+	P_DSS_BS_VP(P1, PixelDepthEnable_False, AdditiveBlend, VS, PS)
+	P_DSS_BS_VP(P2, PixelDepthEnable_False, AlphaBlend, VS, PS)
 }

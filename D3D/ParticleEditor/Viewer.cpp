@@ -7,7 +7,7 @@ void Viewer::Initialize()
 	Context::Get()->GetCamera()->RotationDegree(20, 0, 0);
 	Context::Get()->GetCamera()->Position(1, 36, -85);
 	
-	particle = new Particle(L"Fire");
+	particle = new Particle(L"Smoke");
 
 	shader = new Shader(L"28_AreaLighting.fxo");
 	sky = new CubeSky(L"Environment/Mountain1024.dds");
@@ -33,6 +33,17 @@ void Viewer::Update()
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 	
+	//패스 변경 테스트
+	{
+		UINT passCount = particle->GetShader()->PassCount();
+		ImGui::SliderInt("Pass", (int*)&particle->GetData().Type, 0, passCount - 1);
+
+		static bool bWire = false;
+		ImGui::Checkbox("WireFrame", &bWire);
+		sphere->Pass(bWire ? 3 : 0);
+		grid->Pass(bWire ? 3 : 0);
+	}
+
 	grid->Update();
 	sphere->Update();
 

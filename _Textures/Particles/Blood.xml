@@ -10,7 +10,7 @@
     <EndVelocity>3</EndVelocity>
     <MinHorizontalVelocity>0</MinHorizontalVelocity>
     <MaxHorizontalVelocity>0</MaxHorizontalVelocity>
-    <MinVerticalVelocity>0</MinVerticalVelocity>
+    <MinVerticalVelocity>1</MinVerticalVelocity>
     <MaxVerticalVelocity>0</MaxVerticalVelocity>
     <Gravity X="0" Y="-10" Z="0"/>
     <MinColor R="0.49193549" G="0" B="2.9556213e-05" A="1"/>

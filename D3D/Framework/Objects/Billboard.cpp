@@ -1,77 +1,46 @@
 #include "Framework.h"
 #include "Billboard.h"
 
-Billboard::Billboard(wstring textureFile)
-	: Renderer(L"29_Billboard.fxo")
+Billboard::Billboard(Shader* shader)
+	: Renderer(shader)
 {
-	vertexCount = MAX_BILLBOARD_COUNT * 4;
-	vertices = new VertexBillboard[vertexCount];
-	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexBillboard), 0, true);
-
-	indexCount = MAX_BILLBOARD_COUNT * 6;
-	indices = new UINT[indexCount];
-
-	for (UINT i = 0; i < MAX_BILLBOARD_COUNT; i++)
-	{
-		indices[i * 6 + 0] = i * 4 + 0;
-		indices[i * 6 + 1] = i * 4 + 1;
-		indices[i * 6 + 2] = i * 4 + 2;
-		indices[i * 6 + 3] = i * 4 + 2;
-		indices[i * 6 + 4] = i * 4 + 1;
-		indices[i * 6 + 5] = i * 4 + 3;
-	}
-	indexBuffer = new IndexBuffer(indices, indexCount);
-
-	diffuseMap = new Texture(textureFile);
-	sDiffuseMap = shader->AsSRV("DiffuseMap");
+	sDiffuseMap = shader->AsSRV("BillboardMaps");
 }
 
 Billboard::~Billboard()
 {
-	SafeDeleteArray(vertices);
-	SafeDeleteArray(indices);
-
-	SafeDelete(diffuseMap);
+	SafeDelete(textureArray);
 }
 
 void Billboard::Render()
 {
-	if (prevCount != drawCount)
-	{
-		prevCount = drawCount;
+	if (textureArray == nullptr)
+		textureArray = new TextureArray(textureFiles);
 
-		D3D11_MAPPED_SUBRESOURCE subResource;
-		D3D::GetDC()->Map(vertexBuffer->Buffer(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-		{
-			memcpy(subResource.pData, vertices, sizeof(VertexBillboard) * MAX_BILLBOARD_COUNT);
-		}
-		D3D::GetDC()->Unmap(vertexBuffer->Buffer(), 0);
+	if (vertices.size() != vertexCount)
+	{
+		vertexCount = vertices.size();
+
+		SafeDelete(vertexBuffer);
+		vertexBuffer = new VertexBuffer(&vertices[0], vertices.size(), sizeof(VertexBillboard));
 	}
 
 	Super::Render();
 
-	sDiffuseMap->SetResource(diffuseMap->SRV());
+	sDiffuseMap->SetResource(textureArray->SRV());
 
-	shader->DrawIndexed(0, Pass(), drawCount * 6);
+	shader->Draw(0, Pass(), vertexCount);
 }
 
-void Billboard::Add(Vector3 & position, Vector2 & scale)
+void Billboard::Add(Vector3 & position, Vector2 & scale, UINT mapIndex)
 {
-	vertices[drawCount * 4 + 0].Position = position;
-	vertices[drawCount * 4 + 1].Position = position;
-	vertices[drawCount * 4 + 2].Position = position;
-	vertices[drawCount * 4 + 3].Position = position;
+	vertices.push_back({ position, scale, mapIndex});
 
-	vertices[drawCount * 4 + 0].Scale = scale;
-	vertices[drawCount * 4 + 1].Scale = scale;
-	vertices[drawCount * 4 + 2].Scale = scale;
-	vertices[drawCount * 4 + 3].Scale = scale;
+}
 
-	vertices[drawCount * 4 + 0].Uv = Vector2(0, 1);
-	vertices[drawCount * 4 + 1].Uv = Vector2(0, 0);
-	vertices[drawCount * 4 + 2].Uv = Vector2(1, 1);
-	vertices[drawCount * 4 + 3].Uv = Vector2(1, 0);
+void Billboard::AddTexture(wstring file)
+{
+	SafeDelete(textureArray);
 
-	drawCount++;
-
+	textureFiles.push_back(file);
 }

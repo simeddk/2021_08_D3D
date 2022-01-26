@@ -12,7 +12,7 @@
 
 void Main::Initialize()
 {
-	Push(new WeatherDemo());
+	Push(new BillboardDemo());
 }
 
 

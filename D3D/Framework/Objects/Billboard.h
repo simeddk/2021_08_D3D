@@ -5,28 +5,26 @@
 class Billboard : public Renderer
 {
 public:
-	Billboard(wstring textureFile);
+	Billboard(Shader* shader);
 	~Billboard();
 
 	void Render();
 
-	void Add(Vector3& position, Vector2& scale);
+	void Add(Vector3& position, Vector2& scale, UINT mapIndex);
+	void AddTexture(wstring file);
 
 private:
 	struct VertexBillboard
 	{
 		Vector3 Position;
-		Vector2 Uv;
 		Vector2 Scale;
+		UINT MapIndex;
 	};
 
 private:
-	VertexBillboard* vertices;
-	UINT* indices;
+	vector<VertexBillboard> vertices;
 
-	UINT prevCount = 0;
-	UINT drawCount = 0;
-
-	Texture* diffuseMap;
+	vector<wstring> textureFiles;
+	TextureArray* textureArray = nullptr;
 	ID3DX11EffectShaderResourceVariable* sDiffuseMap;
 };

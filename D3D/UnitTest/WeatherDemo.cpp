@@ -138,6 +138,7 @@ void WeatherDemo::Render()
 	kachujin->Render();
 	weapon->Render();
 
+	billboard->Pass(3);
 	billboard->Render();
 	
 	switch (weatherType)
@@ -376,13 +377,13 @@ void WeatherDemo::SpotLights()
 
 void WeatherDemo::Billboards()
 {
-	billboard = new Billboard(L"Terrain/grass_07.tga");
+	billboard = new Billboard(shader);
 	for (UINT i = 0; i < 2400; i++)
 	{
 		Vector2 position = Math::RandomVec2(-60.0f, +60.0f);
 		Vector2 scale = Math::RandomVec2(1.f, 3.f);
 
-		billboard->Add(Vector3(position.x, scale.y * 0.5f , position.y), scale);
+		billboard->Add(Vector3(position.x, scale.y * 0.5f , position.y), scale, 0);
 	}
 }
 

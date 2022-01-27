@@ -151,5 +151,5 @@ technique11 T0
 	P_RS_BS_VGP(P8, CullMode_None, AlphaBlend_AlphaToCoverageEnable, VS_Billboard, GS_Billboard_Cross, PS_Billboard)
 
 	//ÃÑº»»ê
-	P_RS_DSS_BS_VGP(P9, CullMode_None, PixelDepthEnable_False, AlphaBlend, VS_Billboard, GS_Billboard_Cross, PS_Billboard)
+	P_RS_DSS_BS_VGP(P9, CullMode_None, PixelDepthEnable_False, AlphaBlend_AlphaToCoverageEnable, VS_Billboard, GS_Billboard_Cross, PS_Billboard)
 }

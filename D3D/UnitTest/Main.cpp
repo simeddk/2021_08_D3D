@@ -8,11 +8,12 @@
 #include "ObbDemo.h"
 #include "BillboardDemo.h"
 #include "WeatherDemo.h"
+#include "RtvDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new BillboardDemo());
+	Push(new RtvDemo());
 }
 
 

@@ -9,11 +9,12 @@
 #include "BillboardDemo.h"
 #include "WeatherDemo.h"
 #include "RtvDemo.h"
+#include "PostProcessDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new RtvDemo());
+	Push(new PostProcessDemo());
 }
 
 

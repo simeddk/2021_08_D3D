@@ -245,7 +245,6 @@ void Particle::Render()
 		}
 	}
 
-	D3D11_DEPTH_STENCIL_DESC;
 }
 
 void Particle::SetTexture(wstring file)

@@ -13,8 +13,8 @@ VertexOutput VS(float4 position : Position)
     VertexOutput output;
 
     output.Position = position;
-    output.Uv.x = position * 0.5f + 0.5f;
-    output.Uv.y = -position * 0.5f + 0.5f;
+    output.Uv.x = position.x * 0.5f + 0.5f;
+    output.Uv.y = -position.y * 0.5f + 0.5f;
 
     return output;
 }

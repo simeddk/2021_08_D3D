@@ -1,7 +1,6 @@
 #pragma once
 #include "Systems/IExecute.h"
 
-//TODO 03
 class PostProcessDemo : public IExecute
 {
 public:
@@ -31,6 +30,8 @@ private:
 
 	RenderTarget* renderTarget;
 	DepthStencil* depthStencil;
+
+	PostProcess* postProcess;
 
 	CubeSky* sky;
 

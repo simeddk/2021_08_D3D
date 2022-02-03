@@ -14,6 +14,9 @@ void PostProcessDemo::Initialize()
 	
 	sky = new CubeSky(L"Environment/SunsetCube1024.dds");
 
+	postProcess = new PostProcess(L"34_PostProcess.fxo");
+	postProcess->SRV(renderTarget->SRV());
+
 	Mesh();
 	Airplane();
 	Kachujin();
@@ -111,11 +114,7 @@ void PostProcessDemo::PreRender()
 
 void PostProcessDemo::Render()
 {
-	if (Keyboard::Get()->Down(VK_SPACE))
-		renderTarget->SaveTexture(L"../Screenshot.png");
-
-	shader->AsSRV("DiffuseMap")->SetResource(renderTarget->SRV());
-	cube->Render();
+	postProcess->Render();
 }
 
 void PostProcessDemo::Mesh()

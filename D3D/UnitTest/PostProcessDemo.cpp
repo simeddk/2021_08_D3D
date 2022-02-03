@@ -9,9 +9,16 @@ void PostProcessDemo::Initialize()
 	
 	shader = new Shader(L"33_Billboard.fxo");
 	
-	renderTarget = new RenderTarget();
-	depthStencil = new DepthStencil();
-	
+	float w = D3D::Width(), h = D3D::Height();
+	renderTarget = new RenderTarget(w, h);
+	depthStencil = new DepthStencil(w, h);
+	viewport = new Viewport(w, h);
+
+	render2D = new Render2D();
+	render2D->GetTransform()->Position(177, 620, 0);
+	render2D->GetTransform()->Scale(355, 200, 1);
+	render2D->SRV(renderTarget->SRV());
+
 	sky = new CubeSky(L"Environment/SunsetCube1024.dds");
 
 	postProcess = new PostProcess(L"34_PostProcess.fxo");
@@ -54,12 +61,103 @@ void PostProcessDemo::Destroy()
 	
 	SafeDelete(renderTarget);
 	SafeDelete(depthStencil);
+	SafeDelete(viewport);
+
+	SafeDelete(postProcess);
+	SafeDelete(render2D);
 }
 
 void PostProcessDemo::Update()
 {
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
+
+	//포스트프로세스 테스트
+	static UINT pass = postProcess->GetShader()->PassCount() - 1;
+	const char* processName[] =
+	{
+		"Diffuse", //원본색
+		"Inverse", //반전색
+		"Desaturation", //무채색
+		"Desaturation2", //무채색(색온도에 따른 무채색)
+		"Hercules", //허큘리스(컬러 매트릭스)
+		"Saturation", //고채도
+		"Sharpness", //외곽선 강조
+		"Wiggle", //화면 흔들림
+		"Vignette", //망원경 효과
+		"Interace", //스캔라인
+		"LensDistortion" //컬러채널 분리
+	};
+	ImGui::LabelText("Name", "%s", processName[pass]);
+
+	ImGui::InputInt("Process Select", (int*)&pass);
+	pass %= postProcess->GetShader()->PassCount();
+	postProcess->Pass(pass);
+
+	Vector2 pixelSize = Vector2(1 / D3D::Width(), 1 / D3D::Height());
+	postProcess->GetShader()->AsVector("PixelSize")->SetFloatVector(pixelSize);
+
+	switch (pass)
+	{
+	case 5 : //Saturation
+	{
+		ImGui::Separator();
+
+		static float Saturation = 3.0f;
+		ImGui::SliderFloat("Saturation", &Saturation, 0.0f, 5.0f);
+		postProcess->GetShader()->AsScalar("Saturation")->SetFloat(Saturation);
+	}break;
+
+	case 6 : //Sharpness
+	{
+		ImGui::Separator();
+
+		static float Sharpness = 0.5f;
+		ImGui::SliderFloat("Sharpness", &Sharpness, 0.f, 1.f);
+		postProcess->GetShader()->AsScalar("Sharpness")->SetFloat(Sharpness);
+
+	}
+	break;
+
+	case 7 : //Wiggle
+	{
+		ImGui::Separator();
+
+		static float OffsetX = 10.f;
+		ImGui::InputFloat("OffsetX", &OffsetX, 0.1f);
+
+		static float OffsetY = 10.f;
+		ImGui::InputFloat("OffsetY", &OffsetY, 0.1f);
+		postProcess->GetShader()->AsVector("WiggleOffset")->SetFloatVector(Vector2(OffsetX, OffsetY));
+
+		static float AmountX = 0.01f;
+		ImGui::InputFloat("AmountX", &AmountX, 0.001f);
+
+		static float AmountY = 0.01f;
+		ImGui::InputFloat("AmountY", &AmountY, 0.001f);
+		postProcess->GetShader()->AsVector("WiggleAmount")->SetFloatVector(Vector2(AmountX, AmountY));
+	}
+	break;
+
+	case 8 : 
+	{
+		ImGui::Separator();
+
+		static float Power = 2.0f;
+		ImGui::InputFloat("Power", &Power, 0.05f);
+		postProcess->GetShader()->AsScalar("Power")->SetFloat(Power);
+
+		static float ScaleX = 2.0f;
+		ImGui::InputFloat("ScaleX", &ScaleX, 0.05f);
+
+		static float ScaleY = 2.0f;
+		ImGui::InputFloat("ScaleY", &ScaleY, 0.05f);
+
+		postProcess->GetShader()->AsVector("Scale")->SetFloatVector(Vector2(ScaleX, ScaleY));
+	}
+	break;
+
+	}//switch
 
 	sky->Update();
 
@@ -82,12 +180,15 @@ void PostProcessDemo::Update()
 	weapon->UpdateSubResource();
 	weapon->Update();
 
+	postProcess->Update();
+	render2D->Update();
 	billboard->Update();
 }
 
 void PostProcessDemo::PreRender()
 {
 	renderTarget->PreRender(depthStencil);
+	viewport->RSSetViewport();
 
 	sky->Render();
 
@@ -115,6 +216,7 @@ void PostProcessDemo::PreRender()
 void PostProcessDemo::Render()
 {
 	postProcess->Render();
+	render2D->Render();
 }
 
 void PostProcessDemo::Mesh()

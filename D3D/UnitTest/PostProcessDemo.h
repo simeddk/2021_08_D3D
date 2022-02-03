@@ -30,8 +30,10 @@ private:
 
 	RenderTarget* renderTarget;
 	DepthStencil* depthStencil;
+	Viewport* viewport;
 
 	PostProcess* postProcess;
+	Render2D* render2D;
 
 	CubeSky* sky;
 

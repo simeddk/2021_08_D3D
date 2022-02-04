@@ -69,6 +69,8 @@ void PostProcessDemo::Destroy()
 
 void PostProcessDemo::Update()
 {
+	ImGui::Text("%d", postProcess->GetShader()->PassCount());
+	
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
@@ -139,7 +141,7 @@ void PostProcessDemo::Update()
 	}
 	break;
 
-	case 8 : 
+	case 8 : //Vignette
 	{
 		ImGui::Separator();
 
@@ -154,6 +156,42 @@ void PostProcessDemo::Update()
 		ImGui::InputFloat("ScaleY", &ScaleY, 0.05f);
 
 		postProcess->GetShader()->AsVector("Scale")->SetFloatVector(Vector2(ScaleX, ScaleY));
+	}
+	break;
+
+	case 9: //Interace
+	{
+		ImGui::Separator();
+
+		static float Strength = 1.0f;
+		ImGui::InputFloat("Strength", &Strength, 0.01f);
+		postProcess->GetShader()->AsScalar("Strength")->SetFloat(Strength);
+
+		static int InteraceWeight = 2;
+		ImGui::InputInt("InteraceWeight", &InteraceWeight);
+		postProcess->GetShader()->AsScalar("InteraceWeight")->SetInt(InteraceWeight);
+	}
+	break;
+
+	case 10: //LensDistortion
+	{
+		ImGui::Separator();
+
+		static float LensPower = 1.0f;
+		ImGui::InputFloat("LensPower", &LensPower, 0.01f);
+		postProcess->GetShader()->AsScalar("LensPower")->SetFloat(LensPower);
+
+		static float Distortion = -0.02f;
+		ImGui::InputFloat("Distortion", &Distortion, 0.001f);
+
+		static float ChromaticDistortion = -0.01f;
+		ImGui::InputFloat("ChromaticDistortion", &ChromaticDistortion, 0.001f);
+
+		Vector3 temp = Vector3(Distortion, 0, 0); //r.uv
+		temp.y = Distortion + ChromaticDistortion; //g.uv
+		temp.z = Distortion + 2 * ChromaticDistortion; //b.uv
+
+		postProcess->GetShader()->AsVector("Distortion")->SetFloatVector(temp);
 	}
 	break;
 

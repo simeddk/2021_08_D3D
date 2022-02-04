@@ -157,10 +157,49 @@ float4 PS_Interace(VertexOutput input) : SV_Target
     float height = 1.0f / PixelSize.y;
     int value = (int) ((floor(input.Uv.y * height) % InteraceWeight) / (InteraceWeight / 2));
 
-	//TODO
+	[flatten]
+    if (value)
+    {
+        float3 grayScale = float3(0.2627f, 0.678f, 0.0593f);
+        float desaturation = dot(color.rgb, grayScale);
+
+        desaturation = min(0.9f, desaturation);
+        
+        color.rgb = lerp(color.rgb, color.rgb * desaturation, Strength);
+    }
 
     return color;
 }
+
+//-----------------------------------------------------------------------------
+//PS_LensDistortion
+//-----------------------------------------------------------------------------
+float LensPower;
+float3 Distortion;
+float4 PS_LensDistortion(VertexOutput input) : SV_Target
+{
+    float2 uv = input.Uv * 2 - 1;
+
+    float2 vpSize = float2(1 / PixelSize.x, 1 / PixelSize.y);
+    float aspect = vpSize.x / vpSize.y;
+
+    float radiusSquared = aspect * aspect + uv.x * uv.x + uv.y * uv.y;
+    float radius = sqrt(radiusSquared);
+
+    float3 factor = Distortion * pow(abs(radius + 1e-4f), LensPower) + 1;
+
+    float2 r = (factor.r * uv + 1) * 0.5f;
+    float2 g = (factor.g * uv + 1) * 0.5f;
+    float2 b = (factor.b * uv + 1) * 0.5f;
+
+    float4 color = 0;
+    color.r = DiffuseMap.Sample(LinearSampler, r).r;
+    color.g = DiffuseMap.Sample(LinearSampler, g).g;
+    color.b = DiffuseMap.Sample(LinearSampler, b).b;
+
+    return color;
+}
+
 
 technique11 T0
 {
@@ -173,4 +212,6 @@ technique11 T0
 	P_VP(P6, VS, PS_Sharpness)
 	P_VP(P7, VS, PS_Wiggle)
 	P_VP(P8, VS, PS_Vignette)
+	P_VP(P9, VS, PS_Interace)
+	P_VP(P10, VS, PS_LensDistortion)
 }

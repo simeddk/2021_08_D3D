@@ -135,6 +135,7 @@
     <ClCompile Include="FrameworkDemo.cpp" />
     <ClCompile Include="LightingDemo.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MrtDemo.cpp" />
     <ClCompile Include="NormalMapDemo.cpp" />
     <ClCompile Include="ObbDemo.cpp" />
     <ClCompile Include="PostProcessDemo.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="FrameworkDemo.h" />
     <ClInclude Include="LightingDemo.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="MrtDemo.h" />
     <ClInclude Include="NormalMapDemo.h" />
     <ClInclude Include="ObbDemo.h" />
     <ClInclude Include="PostProcessDemo.h" />

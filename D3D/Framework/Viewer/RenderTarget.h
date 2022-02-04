@@ -12,6 +12,7 @@ public:
 	void SaveTexture(wstring file);
 
 	void PreRender(class DepthStencil* depthStencil);
+	static void PreRender(RenderTarget** targets, UINT count, class DepthStencil* depthStencil);
 
 private:
 	float width, height;

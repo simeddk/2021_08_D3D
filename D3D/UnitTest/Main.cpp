@@ -10,11 +10,12 @@
 #include "WeatherDemo.h"
 #include "RtvDemo.h"
 #include "PostProcessDemo.h"
+#include "MrtDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new PostProcessDemo());
+	Push(new MrtDemo());
 }
 
 

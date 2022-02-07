@@ -11,11 +11,12 @@
 #include "RtvDemo.h"
 #include "PostProcessDemo.h"
 #include "MrtDemo.h"
+#include "BlurDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new MrtDemo());
+	Push(new BlurDemo());
 }
 
 

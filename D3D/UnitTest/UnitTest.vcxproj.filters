@@ -36,6 +36,9 @@
     <ClCompile Include="BlurDemo.cpp">
       <Filter>RenderTarget</Filter>
     </ClCompile>
+    <ClCompile Include="BloomDemo.cpp">
+      <Filter>RenderTarget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -71,6 +74,9 @@
       <Filter>RenderTarget</Filter>
     </ClInclude>
     <ClInclude Include="BlurDemo.h">
+      <Filter>RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="BloomDemo.h">
       <Filter>RenderTarget</Filter>
     </ClInclude>
   </ItemGroup>

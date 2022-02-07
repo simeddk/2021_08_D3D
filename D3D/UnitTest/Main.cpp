@@ -12,11 +12,12 @@
 #include "PostProcessDemo.h"
 #include "MrtDemo.h"
 #include "BlurDemo.h"
+#include "BloomDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new BlurDemo());
+	Push(new BloomDemo());
 }
 
 

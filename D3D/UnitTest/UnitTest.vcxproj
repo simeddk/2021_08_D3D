@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="AreaLightingDemo.cpp" />
     <ClCompile Include="BillboardDemo.cpp" />
+    <ClCompile Include="BloomDemo.cpp" />
     <ClCompile Include="BlurDemo.cpp" />
     <ClCompile Include="FrameworkDemo.cpp" />
     <ClCompile Include="LightingDemo.cpp" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="AreaLightingDemo.h" />
     <ClInclude Include="BillboardDemo.h" />
+    <ClInclude Include="BloomDemo.h" />
     <ClInclude Include="BlurDemo.h" />
     <ClInclude Include="FrameworkDemo.h" />
     <ClInclude Include="LightingDemo.h" />

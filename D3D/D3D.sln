@@ -52,6 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{84
 		_Shaders\34_PostProcess.fx = _Shaders\34_PostProcess.fx
 		_Shaders\35_Mrt.fx = _Shaders\35_Mrt.fx
 		_Shaders\36_Blur.fx = _Shaders\36_Blur.fx
+		_Shaders\37_Bloom.fx = _Shaders\37_Bloom.fx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}"

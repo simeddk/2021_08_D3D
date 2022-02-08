@@ -155,6 +155,9 @@
     <ClCompile Include="Objects\PostProcess.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\EnvCube.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -315,6 +318,9 @@
       <Filter>Viewer</Filter>
     </ClInclude>
     <ClInclude Include="Objects\PostProcess.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\EnvCube.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

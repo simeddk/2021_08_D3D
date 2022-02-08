@@ -35,7 +35,7 @@ void SetMeshWorld(inout matrix world, VertexMesh input)
 
 MeshOutput VS_Mesh(VertexMesh input)
 {
-    MeshOutput output;
+    MeshOutput output = (MeshOutput) 0;
     SetMeshWorld(World, input);
 	VS_GENERATE
 
@@ -83,7 +83,7 @@ void SetModelWorld(inout matrix world, VertexModel input)
 
 MeshOutput VS_Model(VertexModel input)
 {
-    MeshOutput output;
+    MeshOutput output = (MeshOutput) 0;
 
     SetModelWorld(World, input);
 	VS_GENERATE
@@ -273,7 +273,7 @@ void SetBlendingWorld(inout matrix world, VertexModel input)
 
 MeshOutput VS_Animation(VertexModel input)
 {
-    MeshOutput output;
+    MeshOutput output = (MeshOutput) 0;
 
     World = input.Transform;
 
@@ -285,4 +285,63 @@ MeshOutput VS_Animation(VertexModel input)
     VS_GENERATE
 
     return output;
+}
+
+//-----------------------------------------------------------------------------
+//EnvCubeMap
+//-----------------------------------------------------------------------------
+struct EnvCubeDesc
+{
+    matrix Views[6];
+    matrix Projection;
+};
+
+cbuffer CB_EnvCube
+{
+    EnvCubeDesc EnvCube;
+}
+
+[maxvertexcount(18)]
+void GS_EnvCube_PreRender(triangle MeshOutput input[3], inout TriangleStream<MeshOutput> stream)
+{
+    int vertex = 0;
+    MeshOutput output = (MeshOutput) 0;
+
+	[unroll(6)]
+    for (int i = 0; i < 6; i++)
+    {
+        output.TargetIndex = i;
+
+        [unroll(3)]
+        for (vertex = 0; vertex < 3; vertex++)
+        {
+            output.Position = mul(float4(input[vertex].wPosition, 1), EnvCube.Views[i]);
+            output.Position = mul(output.Position, EnvCube.Projection);
+
+            output.oPosition = input[vertex].oPosition;
+            output.wPosition = input[vertex].wPosition;
+            output.Normal = input[vertex].Normal;
+            output.Tangent = input[vertex].Tangent;
+            output.Uv = input[vertex].Uv;
+            output.Color = input[vertex].Color;
+
+            stream.Append(output);
+        }
+
+        stream.RestartStrip();
+
+    }
+}
+
+//-----------------------------------------------------------------------------
+//EnvCube
+//-----------------------------------------------------------------------------
+float4 PS_EnvCube(MeshOutput input) : SV_Target
+{
+    return EnvCubeMap.Sample(LinearSampler, input.oPosition);
+}
+
+float4 PS_Sky(MeshOutput input) : SV_Target
+{
+    return SkyCubeMap.Sample(LinearSampler, input.oPosition);
 }

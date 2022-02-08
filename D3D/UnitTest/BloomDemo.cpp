@@ -10,7 +10,7 @@ void BloomDemo::Initialize()
 	shader = new Shader(L"33_Billboard.fxo");
 	
 	float w = D3D::Width(), h = D3D::Height();
-	for (UINT i = 0 ; i <5; i++)
+	for (UINT i = 0 ; i < 6; i++)
 		renderTarget[i] = new RenderTarget(w, h);
 
 	depthStencil = new DepthStencil(w, h);
@@ -61,7 +61,7 @@ void BloomDemo::Destroy()
 
 	SafeDelete(billboard);
 	
-	for (UINT i = 0 ; i < 5; i++)
+	for (UINT i = 0 ; i < 6; i++)
 		SafeDelete(renderTarget[i]);
 
 	SafeDelete(depthStencil);
@@ -165,12 +165,51 @@ void BloomDemo::PreRender()
 		postProcess->SRV(renderTarget[2]->SRV());
 		postProcess->Render();
 	}
+
+	//Composite
+	{
+		static float BlurRatio = 0.5f;
+		ImGui::SliderFloat("BlurRatio", &BlurRatio, 0.0f, 1.0f);
+		postProcess->GetShader()->AsScalar("BlurRatio")->SetFloat(BlurRatio);
+
+		postProcess->GetShader()->AsSRV("LuminosityMap")->SetResource(renderTarget[1]->SRV());
+		postProcess->GetShader()->AsSRV("BlurMap")->SetResource(renderTarget[3]->SRV());
+
+		renderTarget[4]->PreRender(depthStencil);
+		postProcess->Pass(4);
+		postProcess->SRV(renderTarget[0]->SRV());
+		postProcess->Render();
+	}
+
+	//ColorGrading
+	{
+		ImGui::Separator();
+
+		static float Grading = 0.5f;
+		ImGui::InputFloat("Grading", &Grading, 0.01f);
+		postProcess->GetShader()->AsScalar("Grading")->SetFloat(Grading);
+
+		static float Correlation = 0.5f;
+		ImGui::InputFloat("Correlation", &Correlation, 0.01f);
+		postProcess->GetShader()->AsScalar("Correlation")->SetFloat(Correlation);
+
+		static float Concentration = 0.5f;
+		ImGui::InputFloat("Concentration", &Concentration, 0.01f);
+		postProcess->GetShader()->AsScalar("Concentration")->SetFloat(Concentration);
+
+		ImGui::Separator();
+
+		renderTarget[5]->PreRender(depthStencil);
+		postProcess->Pass(5);
+		postProcess->SRV(renderTarget[4]->SRV());
+		postProcess->Render();
+	}
 	
 }
 
 void BloomDemo::Render()
 {
-	static UINT rtvIndex = 1;
+	static UINT rtvIndex = 5;
 	UINT indexCount = ARRAYSIZE(renderTarget);
 	ImGui::InputInt("RTV Index", (int*)&rtvIndex);
 	rtvIndex %= indexCount;

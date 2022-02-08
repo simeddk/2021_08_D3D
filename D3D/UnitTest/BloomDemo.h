@@ -28,7 +28,8 @@ private:
 private:
 	Shader* shader;
 
-	RenderTarget* renderTarget[5]; //[0]:원본, [1]:루미노시티, [2]가로블러, [3]세로블러 [4]다 합친 결과
+	//[0]:원본, [1]:루미노시티, [2]가로블러, [3]세로블러 [4]다 합친 결과 [5]컬러그레이딩
+	RenderTarget* renderTarget[6]; 
 	DepthStencil* depthStencil;
 	Viewport* viewport;
 

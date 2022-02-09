@@ -16,6 +16,7 @@ void EnvCubeDemo::Initialize()
 	Mesh();
 	Airplane();
 	Kachujin();
+	Kachujin2();
 	Weapon();
 
 	PointLights();
@@ -42,6 +43,7 @@ void EnvCubeDemo::Destroy()
 	//Mesh
 	SafeDelete(airplane);
 	SafeDelete(kachujin);
+	SafeDelete(kachujin2);
 	SafeDelete(weapon);
 
 	SafeDelete(envCube);
@@ -53,10 +55,24 @@ void EnvCubeDemo::Update()
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
+	//굴절, 프리넬 테스트
+	{
+		ImGui::InputInt("Type", (int*)&envCube->Type());
+		envCube->Type() %= 4;
+
+		ImGui::SliderFloat("Alpha", &envCube->Alpha(), 0, 1);
+		ImGui::InputFloat("RefractAmount", &envCube->RefractAmount(), 0.01f);
+
+		ImGui::InputFloat("FresnelAmount", &envCube->FresnelAmount(), 0.01f);
+		ImGui::InputFloat("FresnelBias", &envCube->FresnelBias(), 0.01f);
+		ImGui::InputFloat("FresnelScale", &envCube->FresnelScale(), 0.01f);
+	}
+
 	//Sphere2 이동
 	{
 		Vector3 position;
-		sphere2->GetTransform(0)->Position(&position);
+		//sphere2->GetTransform(0)->Position(&position);
+		kachujin2->GetTrasnform(0)->Position(&position);
 
 		if (Keyboard::Get()->Press('L'))
 			position.x += 20 * Time::Delta();
@@ -73,8 +89,10 @@ void EnvCubeDemo::Update()
 		else if (Keyboard::Get()->Press('U'))
 			position.y -= 20 * Time::Delta();
 
-		sphere2->GetTransform(0)->Position(position);
-		sphere2->UpdateSubResource();
+		/*sphere2->GetTransform(0)->Position(position);
+		sphere2->UpdateSubResource();*/
+		kachujin2->GetTrasnform(0)->Position(position);
+		kachujin2->UpdateSubResource();
 	}
 
 	sky->Update();
@@ -87,6 +105,7 @@ void EnvCubeDemo::Update()
 
 	airplane->Update();
 	kachujin->Update();
+	kachujin2->Update();
 
 	Matrix worlds[MAX_MODEL_TRANSFORMS];
 	for (UINT i = 0; i < kachujin->GetTransformCount(); i++)
@@ -103,9 +122,11 @@ void EnvCubeDemo::Update()
 void EnvCubeDemo::PreRender()
 {
 	Vector3 p, s;
-	sphere2->GetTransform(0)->Position(&p);
-	sphere2->GetTransform(0)->Scale(&s);
-
+	//sphere2->GetTransform(0)->Position(&p);
+	//sphere2->GetTransform(0)->Scale(&s);
+	kachujin2->GetTrasnform(0)->Position(&p);
+	kachujin2->GetTrasnform(0)->Scale(&s);
+	
 	envCube->PreRender(p, s);
 	{
 		sky->Pass(0);
@@ -157,8 +178,11 @@ void EnvCubeDemo::Render()
 	weapon->Render();
 
 	envCube->Render();
+	wall->Render();
 	sphere2->Pass(8);
 	sphere2->Render();
+	kachujin2->Pass(10);
+	kachujin2->Render();
 }
 
 void EnvCubeDemo::Mesh()
@@ -303,6 +327,29 @@ void EnvCubeDemo::Kachujin()
 
 	animators.push_back(kachujin);
 
+}
+
+void EnvCubeDemo::Kachujin2()
+{
+	kachujin2 = new ModelAnimator(shader);
+	kachujin2->ReadMesh(L"Kachujin/Mesh");
+	kachujin2->ReadMaterial(L"Kachujin/Mesh");
+	kachujin2->ReadClip(L"Kachujin/Idle");
+	kachujin2->ReadClip(L"Kachujin/Walk");
+	kachujin2->ReadClip(L"Kachujin/Run");
+	kachujin2->ReadClip(L"Kachujin/Slash");
+	kachujin2->ReadClip(L"Kachujin/Uprock");
+
+	Transform* transform = nullptr;
+
+	transform = kachujin2->AddTransform();
+	transform->Position(0, 0, -40);
+	transform->Scale(0.075f, 0.075f, 0.075f);
+	kachujin2->PlayTweenMode(0, 4, 1.0f);
+
+	kachujin2->UpdateSubResource();
+
+	animators.push_back(kachujin2);
 }
 
 void EnvCubeDemo::Weapon()

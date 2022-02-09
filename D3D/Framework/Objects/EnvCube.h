@@ -12,9 +12,29 @@ public:
 	ID3D11ShaderResourceView* SRV() { return srv; }
 	Projection* GetProjection() { return projection; }
 
+	UINT& Type() { return desc.Type; }
+	void Type(UINT val) { desc.Type = val; }
+
+	float& Alpha() { return desc.Alpha; }
+	float& RefractAmount() { return desc.RefractAmount; }
+
+	float& FresnelAmount() { return desc.FresnelAmount; }
+	float& FresnelBias() { return desc.FresnelBias; }
+	float& FresnelScale() { return desc.FresnelScale; }
+
 private:
 	struct Desc
 	{
+		UINT Type = 0;
+		float Alpha = 1.0f;
+		float RefractAmount = 0.52f;
+		float Padding;
+
+		float FresnelAmount = 1.0f;
+		float FresnelBias = 1.0f;
+		float FresnelScale = 1.0f;
+		float Padding2;
+
 		Matrix Views[6];
 		Matrix Projection;
 

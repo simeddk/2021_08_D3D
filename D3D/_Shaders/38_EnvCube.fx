@@ -25,7 +25,7 @@ technique11 T0
 	P_VP(P7, VS_Animation, PS)
 
 	//EnvCube Render - 큐브맵 텍스쳐가 발려진 물체
-	P_VP(P8, VS_Mesh, PS_EnvCube)
-	P_VP(P9, VS_Model, PS_EnvCube)
-	P_VP(P10, VS_Animation, PS_EnvCube)
+	P_BS_VP(P8, AlphaBlend, VS_Mesh, PS_EnvCube)
+	P_BS_VP(P9, AlphaBlend, VS_Model, PS_EnvCube)
+	P_BS_VP(P10,AlphaBlend, VS_Animation, PS_EnvCube)
 }

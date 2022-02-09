@@ -16,6 +16,7 @@ private:
 	void Mesh();
 	void Airplane();
 	void Kachujin();
+	void Kachujin2();
 	void Weapon();
 
 	void PointLights();
@@ -44,6 +45,7 @@ private:
 	ModelRender* airplane;
 
 	ModelAnimator* kachujin;
+	ModelAnimator* kachujin2;
 	ModelRender* weapon;
 	Transform* weaponInitTransform;
 

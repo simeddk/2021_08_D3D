@@ -292,6 +292,16 @@ MeshOutput VS_Animation(VertexModel input)
 //-----------------------------------------------------------------------------
 struct EnvCubeDesc
 {
+    uint Type;
+    float Alpha;
+    float RefractAmount;
+    float Padding;
+
+    float FresnelAmount;
+    float FresnelBias;
+    float FresnelScale;
+    float Padding2;
+
     matrix Views[6];
     matrix Projection;
 };
@@ -338,7 +348,48 @@ void GS_EnvCube_PreRender(triangle MeshOutput input[3], inout TriangleStream<Mes
 //-----------------------------------------------------------------------------
 float4 PS_EnvCube(MeshOutput input) : SV_Target
 {
-    return EnvCubeMap.Sample(LinearSampler, input.oPosition);
+    float4 env = 0;
+	
+    float3 view = normalize(input.wPosition - ViewPosition());
+    float3 normal = normalize(input.Normal);
+    float3 reflection = reflect(view, normal);
+    float3 refraction = refract(view, normal, EnvCube.RefractAmount);
+
+	//°Á Ä«¸Þ¶ó·Î ºñÃá °á°ú
+    if (EnvCube.Type == 0)
+    {
+        env = EnvCubeMap.Sample(LinearSampler, input.oPosition);
+        env.a = 1.0f;
+    }
+
+	//¹Ý»ç
+    else if (EnvCube.Type == 1)
+    {
+        env = EnvCubeMap.Sample(LinearSampler, reflection);
+        env.a = EnvCube.Alpha;
+    }
+
+	//±¼Àý
+    else if (EnvCube.Type == 2)
+    {
+        env = EnvCubeMap.Sample(LinearSampler, -refraction);
+        env.a = EnvCube.Alpha;
+    }
+
+	//ÇÁ¸®³Ú
+    else if (EnvCube.Type == 3)
+    {
+        float4 color = PS_AllLight(input);
+        env = EnvCubeMap.Sample(LinearSampler, reflection);
+
+        float4 fresnel = EnvCube.FresnelBias + (1.0f - EnvCube.FresnelScale) * pow(abs(1.0f - dot(view, normal)), EnvCube.FresnelAmount);
+        env = EnvCube.FresnelAmount * env + lerp(color, env, fresnel);
+        env *= 0.75f;
+
+        env.a = EnvCube.Alpha;
+    }
+
+    return env;
 }
 
 float4 PS_Sky(MeshOutput input) : SV_Target

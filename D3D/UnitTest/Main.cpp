@@ -13,11 +13,12 @@
 #include "MrtDemo.h"
 #include "BlurDemo.h"
 #include "BloomDemo.h"
+#include "EnvCubeDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new BloomDemo());
+	Push(new EnvCubeDemo());
 }
 
 

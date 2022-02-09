@@ -3,7 +3,7 @@
 class CubeSky
 {
 public:
-	CubeSky(wstring file);
+	CubeSky(wstring file, Shader* shader = nullptr);
 	~CubeSky();
 
 	void Update();
@@ -11,11 +11,15 @@ public:
 
 public:
 	Shader* GetShader() { return shader; }
-	void Pass(UINT val) { sphere->Pass(val); }
+	void Pass(UINT val) { pass = val; }
 
 private:
 	Shader* shader;
 	MeshRender* sphere;
+	
+	UINT pass = 0;
+	bool bCreateShader = false;
+
 
 	ID3D11ShaderResourceView* srv;
 	ID3DX11EffectShaderResourceVariable* sSrv;

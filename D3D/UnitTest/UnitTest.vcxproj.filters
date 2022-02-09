@@ -39,6 +39,9 @@
     <ClCompile Include="BloomDemo.cpp">
       <Filter>RenderTarget</Filter>
     </ClCompile>
+    <ClCompile Include="EnvCubeDemo.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -78,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="BloomDemo.h">
       <Filter>RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="EnvCubeDemo.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

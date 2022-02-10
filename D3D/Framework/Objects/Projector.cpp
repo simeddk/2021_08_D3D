@@ -7,7 +7,11 @@ Projector::Projector(Shader * shader, wstring mapFile, float width, float height
 	, height(height)
 {
 	camera = new Fixity();
-	projection = new Perspective(width, height, 10, 100, Math::PI * 0.25f);
+	camera->Position(0, 30, 0);
+	camera->Rotation(Math::PI * 0.5f, 0, 0);
+
+	//projection = new Perspective(width, height, 10, 100, Math::PI * 0.25f);
+	projection = new Orthographic(width, height);
 
 	map = new Texture(mapFile);
 	buffer = new ConstantBuffer(&desc, sizeof(Desc));

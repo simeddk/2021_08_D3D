@@ -142,6 +142,7 @@
     <ClCompile Include="NormalMapDemo.cpp" />
     <ClCompile Include="ObbDemo.cpp" />
     <ClCompile Include="PostProcessDemo.cpp" />
+    <ClCompile Include="ProjectionTextureDemo.cpp" />
     <ClCompile Include="RtvDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="WeatherDemo.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="NormalMapDemo.h" />
     <ClInclude Include="ObbDemo.h" />
     <ClInclude Include="PostProcessDemo.h" />
+    <ClInclude Include="ProjectionTextureDemo.h" />
     <ClInclude Include="RtvDemo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WeatherDemo.h" />

@@ -87,6 +87,13 @@ SamplerState LinearSampler
     AddressV = Wrap;
 };
 
+SamplerState NoTileSampler
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Border;
+    AddressV = Border;
+};
+
 RasterizerState FillMode_WireFrame
 {
     FillMode = WireFrame;

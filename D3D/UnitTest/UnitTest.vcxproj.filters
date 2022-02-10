@@ -42,6 +42,9 @@
     <ClCompile Include="EnvCubeDemo.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectionTextureDemo.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -83,6 +86,9 @@
       <Filter>RenderTarget</Filter>
     </ClInclude>
     <ClInclude Include="EnvCubeDemo.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectionTextureDemo.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

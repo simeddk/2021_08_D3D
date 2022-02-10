@@ -1,14 +1,13 @@
 #include "stdafx.h"
-#include "ProjectionTextureDemo.h"
+#include "DepthDemo.h"
 
-void ProjectionTextureDemo::Initialize()
+void DepthDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(20, 0, 0);
 	Context::Get()->GetCamera()->Position(1, 36, -85);
 	((Freedom*)Context::Get()->GetCamera())->Speed(50, 2);
 	
-	shader = new Shader(L"39_Projector.fxo");
-	projector = new Projector(shader, L"Window_Test.png", 20, 20);
+	shader = new Shader(L"40_Depth.fxo");
 
 	sky = new CubeSky(L"Environment/SunsetCube1024.dds", shader);
 
@@ -21,7 +20,7 @@ void ProjectionTextureDemo::Initialize()
 	SpotLights();
 }
 
-void ProjectionTextureDemo::Destroy()
+void DepthDemo::Destroy()
 {
 	SafeDelete(shader);
 	SafeDelete(sky);
@@ -43,16 +42,14 @@ void ProjectionTextureDemo::Destroy()
 	SafeDelete(kachujin);
 	SafeDelete(weapon);
 
-	SafeDelete(projector);
 
 }
 
-void ProjectionTextureDemo::Update()
+void DepthDemo::Update()
 {
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
-	projector->Update();
 
 	sky->Update();
 
@@ -76,17 +73,15 @@ void ProjectionTextureDemo::Update()
 	weapon->Update();
 }
 
-void ProjectionTextureDemo::PreRender()
+void DepthDemo::PreRender()
 {
 	
 }
 
-void ProjectionTextureDemo::Render()
+void DepthDemo::Render()
 {
-	projector->Render();
-
-	sky->Pass(0);
-	sky->Render();
+	/*sky->Pass(0);
+	sky->Render();*/
 
 	Pass(1);
 
@@ -107,7 +102,7 @@ void ProjectionTextureDemo::Render()
 	weapon->Render();
 }
 
-void ProjectionTextureDemo::Mesh()
+void DepthDemo::Mesh()
 {
 	//Create Materiald
 	{
@@ -186,7 +181,7 @@ void ProjectionTextureDemo::Mesh()
 	meshes.push_back(sphere);
 }
 
-void ProjectionTextureDemo::Airplane()
+void DepthDemo::Airplane()
 {
 	airplane = new ModelRender(shader);
 	airplane->ReadMesh(L"B787/Airplane");
@@ -200,7 +195,7 @@ void ProjectionTextureDemo::Airplane()
 	models.push_back(airplane);
 }
 
-void ProjectionTextureDemo::Kachujin()
+void DepthDemo::Kachujin()
 {
 	kachujin = new ModelAnimator(shader);
 	kachujin->ReadMesh(L"Kachujin/Mesh");
@@ -245,7 +240,7 @@ void ProjectionTextureDemo::Kachujin()
 
 }
 
-void ProjectionTextureDemo::Weapon()
+void DepthDemo::Weapon()
 {
 	weapon = new ModelRender(shader);
 	weapon->ReadMesh(L"Weapon/Sword");
@@ -265,7 +260,7 @@ void ProjectionTextureDemo::Weapon()
 
 }
 
-void ProjectionTextureDemo::PointLights()
+void DepthDemo::PointLights()
 {
 	PointLight light;
 	light =
@@ -309,7 +304,7 @@ void ProjectionTextureDemo::PointLights()
 	Lighting::Get()->AddPointLight(light);
 }
 
-void ProjectionTextureDemo::SpotLights()
+void DepthDemo::SpotLights()
 {
 	SpotLight light;
 	light =
@@ -335,7 +330,7 @@ void ProjectionTextureDemo::SpotLights()
 	Lighting::Get()->AddSpotLight(light);
 }
 
-void ProjectionTextureDemo::Pass(UINT val)
+void DepthDemo::Pass(UINT val)
 {
 	for (MeshRender* mesh : meshes)
 		mesh->Pass(val);

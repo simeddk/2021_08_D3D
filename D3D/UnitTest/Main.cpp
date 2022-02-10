@@ -14,11 +14,12 @@
 #include "BlurDemo.h"
 #include "BloomDemo.h"
 #include "EnvCubeDemo.h"
+#include "ProjectionTextureDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new EnvCubeDemo());
+	Push(new ProjectionTextureDemo());
 }
 
 

@@ -8,6 +8,8 @@ Texture2D NormalMap;
 TextureCube EnvCubeMap;
 TextureCube SkyCubeMap;
 
+Texture2D ProjectorMap;
+
 //-----------------------------------------------------------------------------
 //Directional(Global) Light
 //-----------------------------------------------------------------------------
@@ -326,4 +328,27 @@ float4 PS_AllLight(MeshOutput input)
     AddMaterial(result, output);
 
     return float4(MaterialToColor(result), 1.0f);
+}
+
+//-----------------------------------------------------------------------------
+//ProjectionTexture(Decal)
+//-----------------------------------------------------------------------------
+struct ProjectorDesc
+{
+    float4 Color;
+
+    Matrix View;
+    Matrix Projection;
+};
+
+cbuffer CB_Projector
+{
+    ProjectorDesc Projector;
+};
+
+void VS_Projector(inout float4 wvp, float4 oPosition)
+{
+    wvp = WorldPosition(oPosition);
+    wvp = mul(wvp, Projector.View);
+    wvp = mul(wvp, Projector.Projection);
 }

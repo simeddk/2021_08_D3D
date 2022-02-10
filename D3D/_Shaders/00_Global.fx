@@ -3,9 +3,11 @@
 //-----------------------------------------------------------------------------
 struct MeshOutput
 {
-    float4 Position : SV_Position;
-    float3 oPosition : Position2;
-    float3 wPosition : Position3;
+    float4 Position : SV_Position; //Rasterizing Position
+    float3 oPosition : Position1; //IA,NDC Position
+    float3 wPosition : Position2; //World Position
+    float4 wvpPosition : Position3; //WVP Position
+    float4 wvpPosition_Sub : Position4; //ProjectionTexture Position
 
     float3 Normal : Normal;
     float3 Tangent : Tangent;

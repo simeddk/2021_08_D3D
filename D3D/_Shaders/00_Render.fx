@@ -8,6 +8,8 @@ output.Position = WorldPosition(input.Position); \
 output.wPosition = output.Position.xyz; \
 \
 output.Position = ViewProjection(output.Position); \
+output.wvpPosition = output.Position; \
+output.wvpPosition_Sub = output.Position; \
 \
 output.Normal = WorldNormal(input.Normal); \
 output.Tangent = WorldTangent(input.Tangent); \
@@ -40,6 +42,14 @@ MeshOutput VS_Mesh(VertexMesh input)
 	VS_GENERATE
 
 	return output;
+};
+
+MeshOutput VS_Mesh_Projector(VertexMesh input)
+{
+    MeshOutput output = VS_Mesh(input);
+    VS_Projector(output.wvpPosition_Sub, input.Position);
+
+    return output;
 };
 
 //-----------------------------------------------------------------------------
@@ -90,6 +100,14 @@ MeshOutput VS_Model(VertexModel input)
 
     return output;
 }
+
+MeshOutput VS_Model_Projector(VertexModel input)
+{
+    MeshOutput output = VS_Model(input);
+    VS_Projector(output.wvpPosition_Sub, input.Position);
+
+    return output;
+};
 
 //-----------------------------------------------------------------------------
 //Animation(Kachjin::Idle, Walk....)
@@ -286,6 +304,14 @@ MeshOutput VS_Animation(VertexModel input)
 
     return output;
 }
+
+MeshOutput VS_Animation_Projector(VertexModel input)
+{
+    MeshOutput output = VS_Animation(input);
+    VS_Projector(output.wvpPosition_Sub, input.Position);
+
+    return output;
+};
 
 //-----------------------------------------------------------------------------
 //EnvCubeMap

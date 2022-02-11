@@ -164,6 +164,9 @@
     <ClCompile Include="Viewer\Fixity.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Shadow.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -334,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="Viewer\Fixity.h">
       <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Shadow.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

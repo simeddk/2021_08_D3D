@@ -11,10 +11,21 @@ output.Position = ViewProjection(output.Position); \
 output.wvpPosition = output.Position; \
 output.wvpPosition_Sub = output.Position; \
 \
+output.sPosition = WorldPosition(input.Position); \
+output.sPosition = mul(output.sPosition, Shadow.View); \
+output.sPosition = mul(output.sPosition, Shadow.Projection); \
+\
 output.Normal = WorldNormal(input.Normal); \
 output.Tangent = WorldTangent(input.Tangent); \
 output.Uv = input.Uv; \
 output.Color = input.Color;
+
+#define VS_DEPTH_GENERATE \
+output.Position = WorldPosition(input.Position); \
+output.Position = mul(output.Position, Shadow.View); \
+output.Position = mul(output.Position, Shadow.Projection); \
+\
+output.sPosition = output.Position;
 
 //-----------------------------------------------------------------------------
 //Mesh(Cube, Cylinder, Sphere...)
@@ -48,6 +59,15 @@ MeshOutput VS_Mesh_Projector(VertexMesh input)
 {
     MeshOutput output = VS_Mesh(input);
     VS_Projector(output.wvpPosition_Sub, input.Position);
+
+    return output;
+};
+
+MeshDepthOutput VS_Mesh_Depth(VertexMesh input)
+{
+    MeshDepthOutput output = (MeshDepthOutput) 0;
+    SetMeshWorld(World, input);
+	VS_DEPTH_GENERATE
 
     return output;
 };
@@ -108,6 +128,16 @@ MeshOutput VS_Model_Projector(VertexModel input)
 
     return output;
 };
+
+MeshDepthOutput VS_Model_Depth(VertexModel input)
+{
+    MeshDepthOutput output = (MeshDepthOutput) 0;
+
+    SetModelWorld(World, input);
+	VS_DEPTH_GENERATE
+
+    return output;
+}
 
 //-----------------------------------------------------------------------------
 //Animation(Kachjin::Idle, Walk....)
@@ -312,6 +342,22 @@ MeshOutput VS_Animation_Projector(VertexModel input)
 
     return output;
 };
+
+MeshDepthOutput VS_Animation_Depth(VertexModel input)
+{
+    MeshDepthOutput output = (MeshDepthOutput) 0;
+
+    World = input.Transform;
+
+    if (BlendingFrames[input.InstanceID].Mode == 0)
+        SetAnimationWorld(World, input); //Tween
+    else
+        SetBlendingWorld(World, input); //Blend
+
+    VS_DEPTH_GENERATE
+
+    return output;
+}
 
 //-----------------------------------------------------------------------------
 //EnvCubeMap

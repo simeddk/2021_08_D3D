@@ -1,6 +1,7 @@
 //-----------------------------------------------------------------------------
 //MeshOutput(VS -> RS)
 //-----------------------------------------------------------------------------
+//2pass
 struct MeshOutput
 {
     float4 Position : SV_Position; //Rasterizing Position
@@ -8,6 +9,7 @@ struct MeshOutput
     float3 wPosition : Position2; //World Position
     float4 wvpPosition : Position3; //WVP Position
     float4 wvpPosition_Sub : Position4; //ProjectionTexture Position
+    float4 sPosition : Position5; //Shadow Position
 
     float3 Normal : Normal;
     float3 Tangent : Tangent;
@@ -15,6 +17,13 @@ struct MeshOutput
     float4 Color : Color;
 
     uint TargetIndex : SV_RenderTargetArrayIndex;
+};
+
+//1Pass
+struct MeshDepthOutput
+{
+    float4 Position : SV_Position; //Rasterizng Position
+    float4 sPosition : Position1; //Shadow Position;
 };
 
 //-----------------------------------------------------------------------------
@@ -38,6 +47,22 @@ cbuffer CB_World
     matrix World;
 };
 
+struct ShadowDesc
+{
+    Matrix View;
+    Matrix Projection;
+
+    float2 MapSize;
+    float Bias;
+
+    uint Quality;
+};
+
+cbuffer CB_Shadow
+{
+    ShadowDesc Shadow;
+};
+
 //-----------------------------------------------------------------------------
 //Functions
 //-----------------------------------------------------------------------------
@@ -48,7 +73,7 @@ float4 WorldPosition(float4 position)
 
 float4 ViewProjection(float4 position)
 {
-    //return mul(position, VP); //<- Perframe 클래스 작성해야 동작함
+//return mul(position, VP); //<- Perframe 클래스 작성해야 동작함
 
     position = mul(position, View);
     return mul(position, Projection);
@@ -73,116 +98,116 @@ float3 ViewPosition()
 //-----------------------------------------------------------------------------
 //States
 //-----------------------------------------------------------------------------
-SamplerState PointSampler
-{
-    Filter = MIN_MAG_MIP_POINT;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
+    SamplerState PointSampler
+    {
+        Filter = MIN_MAG_MIP_POINT;
+        AddressU = Wrap;
+        AddressV = Wrap;
+    };
 
-SamplerState LinearSampler
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
+    SamplerState LinearSampler
+    {
+        Filter = MIN_MAG_MIP_LINEAR;
+        AddressU = Wrap;
+        AddressV = Wrap;
+    };
 
-SamplerState NoTileSampler
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Border;
-    AddressV = Border;
-};
+    SamplerState NoTileSampler
+    {
+        Filter = MIN_MAG_MIP_LINEAR;
+        AddressU = Border;
+        AddressV = Border;
+    };
 
-RasterizerState FillMode_WireFrame
-{
-    FillMode = WireFrame;
-};
+    RasterizerState FillMode_WireFrame
+    {
+        FillMode = WireFrame;
+    };
 
-RasterizerState FrontCounterClockwise_True
-{
-    FrontCounterClockwise = true;
-};
+    RasterizerState FrontCounterClockwise_True
+    {
+        FrontCounterClockwise = true;
+    };
 
-RasterizerState CullMode_None
-{
-    CullMode = None;
-};
+    RasterizerState CullMode_None
+    {
+        CullMode = None;
+    };
 
-DepthStencilState DepthEnable_False
-{
-    DepthEnable = false;
-};
+    DepthStencilState DepthEnable_False
+    {
+        DepthEnable = false;
+    };
 
-DepthStencilState PixelDepthEnable_False
-{
-    DepthEnable = true;
-    DepthFunc = LESS_EQUAL;
+    DepthStencilState PixelDepthEnable_False
+    {
+        DepthEnable = true;
+        DepthFunc = LESS_EQUAL;
     //DepthFunc = GREATER_EQUAL;
-    DepthWriteMask = ZERO;
-};
+        DepthWriteMask = ZERO;
+    };
 
 
 //src.rgb * src.blend (op) + dest.rgb * dest.blend
-BlendState AlphaBlend
-{
-    BlendEnable[0] = true;
-    SrcBlend[0] = SRC_ALPHA;
-    DestBlend[0] = INV_SRC_ALPHA;
-    BlendOp[0] = ADD;
+    BlendState AlphaBlend
+    {
+        BlendEnable[0] = true;
+        SrcBlend[0] = SRC_ALPHA;
+        DestBlend[0] = INV_SRC_ALPHA;
+        BlendOp[0] = ADD;
 
-    SrcBlendAlpha[0] = ONE;
-    DestBlendAlpha[0] = ZERO;
-    BlendOpAlpha[0] = ADD;
+        SrcBlendAlpha[0] = ONE;
+        DestBlendAlpha[0] = ZERO;
+        BlendOpAlpha[0] = ADD;
 
-    RenderTargetWriteMask[0] = 0x0F;
-};
+        RenderTargetWriteMask[0] = 0x0F;
+    };
 
-BlendState AlphaBlend_AlphaToCoverageEnable
-{
-    AlphaToCoverageEnable = true;
+    BlendState AlphaBlend_AlphaToCoverageEnable
+    {
+        AlphaToCoverageEnable = true;
 
-    BlendEnable[0] = true;
-    SrcBlend[0] = SRC_ALPHA;
-    DestBlend[0] = INV_SRC_ALPHA;
-    BlendOp[0] = ADD;
+        BlendEnable[0] = true;
+        SrcBlend[0] = SRC_ALPHA;
+        DestBlend[0] = INV_SRC_ALPHA;
+        BlendOp[0] = ADD;
 
-    SrcBlendAlpha[0] = ONE;
-    DestBlendAlpha[0] = ZERO;
-    BlendOpAlpha[0] = ADD;
+        SrcBlendAlpha[0] = ONE;
+        DestBlendAlpha[0] = ZERO;
+        BlendOpAlpha[0] = ADD;
 
-    RenderTargetWriteMask[0] = 0x0F;
-};
+        RenderTargetWriteMask[0] = 0x0F;
+    };
 
-BlendState AdditiveBlend
-{
-    BlendEnable[0] = true;
-    SrcBlend[0] = SRC_ALPHA;
-    DestBlend[0] = ONE;
-    BlendOp[0] = ADD;
+    BlendState AdditiveBlend
+    {
+        BlendEnable[0] = true;
+        SrcBlend[0] = SRC_ALPHA;
+        DestBlend[0] = ONE;
+        BlendOp[0] = ADD;
 
-    SrcBlendAlpha[0] = ONE;
-    DestBlendAlpha[0] = ZERO;
-    BlendOpAlpha[0] = ADD;
+        SrcBlendAlpha[0] = ONE;
+        DestBlendAlpha[0] = ZERO;
+        BlendOpAlpha[0] = ADD;
 
-    RenderTargetWriteMask[0] = 0x0F;
-};
+        RenderTargetWriteMask[0] = 0x0F;
+    };
 
-BlendState AdditiveBlend_AlphaToCoverageEnable
-{
-    AlphaToCoverageEnable = true;
+    BlendState AdditiveBlend_AlphaToCoverageEnable
+    {
+        AlphaToCoverageEnable = true;
 
-    BlendEnable[0] = true;
-    SrcBlend[0] = SRC_ALPHA;
-    DestBlend[0] = ONE;
-    BlendOp[0] = ADD;
+        BlendEnable[0] = true;
+        SrcBlend[0] = SRC_ALPHA;
+        DestBlend[0] = ONE;
+        BlendOp[0] = ADD;
 
-    SrcBlendAlpha[0] = ONE;
-    DestBlendAlpha[0] = ZERO;
-    BlendOpAlpha[0] = ADD;
+        SrcBlendAlpha[0] = ONE;
+        DestBlendAlpha[0] = ZERO;
+        BlendOpAlpha[0] = ADD;
 
-    RenderTargetWriteMask[0] = 0x0F;
-};
+        RenderTargetWriteMask[0] = 0x0F;
+    };
 
 //-----------------------------------------------------------------------------
 //VS -> PS

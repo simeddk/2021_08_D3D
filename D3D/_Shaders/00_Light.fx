@@ -7,8 +7,8 @@ Texture2D NormalMap;
 
 TextureCube EnvCubeMap;
 TextureCube SkyCubeMap;
-
 Texture2D ProjectorMap;
+Texture2D ShadowMap;
 
 //-----------------------------------------------------------------------------
 //Directional(Global) Light
@@ -351,4 +351,14 @@ void VS_Projector(inout float4 wvp, float4 oPosition)
     wvp = WorldPosition(oPosition);
     wvp = mul(wvp, Projector.View);
     wvp = mul(wvp, Projector.Projection);
+}
+
+//-----------------------------------------------------------------------------
+//Shadow
+//-----------------------------------------------------------------------------
+float4 PS_Shadow_Depth(MeshDepthOutput input) : SV_Target
+{
+    float depth = input.sPosition.z / input.sPosition.w;
+
+    return float4(depth, depth, depth, 1);
 }

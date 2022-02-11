@@ -48,6 +48,9 @@
     <ClCompile Include="DepthDemo.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ShadowDemo.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -95,6 +98,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DepthDemo.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowDemo.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

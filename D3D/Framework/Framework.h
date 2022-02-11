@@ -122,6 +122,7 @@ typedef D3DXPLANE Plane;
 #include "Objects/PostProcess.h"
 #include "Objects/EnvCube.h"
 #include "Objects/Projector.h"
+#include "Objects/Shadow.h"
 
 #include "Particle/ParticleData.h"
 #include "Particle/Particle.h"

@@ -15,11 +15,12 @@
 #include "BloomDemo.h"
 #include "EnvCubeDemo.h"
 #include "ProjectionTextureDemo.h"
+#include "DepthDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new ProjectionTextureDemo());
+	Push(new DepthDemo());
 }
 
 

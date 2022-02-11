@@ -134,6 +134,7 @@
     <ClCompile Include="BillboardDemo.cpp" />
     <ClCompile Include="BloomDemo.cpp" />
     <ClCompile Include="BlurDemo.cpp" />
+    <ClCompile Include="DepthDemo.cpp" />
     <ClCompile Include="EnvCubeDemo.cpp" />
     <ClCompile Include="FrameworkDemo.cpp" />
     <ClCompile Include="LightingDemo.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="BillboardDemo.h" />
     <ClInclude Include="BloomDemo.h" />
     <ClInclude Include="BlurDemo.h" />
+    <ClInclude Include="DepthDemo.h" />
     <ClInclude Include="EnvCubeDemo.h" />
     <ClInclude Include="FrameworkDemo.h" />
     <ClInclude Include="LightingDemo.h" />

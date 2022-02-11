@@ -83,7 +83,7 @@ void DepthDemo::Render()
 	/*sky->Pass(0);
 	sky->Render();*/
 
-	Pass(1);
+	Pass(0);
 
 	wall->Render();
 	sphere->Render();

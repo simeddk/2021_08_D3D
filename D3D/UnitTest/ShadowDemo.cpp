@@ -7,7 +7,7 @@ void ShadowDemo::Initialize()
 	Context::Get()->GetCamera()->Position(1, 36, -85);
 	((Freedom*)Context::Get()->GetCamera())->Speed(50, 2);
 	
-	shader = new Shader(L"42_Shadow.fxo");
+	shader = new Shader(L"43_Framework.fxo");
 	
 	sky = new CubeSky(L"Environment/SunsetCube1024.dds", shader);
 	shadow = new Shadow(shader, Vector3(0, 0, 0), 65);
@@ -58,14 +58,14 @@ void ShadowDemo::Update()
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
 	//그림자 퀄리티 테스트
-	static UINT q = 0;
+	/*static UINT q = 0;
 	ImGui::InputInt("Quality", (int*)&q);
 	q %= 3;
 	shadow->Quality(q);
 
 	static float bias = 0;
 	ImGui::SliderFloat("Bias", &bias, -0.2f, 0.2f);
-	shadow->Bias(bias);
+	shadow->Bias(bias);*/
 
 	sky->Update();
 

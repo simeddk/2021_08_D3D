@@ -20,9 +20,9 @@ private:
 		Matrix Projection;
 
 		Vector2 MapSize;
-		float Bias;
+		float Bias = 0.0f;
 
-		UINT Quality;
+		UINT Quality = 2;
 	} desc;
 
 private:

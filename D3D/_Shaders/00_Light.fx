@@ -362,3 +362,65 @@ float4 PS_Shadow_Depth(MeshDepthOutput input) : SV_Target
 
     return float4(depth, depth, depth, 1);
 }
+
+float4 PS_Shadow(float4 sPosition, float4 color)
+{
+    float4 position = sPosition;
+    position.xyz /= position.w;
+
+	//ProjectionTexture
+	[flatten]
+    if (position.x < -1.0f || position.x > 1.0f &&
+		position.y < -1.0f || position.y > 1.0f &&
+		position.z < 0.0f || position.z > 1.0f)
+    {
+        return color;
+    }
+
+    position.x = position.x * 0.5f + 0.5f;
+    position.y = -position.y * 0.5f + 0.5f;
+
+    float depth = 0.0f;
+    float z = position.z - Shadow.Bias;
+    float factor;
+
+    if (Shadow.Quality == 0)
+    {
+        depth = ShadowMap.Sample(LinearSampler, position.xy).r; //µ¤¾î¾²±â°¡ ¹ß»ýÇÑ 1passÀÇ ±íÀÌ¸¦ ÀÐ¾î¿È
+        factor = (float) (depth >= z);
+    }
+    else if (Shadow.Quality == 1)
+    {
+        depth = z;
+        factor = ShadowMap.SampleCmpLevelZero(ComparisonState, position.xy, depth).r;
+    }
+    else if (Shadow.Quality == 2)
+    {
+        depth = z;
+
+        float2 size = 1.0f / Shadow.MapSize;
+
+        float2 offsets[] =
+        {
+            float2(-size.x, -size.y), float2(0.0f, -size.y), float2(+size.x, -size.y),
+			float2(-size.x, 0.0f), float2(0.0f, 0.0f), float2(+size.x, 0.0f),
+			float2(-size.x, +size.y), float2(0.0f, +size.y), float2(+size.x, +size.y)
+        };
+
+        float2 uv = 0;
+        float sum = 0;
+
+		[unroll(9)]
+        for (int i = 0; i < 9; i++)
+        {
+            uv = position.xy + offsets[i];
+            sum += ShadowMap.SampleCmpLevelZero(ComparisonState, uv, depth).r;
+        }
+
+        factor = sum / 9.0f;
+    }
+
+    factor = saturate(factor + depth);
+
+    return float4(color.rgb * factor, 1);
+}

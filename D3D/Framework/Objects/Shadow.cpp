@@ -16,6 +16,24 @@ Shadow::Shadow(Shader * shader, Vector3 & at, float radius, float width, float h
 	sBuffer = shader->AsConstantBuffer("CB_Shadow");
 
 	sShadowMap = shader->AsSRV("ShadowMap");
+
+	//Create SamplerState
+	{
+		D3D11_SAMPLER_DESC desc;
+		ZeroMemory(&desc, sizeof(D3D11_SAMPLER_DESC));
+		desc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+		desc.ComparisonFunc = D3D11_COMPARISON_LESS;
+		desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		//desc.MaxLOD = FLT_MAX;
+		//desc.MaxAnisotropy = 1;
+
+		Check(D3D::GetDevice()->CreateSamplerState(&desc, &comparisonState));
+		sComparisonState = shader->AsSampler("ComparisonState");
+	}
+
+	desc.MapSize = Vector2(this->width, this->height);
 }
 
 Shadow::~Shadow()
@@ -24,6 +42,8 @@ Shadow::~Shadow()
 	SafeDelete(depthStencil);
 	SafeDelete(viewport);
 	SafeDelete(buffer);
+	
+	SafeRelease(comparisonState);
 }
 
 void Shadow::PreRender()
@@ -53,4 +73,5 @@ void Shadow::PreRender()
 	sBuffer->SetConstantBuffer(buffer->Buffer());
 
 	sShadowMap->SetResource(depthStencil->SRV());
+	sComparisonState->SetSampler(0, comparisonState);
 }

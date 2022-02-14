@@ -98,54 +98,56 @@ float3 ViewPosition()
 //-----------------------------------------------------------------------------
 //States
 //-----------------------------------------------------------------------------
-    SamplerState PointSampler
-    {
-        Filter = MIN_MAG_MIP_POINT;
-        AddressU = Wrap;
-        AddressV = Wrap;
-    };
+SamplerState PointSampler
+{
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
-    SamplerState LinearSampler
-    {
-        Filter = MIN_MAG_MIP_LINEAR;
-        AddressU = Wrap;
-        AddressV = Wrap;
-    };
+SamplerState LinearSampler
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
-    SamplerState NoTileSampler
-    {
-        Filter = MIN_MAG_MIP_LINEAR;
-        AddressU = Border;
-        AddressV = Border;
-    };
+SamplerState NoTileSampler
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Border;
+    AddressV = Border;
+};
 
-    RasterizerState FillMode_WireFrame
-    {
-        FillMode = WireFrame;
-    };
+SamplerComparisonState ComparisonState;
 
-    RasterizerState FrontCounterClockwise_True
-    {
-        FrontCounterClockwise = true;
-    };
+RasterizerState FillMode_WireFrame
+{
+    FillMode = WireFrame;
+};
 
-    RasterizerState CullMode_None
-    {
-        CullMode = None;
-    };
+RasterizerState FrontCounterClockwise_True
+{
+    FrontCounterClockwise = true;
+};
 
-    DepthStencilState DepthEnable_False
-    {
-        DepthEnable = false;
-    };
+RasterizerState CullMode_None
+{
+    CullMode = None;
+};
 
-    DepthStencilState PixelDepthEnable_False
-    {
-        DepthEnable = true;
-        DepthFunc = LESS_EQUAL;
-    //DepthFunc = GREATER_EQUAL;
-        DepthWriteMask = ZERO;
-    };
+DepthStencilState DepthEnable_False
+{
+    DepthEnable = false;
+};
+
+DepthStencilState PixelDepthEnable_False
+{
+    DepthEnable = true;
+    DepthFunc = LESS_EQUAL;
+	//DepthFunc = GREATER_EQUAL;
+    DepthWriteMask = ZERO;
+};
 
 
 //src.rgb * src.blend (op) + dest.rgb * dest.blend

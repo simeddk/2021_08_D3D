@@ -57,6 +57,15 @@ void ShadowDemo::Update()
 	//램버트 테스트
 	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
 
+	//그림자 퀄리티 테스트
+	static UINT q = 0;
+	ImGui::InputInt("Quality", (int*)&q);
+	q %= 3;
+	shadow->Quality(q);
+
+	static float bias = 0;
+	ImGui::SliderFloat("Bias", &bias, -0.2f, 0.2f);
+	shadow->Bias(bias);
 
 	sky->Update();
 
@@ -97,8 +106,8 @@ void ShadowDemo::PreRender()
 		stone->Render();
 		cube->Render();
 
-		floor->Render();
-		plane->Render();
+		//floor->Render();
+		//plane->Render();
 
 		airplane->Render();
 		kachujin->Render();

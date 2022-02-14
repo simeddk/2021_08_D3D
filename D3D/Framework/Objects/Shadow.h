@@ -10,16 +10,19 @@ public:
 
 	ID3D11ShaderResourceView* SRV() { return renderTarget->SRV(); }
 
+	void Quality(UINT val) { desc.Quality = val; }
+	void Bias(float val) { desc.Bias = val; }
+
 private:
 	struct Desc
 	{
 		Matrix View;
 		Matrix Projection;
 
-		/*Vector2 MapSize;
+		Vector2 MapSize;
 		float Bias;
 
-		UINT Quality;*/
+		UINT Quality;
 	} desc;
 
 private:
@@ -36,6 +39,9 @@ private:
 
 	ConstantBuffer* buffer;
 	ID3DX11EffectConstantBuffer* sBuffer;
+
+	ID3D11SamplerState* comparisonState;
+	ID3DX11EffectSamplerVariable* sComparisonState;
 
 	ID3DX11EffectShaderResourceVariable* sShadowMap;
 };

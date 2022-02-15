@@ -3,7 +3,7 @@
 class Terrain : public Renderer
 {
 public:
-	Terrain(Shader* shader, wstring heightFile);
+	Terrain(Shader* shader, wstring imageFile);
 	~Terrain();
 
 	void Update();
@@ -15,6 +15,7 @@ public:
 	Vector3 GetCursorPosition();
 
 private:
+	void ReadHeightData();
 	void CreateVertexData();
 	void CreateIndexData();
 	void CreateNormalData();
@@ -28,11 +29,15 @@ private:
 	};
 
 private:
+	Material* material;
+	wstring imageFile;
+	float* heights;
+
 	UINT width, height;
 
 	VertexTerrain* vertices;
 	UINT* indices;
 
-	Texture* heightMap;
 	Texture* baseMap = nullptr;
+	ID3DX11EffectShaderResourceVariable* sBaseMap;
 };

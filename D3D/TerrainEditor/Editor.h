@@ -13,8 +13,12 @@ public:
 	virtual void ResizeScreen() override {};
 
 private:
+	function<void(wstring)> openFunc;
+	void OpenComplete(wstring fileName);
+
+private:
 	void ToDataMapFile(); //높이맵 불러오기 -> 높이가 저장된 채널 선택 -> *.dds로 저장
-	//Todo
+	void UpdateDataMapFileList(); //높이맵 폴더를 뒤져서 *.dds 파일들을 목록화
 
 private:
 	Shader* shader;
@@ -35,4 +39,7 @@ private:
 	int selectedChannel = 0;
 
 	vector<wstring> dataMapFileList;
+
+private:
+	Terrain* terrain = nullptr;
 };

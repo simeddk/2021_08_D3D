@@ -7,15 +7,30 @@ Brush::Brush(Shader * shader, Terrain * terrain)
 {
 	brushBuffer = new ConstantBuffer(&brushDesc, sizeof(BrushDesc));
 	sBrushBuffer = shader->AsConstantBuffer("CB_TerrainBrush");
+
+	lineBuffer = new ConstantBuffer(&lineDesc, sizeof(LineDesc));
+	sLineBuffer = shader->AsConstantBuffer("CB_TerrainLine");
 }
 
 Brush::~Brush()
 {
 	SafeDelete(brushBuffer);
+	SafeDelete(lineBuffer);
 }
 
 void Brush::Update()
 {
+	ImGui::Separator();
+
+	static bool bVisible = true;
+	ImGui::Checkbox("LineVisible", &bVisible);
+	lineDesc.Visible = bVisible ? 1 : 0;
+
+	ImGui::ColorEdit3("LineColor", lineDesc.Color);
+	ImGui::InputFloat("Thickness", &lineDesc.Thickness, 0.01f);
+	ImGui::InputFloat("LineSize", &lineDesc.Size, 1.0f);
+
+
 	ImGui::Separator();
 
 	ImGui::ColorEdit3("BrushColor", brushDesc.Color);
@@ -54,6 +69,9 @@ void Brush::Render()
 
 	brushBuffer->Render();
 	sBrushBuffer->SetConstantBuffer(brushBuffer->Buffer());
+
+	lineBuffer->Render();
+	sLineBuffer->SetConstantBuffer(lineBuffer->Buffer());
 }
 
 void Brush::RaiseHeight(float intensity)

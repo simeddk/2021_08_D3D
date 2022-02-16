@@ -25,9 +25,23 @@ private:
 	} brushDesc;
 
 private:
+	struct LineDesc
+	{
+		Color Color = D3DXCOLOR(1, 1, 1, 1);
+
+		UINT Visible = 1;
+		float Thickness = 0.01f;
+		float Size = 1.0f;
+		float Padding;
+	} lineDesc;
+
+private:
 	Shader* shader;
 	Terrain* terrain;
 
 	ConstantBuffer* brushBuffer;
 	ID3DX11EffectConstantBuffer* sBrushBuffer;
+
+	ConstantBuffer* lineBuffer;
+	ID3DX11EffectConstantBuffer* sLineBuffer;
 };

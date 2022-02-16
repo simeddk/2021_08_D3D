@@ -62,9 +62,26 @@ float4 GetBrushColor(float3 wPosition)
 }
 
 //-----------------------------------------------------------------------------
+//Line
+//-----------------------------------------------------------------------------
+struct LineDesc
+{
+    float4 Color;
+    uint Visible;
+    float Thickness;
+    float Size;
+};
+
+cbuffer CB_TerrainLine
+{
+    LineDesc TerrainLine;
+};
+
+//-----------------------------------------------------------------------------
 //Shader
 //-----------------------------------------------------------------------------
-MeshOutput VS_Terrain(VertexTerrain input)
+    MeshOutput VS_Terrain(
+    VertexTerrain input)
 {
     MeshOutput output = (MeshOutput) 0;
     
@@ -72,7 +89,8 @@ MeshOutput VS_Terrain(VertexTerrain input)
 
     //output.Color = GetBrushColor(output.wPosition);
       
-    return output;
+    return
+    output;
 }
 
 MeshDepthOutput VS_Terrain_Depth(VertexTerrain input)

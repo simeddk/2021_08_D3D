@@ -18,6 +18,11 @@ void Editor::Initialize()
 	brush = new Brush(shader, terrain);
 
 	openFunc = bind(&Editor::OpenComplete, this, placeholders::_1);
+
+	wstring path = L"Terrain/Gray256.dds";
+	terrain = new Terrain(shader, path);
+	terrain->BaseMap(L"Terrain/Dirt.png");
+	terrain->LayerMap(L"Terrain/Grass (Lawn).jpg");
 }
 
 void Editor::Destroy()

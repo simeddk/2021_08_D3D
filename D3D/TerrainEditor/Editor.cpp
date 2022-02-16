@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Editor.h"
-
+#include "Brush.h"
 
 void Editor::Initialize()
 {
@@ -11,10 +11,11 @@ void Editor::Initialize()
 	heightMapFileDirectory = L"Terrain/";
 	heightMapFileName = L"Gray256.png";
 
-	shader = new Shader(L"43_Framework.fxo");
+	shader = new Shader(L"44_Brush.fxo");
 	shadow = new Shadow(shader, Vector3(128, 0, 128), 256);
 
 	sky = new CubeSky(L"Environment/Mountain1024.dds", shader);
+	brush = new Brush(shader, terrain);
 
 	openFunc = bind(&Editor::OpenComplete, this, placeholders::_1);
 }
@@ -25,6 +26,7 @@ void Editor::Destroy()
 	SafeDelete(shadow);
 	SafeDelete(sky);
 	SafeDelete(terrain);
+	SafeDelete(brush);
 }
 
 void Editor::Update()
@@ -67,16 +69,24 @@ void Editor::Update()
 			if (ImGui::Button(String::ToString(dataMapFileList[i]).c_str(), ImVec2(200, 0)))
 			{
 				SafeDelete(terrain);
+				SafeDelete(brush);
+
 				wstring path = L"Terrain/" + dataMapFileList[i] + L".dds";
 				terrain = new Terrain(shader, path);
-				terrain->BaseMap(L"Terrain/Dirt3.png");
+				terrain->BaseMap(L"Terrain/Dirt.png");
+				terrain->LayerMap(L"Terrain/Grass (Lawn).jpg");
+
+				brush = new Brush(shader, terrain);
 			}
 		}
 	}
 	ImGui::Separator();
 
 	if (terrain != nullptr)
+	{
+		brush->Update();
 		terrain->Update();
+	}
 
 	sky->Update();
 	UpdateDataMapFileList();
@@ -84,11 +94,16 @@ void Editor::Update()
 
 void Editor::Render()
 {
-	sky->Pass(3);
+	sky->Pass(4);
 	sky->Render();
 
 	if (terrain != nullptr)
+	{
+		brush->Render();
+
+		terrain->Pass(8);
 		terrain->Render();
+	}
 }
 
 void Editor::OpenComplete(wstring fileName)

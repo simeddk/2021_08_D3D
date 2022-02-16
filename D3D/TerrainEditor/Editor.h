@@ -42,4 +42,5 @@ private:
 
 private:
 	Terrain* terrain = nullptr;
+	class Brush* brush = nullptr;
 };

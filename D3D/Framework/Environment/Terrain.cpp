@@ -10,7 +10,7 @@ Terrain::Terrain(Shader * shader, wstring imageFile)
 	CreateIndexData();
 	CreateNormalData();
 
-	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexTerrain));
+	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexTerrain), 0, true);
 	indexBuffer = new IndexBuffer(indices, indexCount);
 
 	material = new Material(shader);
@@ -18,6 +18,9 @@ Terrain::Terrain(Shader * shader, wstring imageFile)
 	material->Specular(1, 1, 1, 200);
 
 	sBaseMap = shader->AsSRV("BaseMap");
+
+	layer1.sSRV = shader->AsSRV("Layer1AlphaMap");
+	layer1.sMap = shader->AsSRV("Layer1ColorMap");
 }
 
 Terrain::~Terrain()
@@ -27,6 +30,8 @@ Terrain::~Terrain()
 
 	SafeDeleteArray(heights);
 	SafeDelete(material);
+
+	SafeDelete(baseMap);
 }
 
 void Terrain::Update()
@@ -36,29 +41,14 @@ void Terrain::Update()
 
 void Terrain::Render()
 {
-	static bool bVisible = false;
-	static UINT interval = 3;
-	ImGui::Checkbox("Visible Normal", &bVisible);
-	ImGui::SliderInt("Interval", (int*)&interval, 1, 5);
-
-	if (bVisible == true)
-	{
-		for (UINT z = 0; z < height; z += interval)
-		{
-			for (UINT x = 0; x < width; x += interval)
-			{
-				UINT index = width * z + x;
-
-				Vector3 start = vertices[index].Position;
-				Vector3 end = vertices[index].Position + vertices[index].Normal;
-
-				DebugLine::Get()->RenderLine(start, end);
-			}
-		}
-	}
-
 	if (baseMap != nullptr)
 		sBaseMap->SetResource(baseMap->SRV());
+
+	if (layer1.Data != nullptr)
+	{
+		layer1.sSRV->SetResource(layer1.SRV);
+		layer1.sMap->SetResource(layer1.Map->SRV());
+	}
 
 	material->Render();
 
@@ -71,6 +61,12 @@ void Terrain::BaseMap(wstring file)
 {
 	SafeDelete(baseMap);
 	baseMap = new Texture(file);
+}
+
+void Terrain::LayerMap(wstring file)
+{
+	SafeDelete(layer1.Map);
+	layer1.Map = new Texture(file);
 }
 
 float Terrain::GetHeight(Vector3 & position)
@@ -238,6 +234,43 @@ void Terrain::ReadHeightData()
 			heights[i] = (float)temp / 255.0f;
 		}
 
+		layer1.Data = new float[width * height];
+		for (UINT i = 0; i < width * height; i++)
+		{
+			UINT temp = (pixels[i] & 0x000000FF);
+			layer1.Data[i] = (float)temp / 255.0f;
+		}
+
+		SafeDelete(texture);
+		SafeRelease(readTexture);
+
+		D3D11_TEXTURE2D_DESC layerDesc;
+		ZeroMemory(&layerDesc, sizeof(D3D11_TEXTURE2D_DESC));
+		layerDesc.Width = srcDesc.Width;
+		layerDesc.Height = srcDesc.Height;
+		layerDesc.ArraySize = 1;
+		layerDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		layerDesc.MipLevels = 1;
+		layerDesc.SampleDesc = srcDesc.SampleDesc;
+		layerDesc.Usage = D3D11_USAGE_DYNAMIC;
+		layerDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		layerDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+		D3D11_SUBRESOURCE_DATA layerSubResource = { 0 };
+		layerSubResource.pSysMem = layer1.Data;
+		layerSubResource.SysMemPitch = width * 4;
+		layerSubResource.SysMemSlicePitch = width * 4 * height;
+
+		Check(D3D::GetDevice()->CreateTexture2D(&layerDesc, &layerSubResource, &layer1.Texture2D));
+
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+		ZeroMemory(&srvDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		srvDesc.Texture2D.MipLevels = 1;
+
+		Check(D3D::GetDevice()->CreateShaderResourceView(layer1.Texture2D, &srvDesc, &layer1.SRV));
+
 		return;
 	}
 
@@ -328,5 +361,15 @@ void Terrain::CreateNormalData()
 
 	for (UINT i = 0; i < vertexCount; i++)
 		D3DXVec3Normalize(&vertices[i].Normal, &vertices[i].Normal);
+}
+
+void Terrain::UpdateVertextData()
+{
+	D3D11_MAPPED_SUBRESOURCE subResouce;
+	D3D::GetDC()->Map(vertexBuffer->Buffer(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResouce);
+	{
+		memcpy(subResouce.pData, vertices, sizeof(VertexTerrain) * vertexCount);
+	}
+	D3D::GetDC()->Unmap(vertexBuffer->Buffer(), 0);
 }
 

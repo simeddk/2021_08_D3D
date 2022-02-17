@@ -15,14 +15,15 @@ void Editor::Initialize()
 	shadow = new Shadow(shader, Vector3(128, 0, 128), 256);
 
 	sky = new CubeSky(L"Environment/Mountain1024.dds", shader);
-	brush = new Brush(shader, terrain);
-
+	
 	openFunc = bind(&Editor::OpenComplete, this, placeholders::_1);
 
 	wstring path = L"Terrain/Gray256.dds";
 	terrain = new Terrain(shader, path);
 	terrain->BaseMap(L"Terrain/Dirt.png");
 	terrain->LayerMap(L"Terrain/Grass (Lawn).jpg");
+
+	brush = new Brush(shader, terrain);
 }
 
 void Editor::Destroy()

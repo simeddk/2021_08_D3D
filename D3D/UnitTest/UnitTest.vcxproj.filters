@@ -51,6 +51,12 @@
     <ClCompile Include="ShadowDemo.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="TessellationTriangleDemo.cpp">
+      <Filter>Tessellation</Filter>
+    </ClCompile>
+    <ClCompile Include="TessellationRectDemo.cpp">
+      <Filter>Tessellation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -103,6 +109,12 @@
     <ClInclude Include="ShadowDemo.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="TessellationTriangleDemo.h">
+      <Filter>Tessellation</Filter>
+    </ClInclude>
+    <ClInclude Include="TessellationRectDemo.h">
+      <Filter>Tessellation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -116,6 +128,9 @@
     </Filter>
     <Filter Include="RenderTarget">
       <UniqueIdentifier>{acd84441-fc96-4a88-b660-497626a92816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tessellation">
+      <UniqueIdentifier>{a169f0ef-4392-4bf9-a4cb-4340f6c7d64b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -17,11 +17,13 @@
 #include "ProjectionTextureDemo.h"
 #include "DepthDemo.h"
 #include "ShadowDemo.h"
+#include "TessellationTriangleDemo.h"
+#include "TessellationRectDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new ShadowDemo());
+	Push(new TessellationRectDemo()); //Todo 照蟹身..ばば
 }
 
 

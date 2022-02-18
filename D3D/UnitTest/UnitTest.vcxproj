@@ -147,6 +147,8 @@
     <ClCompile Include="RtvDemo.cpp" />
     <ClCompile Include="ShadowDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TessellationRectDemo.cpp" />
+    <ClCompile Include="TessellationTriangleDemo.cpp" />
     <ClCompile Include="WeatherDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +169,8 @@
     <ClInclude Include="RtvDemo.h" />
     <ClInclude Include="ShadowDemo.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TessellationRectDemo.h" />
+    <ClInclude Include="TessellationTriangleDemo.h" />
     <ClInclude Include="WeatherDemo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

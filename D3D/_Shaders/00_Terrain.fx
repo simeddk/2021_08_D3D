@@ -109,7 +109,7 @@ float4 GetLineColor_FWidth(float3 wPosition)
 
     //return float4(pixel, 0, 1);
 
-    float thick = saturate(min(pixel.x, pixel.y));
+    float thick = saturate(min(pixel.x, pixel.y) - TerrainLine.Thickness);
 
     return lerp(TerrainLine.Color, float4(0, 0, 0, 1), thick);
 }
@@ -148,12 +148,14 @@ MeshOutput VS_Terrain_Projector(VertexTerrain input)
 
 float4 PS_Terrain(MeshOutput input) : SV_Target
 {
-    //float4 color = BaseMap.Sample(LinearSampler, input.Uv);
-    float4 color = float4(0, 0, 0, 1);
+    float4 color = BaseMap.Sample(LinearSampler, input.Uv);
+    //float4 color = float4(0, 0, 0, 1);
 
     float alpha = Layer1AlphaMap.Sample(LinearSampler, input.Uv).r;
     float4 colorMap = Layer1ColorMap.Sample(LinearSampler, input.Uv);
 
+    Material.Diffuse = color;
+    color += PS_Shadow(input.sPosition, PS_AllLight(input));
 
     if (alpha > 0.0f)
         color = lerp(color, colorMap, alpha);

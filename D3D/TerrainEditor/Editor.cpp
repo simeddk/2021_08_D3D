@@ -98,6 +98,13 @@ void Editor::Update()
 	UpdateDataMapFileList();
 }
 
+void Editor::PreRender()
+{
+	shadow->PreRender();
+	terrain->Pass(3);
+	terrain->Render();
+}
+
 void Editor::Render()
 {
 	sky->Pass(4);

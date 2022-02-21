@@ -14,7 +14,7 @@ void TessellationRectDemo::Initialize()
 	vertices[2].Position = Vector3(+0.9f, -0.9f, 0.0f);
 	vertices[3].Position = Vector3(+0.9f, +0.9f, 0.0f);
 
-	vertexBuffer = new VertexBuffer(vertices, 3, sizeof(Vertex));
+	vertexBuffer = new VertexBuffer(vertices, 4, sizeof(Vertex));
 	
 }
 
@@ -27,7 +27,7 @@ void TessellationRectDemo::Destroy()
 
 void TessellationRectDemo::Update()
 {
-	static UINT Edge[4]{ 1, 1, 1, 1 };
+	static UINT Edge[4] = { 1, 1, 1, 1 };
 	static UINT Inside[2] = { 1, 1 };
 
 	ImGui::InputInt("Edge0", (int*)&Edge[0]);
@@ -38,7 +38,7 @@ void TessellationRectDemo::Update()
 	ImGui::InputInt("Inside0", (int*)&Inside[0]);
 	ImGui::InputInt("Inside1", (int*)&Inside[1]);
 
-	shader->AsScalar("Edge")->SetIntArray((int*)Edge, 0, 3);
+	shader->AsScalar("Edge")->SetIntArray((int*)Edge, 0, 4);
 	shader->AsScalar("Inside")->SetIntArray((int*)Inside, 0, 2);
 }
 

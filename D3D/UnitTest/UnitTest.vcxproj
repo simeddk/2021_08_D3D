@@ -147,6 +147,7 @@
     <ClCompile Include="RtvDemo.cpp" />
     <ClCompile Include="ShadowDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TessellationLodDemo.cpp" />
     <ClCompile Include="TessellationRectDemo.cpp" />
     <ClCompile Include="TessellationTriangleDemo.cpp" />
     <ClCompile Include="WeatherDemo.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="RtvDemo.h" />
     <ClInclude Include="ShadowDemo.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TessellationLodDemo.h" />
     <ClInclude Include="TessellationRectDemo.h" />
     <ClInclude Include="TessellationTriangleDemo.h" />
     <ClInclude Include="WeatherDemo.h" />

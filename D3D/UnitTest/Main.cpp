@@ -19,11 +19,12 @@
 #include "ShadowDemo.h"
 #include "TessellationTriangleDemo.h"
 #include "TessellationRectDemo.h"
+#include "TessellationLodDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new TessellationRectDemo()); //Todo 照蟹身..ばば
+	Push(new TessellationLodDemo());
 }
 
 

@@ -23,9 +23,10 @@ TerrainLOD::TerrainLOD(wstring imageFile)
 
 	sHeightMapSRV = shader->AsSRV("HeightMap");
 	sBaseMap = shader->AsSRV("BaseMap");
+	sNormalMap = shader->AsSRV("NormalMap");
 
 	desc.CellSpacingU = 1.0f / width;
-	desc.CellSpacingU = 1.0f / height;
+	desc.CellSpacingV = 1.0f / height;
 }
 
 TerrainLOD::~TerrainLOD()
@@ -52,6 +53,9 @@ void TerrainLOD::Render()
 	sHeightMapSRV->SetResource(heightMapSRV);
 	sBaseMap->SetResource(baseMap->SRV());
 
+	if (normalMap != nullptr)
+		sNormalMap->SetResource(normalMap->SRV());
+
 	buffer->Render();
 	sBuffer->SetConstantBuffer(buffer->Buffer());
 
@@ -62,6 +66,12 @@ void TerrainLOD::BaseMap(wstring file)
 {
 	SafeDelete(baseMap);
 	baseMap = new Texture(file);
+}
+
+void TerrainLOD::NormalMap(wstring file)
+{
+	SafeDelete(normalMap);
+	normalMap = new Texture(file);
 }
 
 float TerrainLOD::GetWidth()

@@ -10,6 +10,7 @@ public:
 	void Render();
 
 	void BaseMap(wstring file);
+	void NormalMap(wstring file);
 
 public:
 	float GetWidth();
@@ -37,8 +38,8 @@ private:
 		Vector2 TessFactor = Vector2(1, 64); //Factor Min, Max 개수
 
 		float CellSpacing = 2.0f; //1칸의 크기는 2
-		float CellSpacingU; // 1/256
-		float CellSpacingV; // 1/256
+		float CellSpacingU; // 1/전체지면크기
+		float CellSpacingV; // 1/전체지면크기
 		float HeightScale = 1.5f; //높이 조절값
 	} desc;
 
@@ -61,4 +62,7 @@ private:
 
 	Texture* baseMap = nullptr;
 	ID3DX11EffectShaderResourceVariable* sBaseMap;
+
+	Texture* normalMap = nullptr;
+	ID3DX11EffectShaderResourceVariable* sNormalMap;
 };

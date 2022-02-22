@@ -1,3 +1,5 @@
+Texture2D HeightMap;
+
 Texture2D BaseMap;
 Texture2D Layer1AlphaMap;
 Texture2D Layer1ColorMap;

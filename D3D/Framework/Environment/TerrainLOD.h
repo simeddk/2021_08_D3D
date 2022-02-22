@@ -39,7 +39,7 @@ private:
 		float CellSpacing = 2.0f; //1칸의 크기는 2
 		float CellSpacingU; // 1/256
 		float CellSpacingV; // 1/256
-		float HeightScale = 2.5f; //높이 조절값
+		float HeightScale = 1.5f; //높이 조절값
 	} desc;
 
 private:

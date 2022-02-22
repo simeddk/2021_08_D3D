@@ -60,6 +60,9 @@
     <ClCompile Include="TessellationLodDemo.cpp">
       <Filter>Tessellation</Filter>
     </ClCompile>
+    <ClCompile Include="TerrainLODDemo.cpp">
+      <Filter>Tessellation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -119,6 +122,9 @@
       <Filter>Tessellation</Filter>
     </ClInclude>
     <ClInclude Include="TessellationLodDemo.h">
+      <Filter>Tessellation</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainLODDemo.h">
       <Filter>Tessellation</Filter>
     </ClInclude>
   </ItemGroup>

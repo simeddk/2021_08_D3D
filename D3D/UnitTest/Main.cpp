@@ -20,11 +20,12 @@
 #include "TessellationTriangleDemo.h"
 #include "TessellationRectDemo.h"
 #include "TessellationLodDemo.h"
+#include "TerrainLODDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new TessellationLodDemo());
+	Push(new TerrainLODDemo());
 }
 
 

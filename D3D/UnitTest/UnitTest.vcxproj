@@ -137,6 +137,7 @@
     <ClCompile Include="DepthDemo.cpp" />
     <ClCompile Include="EnvCubeDemo.cpp" />
     <ClCompile Include="FrameworkDemo.cpp" />
+    <ClCompile Include="FrustumDemo.cpp" />
     <ClCompile Include="LightingDemo.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MrtDemo.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="DepthDemo.h" />
     <ClInclude Include="EnvCubeDemo.h" />
     <ClInclude Include="FrameworkDemo.h" />
+    <ClInclude Include="FrustumDemo.h" />
     <ClInclude Include="LightingDemo.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MrtDemo.h" />

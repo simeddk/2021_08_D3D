@@ -21,11 +21,12 @@
 #include "TessellationRectDemo.h"
 #include "TessellationLodDemo.h"
 #include "TerrainLODDemo.h"
+#include "FrustumDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new TerrainLODDemo());
+	Push(new FrustumDemo());
 }
 
 

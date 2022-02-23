@@ -63,6 +63,9 @@
     <ClCompile Include="TerrainLODDemo.cpp">
       <Filter>Tessellation</Filter>
     </ClCompile>
+    <ClCompile Include="FrustumDemo.cpp">
+      <Filter>Culling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -127,6 +130,9 @@
     <ClInclude Include="TerrainLODDemo.h">
       <Filter>Tessellation</Filter>
     </ClInclude>
+    <ClInclude Include="FrustumDemo.h">
+      <Filter>Culling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -143,6 +149,9 @@
     </Filter>
     <Filter Include="Tessellation">
       <UniqueIdentifier>{a169f0ef-4392-4bf9-a4cb-4340f6c7d64b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Culling">
+      <UniqueIdentifier>{844b2f1e-0383-47d7-a851-07539a4e5d34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

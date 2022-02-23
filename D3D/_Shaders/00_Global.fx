@@ -17,6 +17,9 @@ struct MeshOutput
     float4 Color : Color;
 
     uint TargetIndex : SV_RenderTargetArrayIndex;
+
+    float4 Culling : SV_CullDistance;
+    float4 Clipping : SV_ClipDistance;
 };
 
 //1Pass

@@ -18,14 +18,25 @@ output.sPosition = mul(output.sPosition, Shadow.Projection); \
 output.Normal = WorldNormal(input.Normal); \
 output.Tangent = WorldTangent(input.Tangent); \
 output.Uv = input.Uv; \
-output.Color = input.Color;
+output.Color = input.Color; \
+\
+output.Culling.x = dot(float4(output.wPosition, 1), Culling[0]); \
+output.Culling.y = dot(float4(output.wPosition, 1), Culling[1]); \
+output.Culling.z = dot(float4(output.wPosition, 1), Culling[2]); \
+output.Culling.w = dot(float4(output.wPosition, 1), Culling[3]); \
+\
+output.Clipping = float4(0, 0, 0, 0); \
+output.Clipping.x = dot(float4(output.wPosition, 1), Clipping);
 
+///////////////////////////////////////////////////////////////////////////////
 #define VS_DEPTH_GENERATE \
 output.Position = WorldPosition(input.Position); \
 output.Position = mul(output.Position, Shadow.View); \
 output.Position = mul(output.Position, Shadow.Projection); \
 \
 output.sPosition = output.Position;
+
+
 
 //-----------------------------------------------------------------------------
 //Mesh(Cube, Cylinder, Sphere...)

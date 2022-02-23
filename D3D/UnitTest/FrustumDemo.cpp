@@ -14,8 +14,10 @@ void FrustumDemo::Initialize()
 	plane->UpdateSubResource();
 	plane->Pass(0);
 
+	camera = new Fixity();
+	camera->Position(0, 0, -50);
 	perspective = new Perspective(1024, 768, 1, zFar, Math::PI * fov);
-	frustum = new Frustum(nullptr, perspective);
+	frustum = new Frustum(camera, perspective);
 	
 	//Å¥ºê
 	shader = new Shader(L"12_Mesh.fxo");
@@ -39,6 +41,25 @@ void FrustumDemo::Initialize()
 	}
 
 	CreateMesh();
+
+	model = new ModelRender(gridShader);
+	model->ReadMesh(L"B787/Airplane");
+	model->ReadMaterial(L"B787/Airplane");
+
+	for (float z = -100; z <= 100; z += 30)
+	{
+		for (float y = -100; y <= 100; y += 30)
+		{
+			for (float x = -100; x <= 100; x += 30)
+			{
+				Transform* transform = model->AddTransform();
+				transform->Position(x, y, z);
+				transform->Scale(0.004f, 0.004f, 0.004f);
+				transform->Rotation(0, Math::PI * 0.25f, 0);
+			}
+		}
+	}
+	model->UpdateSubResource();
 }
 
 void FrustumDemo::Destroy()
@@ -51,6 +72,7 @@ void FrustumDemo::Destroy()
 	SafeDelete(gridShader);
 	SafeDelete(floor);
 	SafeDelete(plane);
+	SafeDelete(model);
 
 	SafeDelete(camera);
 	SafeDelete(perspective);
@@ -67,10 +89,20 @@ void FrustumDemo::Update()
 	ImGui::InputFloat("FOV", &fov, 1e-3f);
 	perspective->Set(1024, 768, 1, zFar, Math::PI * fov);
 
+	static Vector3 position;
+	ImGui::SliderFloat3("Position", (float*)&position, -100.0f, 100.0);
+	camera->Position(position);
+
+	static Vector3 rotation;
+	ImGui::SliderFloat3("Rotation", (float*)&rotation, -Math::PI, Math::PI);
+	camera->Rotation(rotation);
+
 	frustum->Update();
 
 	perFrame->Update();
 	plane->Update();
+
+	model->Update();
 }
 
 void FrustumDemo::Render()
@@ -103,6 +135,15 @@ void FrustumDemo::Render()
 
 	string str = to_string(drawCount) + " / " + to_string(transforms.size());
 	Gui::Get()->RenderText(10, 60, 1, 0, 0, str);
+
+	static float distance = 0.0f;
+	ImGui::SliderFloat("Distance", &distance, -100.f, +100.f);
+	//Context::Get()->Clipping() = Plane(0, 0, 1, distance);
+	//Context::Get()->Culling()[0] = Plane(1, 0, 0, distance);
+	frustum->Planes(Context::Get()->Culling());
+
+	model->Pass(1);
+	model->Render();
 }
 
 void FrustumDemo::CreateMesh()

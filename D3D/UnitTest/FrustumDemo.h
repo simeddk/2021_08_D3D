@@ -28,6 +28,8 @@ private:
 	Material* floor;
 	MeshRender* plane;
 
+	ModelRender* model;
+
 	Fixity* camera;
 	Perspective* perspective;
 	Frustum* frustum;

@@ -3,9 +3,9 @@
 
 void TessellationLodDemo::Initialize()
 {
-	Context::Get()->GetCamera()->RotationDegree(0, 0, 0);
-	Context::Get()->GetCamera()->Position(0, 0, -5);
-	((Freedom*)Context::Get()->GetCamera())->Speed(10, 0);
+	Context::Get()->GetCamera()->RotationDegree(21, 0, 0);
+	Context::Get()->GetCamera()->Position(126, 200, 100);
+	((Freedom*)Context::Get()->GetCamera())->Speed(100);
 
 	shader = new Shader(L"47_TessLod.fxo");
 
@@ -35,6 +35,8 @@ void TessellationLodDemo::Update()
 	static Vector2 distance = Vector2(1, 100);
 	ImGui::SliderFloat2("Distance", distance, 0, 1000);
 	shader->AsVector("Distance")->SetFloatVector(distance);
+
+	
 	
 	transform->Update();
 	perFrame->Update();

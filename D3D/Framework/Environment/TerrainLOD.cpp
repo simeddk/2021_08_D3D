@@ -15,6 +15,7 @@ TerrainLOD::TerrainLOD(wstring imageFile)
 	vertexCount = (patchWidth + 1) * (patchHeight + 1);
 	indexCount = patchWidth * patchHeight * 4;
 
+	CreatePatchBound();
 	CreatePatchVertex();
 	CreatePatchIndex();
 
@@ -27,6 +28,10 @@ TerrainLOD::TerrainLOD(wstring imageFile)
 
 	desc.CellSpacingU = 1.0f / width;
 	desc.CellSpacingV = 1.0f / height;
+
+	camera = new Fixity();
+	perspective = new Perspective(D3D::Width(), D3D::Height(), -0.1f, 500.0f, Math::PI * 0.615f);
+	frustum = new Frustum(camera, perspective);
 }
 
 TerrainLOD::~TerrainLOD()
@@ -39,11 +44,19 @@ TerrainLOD::~TerrainLOD()
 	SafeDelete(buffer);
 
 	SafeDelete(baseMap);
+	SafeDelete(normalMap);
+
+	SafeDelete(camera);
+	SafeDelete(perspective);
+	SafeDelete(frustum);
 }
 
 void TerrainLOD::Update()
 {
 	Super::Update();
+
+	frustum->Update();
+	frustum->Planes(desc.Culling, 6);
 }
 
 void TerrainLOD::Render()
@@ -159,6 +172,41 @@ void TerrainLOD::ReadHeightData()
 	Check(D3D::GetDevice()->CreateShaderResourceView(heightMap, &srvDesc, &heightMapSRV));
 }
 
+void TerrainLOD::CreatePatchBound()
+{
+	bounds = new Vector2[vertexCount];
+
+	for (UINT z = 0; z < patchHeight; z++)
+	{
+		for (UINT x = 0; x < patchWidth; x++)
+		{
+			UINT x0 = x * cellPerPatch;
+			UINT x1 = (x + 1) * cellPerPatch;
+
+			UINT z0 = z * cellPerPatch;
+			UINT z1 = (z + 1) * cellPerPatch;
+
+
+			float minY = +FLT_MAX;
+			float maxY = -FLT_MAX;
+
+			for (UINT tempZ = z0; tempZ <= z1; tempZ++)
+			{
+				for (UINT tempX = x0; tempX <= x1; tempX++)
+				{
+					UINT k = z * patchWidth + tempX;
+
+					minY = min(minY, heights[k]);
+					maxY = max(maxY, heights[k]);
+				}
+			}
+
+			UINT patchID = z * patchWidth + x;
+			bounds[patchID] = Vector2(minY, maxY);
+		}//for(x)
+	}//for(z)
+}
+
 void TerrainLOD::CreatePatchVertex()
 {
 	vector<TerrainVertex> vertices(vertexCount);
@@ -184,6 +232,9 @@ void TerrainLOD::CreatePatchVertex()
 
 			vertices[(patchWidth + 1) * z + x].Uv.x = x * du;
 			vertices[(patchWidth + 1) * z + x].Uv.y = z * du;
+
+			UINT patchID = z * patchWidth + x;
+			vertices[patchID].Bound = bounds[patchID];
 		}
 	}
 

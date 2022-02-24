@@ -16,11 +16,16 @@ public:
 	float GetWidth();
 	float GetHeight();
 
+public:
+	Perspective* GetPerspective() { return perspective; }
+	Camera* GetCamera() { return camera; }
+
 	float& HeightScale() { return desc.HeightScale; }
 	Vector2& Distance() { return desc.Distance; }
 
 private:
 	void ReadHeightData();
+	void CreatePatchBound();
 	void CreatePatchVertex();
 	void CreatePatchIndex();
 
@@ -29,6 +34,8 @@ private:
 	{
 		Vector3 Position;
 		Vector2 Uv;
+
+		Vector2 Bound;
 	};
 
 private:
@@ -41,6 +48,8 @@ private:
 		float CellSpacingU; // 1/전체지면크기
 		float CellSpacingV; // 1/전체지면크기
 		float HeightScale = 1.5f; //높이 조절값
+
+		Plane Culling[6];
 	} desc;
 
 private:
@@ -52,6 +61,7 @@ private:
 	UINT patchWidth, patchHeight; //Patch의 개수
 
 	float* heights;
+	Vector2* bounds;
 
 	ID3D11Texture2D* heightMap = nullptr;
 	ID3D11ShaderResourceView* heightMapSRV = nullptr;
@@ -65,4 +75,8 @@ private:
 
 	Texture* normalMap = nullptr;
 	ID3DX11EffectShaderResourceVariable* sNormalMap;
+
+	class Camera* camera;
+	class Perspective* perspective;
+	class Frustum* frustum;
 };

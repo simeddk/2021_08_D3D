@@ -12,6 +12,8 @@ struct TerrainLODDesc
     float CellSpacingU;
     float CellSpacingV;
     float HeightScale;
+
+    float4 Culling[6];
 };
 
 cbuffer CB_TerrainLOD
@@ -23,6 +25,7 @@ struct VertexOutput
 {
     float4 Position : Position;
     float2 Uv : Uv;
+    float2 Bound : Bound;
 };
 
 VertexOutput VS(VertexOutput input)
@@ -30,6 +33,7 @@ VertexOutput VS(VertexOutput input)
     VertexOutput output;
     output.Position = input.Position;
     output.Uv = input.Uv;
+    output.Bound = input.Bound;
 
     return output;
 }
@@ -48,6 +52,28 @@ float CalcTessFactor(float3 position)
     return lerp(TerrainLOD.TessFactor.x, TerrainLOD.TessFactor.y, s);
 };
 
+bool OutFrustumPlane(float3 center, float3 extent, float4 plane)
+{
+    float3 n = abs(plane.xyz);
+    float r = dot(extent, n);
+    float s = dot(float4(center, 1), plane);
+    
+    return (s + r) < 0.0f;
+}
+
+bool OutFrustum(float3 center, float3 extent)
+{
+    [unroll(4)]
+    for (int i = 0; i < 4; i++)
+    {
+        [flatten]
+        if (OutFrustumPlane(center, extent, TerrainLOD.Culling[i]))
+            return true;
+    }
+    
+    return false;
+}
+
 CHullOutput CHS(InputPatch<VertexOutput, 4> input)
 {
     float4 positions[4];
@@ -56,6 +82,30 @@ CHullOutput CHS(InputPatch<VertexOutput, 4> input)
     positions[2] = WorldPosition(input[2].Position); //좌하
     positions[3] = WorldPosition(input[3].Position); //우하
 
+    float minY = input[0].Bound.x;
+    float maxY = input[0].Bound.y;
+    
+    float3 minBox = float3(positions[2].x, minY, positions[2].z);
+    float3 maxBox = float3(positions[1].x, maxY, positions[1].z);
+    
+    float3 boxCenter = (minBox + maxBox) * 0.5f;
+    float3 boxExtent = abs(maxBox - minBox) * 0.5f;
+    
+    CHullOutput output;
+    
+	[flatten]
+    if (OutFrustum(boxCenter, boxExtent))
+    {
+        output.Edge[0] = -1;
+        output.Edge[1] = -1;
+        output.Edge[2] = -1;
+        output.Edge[3] = -1;
+
+        output.Inside[0] = -1;
+        output.Inside[1] = -1;
+    
+        return output;
+    }
 
 	//[0] [1]
 	//[2] [3]
@@ -64,7 +114,6 @@ CHullOutput CHS(InputPatch<VertexOutput, 4> input)
     float3 e2 = (positions[1] + positions[3]).xyz * 0.5f; //Right 간선
     float3 e3 = (positions[2] + positions[3]).xyz * 0.5f; //Bottom 간선
   
-    CHullOutput output;
     output.Edge[0] = CalcTessFactor(e0);
     output.Edge[1] = CalcTessFactor(e1);
     output.Edge[2] = CalcTessFactor(e2);

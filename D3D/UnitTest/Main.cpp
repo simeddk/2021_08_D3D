@@ -26,7 +26,7 @@
 
 void Main::Initialize()
 {
-	Push(new FrustumDemo());
+	Push(new TerrainLODDemo());
 }
 
 

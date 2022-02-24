@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{84
 		_Shaders\00_Global.fx = _Shaders\00_Global.fx
 		_Shaders\00_Light.fx = _Shaders\00_Light.fx
 		_Shaders\00_Render.fx = _Shaders\00_Render.fx
+		_Shaders\00_Sky.fx = _Shaders\00_Sky.fx
 		_Shaders\00_Terrain.fx = _Shaders\00_Terrain.fx
 		_Shaders\01_Line.fx = _Shaders\01_Line.fx
 		_Shaders\02_LineColor.fx = _Shaders\02_LineColor.fx
@@ -65,6 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{84
 		_Shaders\46_TessRect.fx = _Shaders\46_TessRect.fx
 		_Shaders\47_TessLod.fx = _Shaders\47_TessLod.fx
 		_Shaders\48_TerrainLOD.fx = _Shaders\48_TerrainLOD.fx
+		_Shaders\49_Scattering.fx = _Shaders\49_Scattering.fx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{C64909B5-3960-4602-8E53-F9F2BD6B9EEF}"

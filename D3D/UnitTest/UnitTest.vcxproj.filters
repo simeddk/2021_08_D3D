@@ -66,6 +66,9 @@
     <ClCompile Include="FrustumDemo.cpp">
       <Filter>Culling</Filter>
     </ClCompile>
+    <ClCompile Include="ScaterringDemo.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="FrustumDemo.h">
       <Filter>Culling</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaterringDemo.h">
+      <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

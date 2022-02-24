@@ -22,11 +22,12 @@
 #include "TessellationLodDemo.h"
 #include "TerrainLODDemo.h"
 #include "FrustumDemo.h"
+#include "ScaterringDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new TerrainLODDemo());
+	Push(new ScaterringDemo());
 }
 
 

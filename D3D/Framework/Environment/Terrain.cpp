@@ -69,6 +69,11 @@ void Terrain::LayerMap(wstring file)
 	layer1.Map = new Texture(file);
 }
 
+void Terrain::NormalMap(wstring file)
+{
+	material->NormalMap(file);
+}
+
 float Terrain::GetHeight(Vector3 & position)
 {
 	UINT x = (UINT)position.x;
@@ -283,6 +288,7 @@ void Terrain::ReadHeightData()
 	width = heightMap->GetWidth();
 	height = heightMap->GetHeight();
 
+	heights = new float[width * height];
 	for (UINT i = 0; i < pixels.size(); i++)
 		heights[i] = pixels[i].r;
 

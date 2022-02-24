@@ -156,14 +156,14 @@ float4 PS_Terrain(MeshOutput input) : SV_Target
     float alpha = Layer1AlphaMap.Sample(LinearSampler, input.Uv).r;
     float4 colorMap = Layer1ColorMap.Sample(LinearSampler, input.Uv);
 
-    Material.Diffuse = color;
-    color += PS_Shadow(input.sPosition, PS_AllLight(input));
-
     if (alpha > 0.0f)
         color = lerp(color, colorMap, alpha);
+
+    Material.Diffuse = color;
+    color += PS_Shadow(input.sPosition, PS_AllLight(input));
 
     color += GetBrushColor(input.wPosition);
     color += GetLineColor_FWidth(input.wPosition);
 
-    return color;
+    return color * 0.5f;
 }

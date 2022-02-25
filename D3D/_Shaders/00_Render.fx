@@ -36,6 +36,34 @@ output.Position = mul(output.Position, Shadow.Projection); \
 \
 output.sPosition = output.Position;
 
+//////////////////////////////////////////////////////////////////////////////////
+#define VS_REFLECTION_GENERATE \
+output.oPosition = input.Position.xyz; \
+\
+output.Position = WorldPosition(input.Position); \
+output.wPosition = output.Position.xyz; \
+\
+output.Position = mul(output.Position, ReflectionView); \
+output.Position = mul(output.Position, Projection); \
+output.wvpPosition = output.Position; \
+output.wvpPosition_Sub = output.Position; \
+\
+output.sPosition = WorldPosition(input.Position); \
+output.sPosition = mul(output.sPosition, Shadow.View); \
+output.sPosition = mul(output.sPosition, Shadow.Projection); \
+\
+output.Normal = WorldNormal(input.Normal); \
+output.Tangent = WorldTangent(input.Tangent); \
+output.Uv = input.Uv; \
+output.Color = input.Color; \
+\
+output.Culling.x = dot(float4(output.wPosition, 1), Culling[0]); \
+output.Culling.y = dot(float4(output.wPosition, 1), Culling[1]); \
+output.Culling.z = dot(float4(output.wPosition, 1), Culling[2]); \
+output.Culling.w = dot(float4(output.wPosition, 1), Culling[3]); \
+\
+output.Clipping = float4(0, 0, 0, 0); \
+output.Clipping.x = dot(float4(output.wPosition, 1), Clipping);
 
 
 //-----------------------------------------------------------------------------
@@ -82,6 +110,16 @@ MeshDepthOutput VS_Mesh_Depth(VertexMesh input)
 
     return output;
 };
+
+MeshOutput VS_Mesh_Reflection(VertexMesh input)
+{
+    MeshOutput output = (MeshOutput) 0;
+    SetMeshWorld(World, input);
+    
+    VS_REFLECTION_GENERATE
+    
+    return output;
+}
 
 //-----------------------------------------------------------------------------
 //Model(Tank, Tower, Airplane.. fbx)
@@ -147,6 +185,16 @@ MeshDepthOutput VS_Model_Depth(VertexModel input)
     SetModelWorld(World, input);
 	VS_DEPTH_GENERATE
 
+    return output;
+}
+
+MeshOutput VS_Model_Reflection(VertexModel input)
+{
+    MeshOutput output = (MeshOutput) 0;
+    SetModelWorld(World, input);
+    
+    VS_REFLECTION_GENERATE
+    
     return output;
 }
 
@@ -367,6 +415,22 @@ MeshDepthOutput VS_Animation_Depth(VertexModel input)
 
     VS_DEPTH_GENERATE
 
+    return output;
+}
+
+MeshOutput VS_Animation_Reflection(VertexModel input)
+{
+    MeshOutput output = (MeshOutput) 0;
+    
+    World = input.Transform;
+    
+    if (BlendingFrames[input.InstanceID].Mode == 0)
+        SetAnimationWorld(World, input);
+    else
+        SetBlendingWorld(World, input);
+    
+    VS_REFLECTION_GENERATE
+    
     return output;
 }
 

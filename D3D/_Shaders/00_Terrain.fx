@@ -148,6 +148,15 @@ MeshOutput VS_Terrain_Projector(VertexTerrain input)
     return output;
 }
 
+MeshOutput VS_Terrain_Reflection(VertexTerrain input)
+{
+    MeshOutput output = (MeshOutput) 0;
+    
+    VS_REFLECTION_GENERATE
+    
+    return output;
+}
+
 float4 PS_Terrain(MeshOutput input) : SV_Target
 {
     float4 color = BaseMap.Sample(LinearSampler, input.Uv);

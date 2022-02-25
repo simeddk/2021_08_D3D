@@ -28,6 +28,7 @@
     <ClCompile Include="Environment\Snow.cpp" />
     <ClCompile Include="Environment\Terrain.cpp" />
     <ClCompile Include="Environment\TerrainLOD.cpp" />
+    <ClCompile Include="Environment\Water.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -49,6 +50,8 @@
     <ClCompile Include="Objects\Frustum.cpp" />
     <ClCompile Include="Objects\PostProcess.cpp" />
     <ClCompile Include="Objects\Projector.cpp" />
+    <ClCompile Include="Objects\Reflection.cpp" />
+    <ClCompile Include="Objects\Refraction.cpp" />
     <ClCompile Include="Objects\Render2D.cpp" />
     <ClCompile Include="Objects\Shadow.cpp" />
     <ClCompile Include="Particle\Particle.cpp" />
@@ -94,6 +97,7 @@
     <ClInclude Include="Environment\Snow.h" />
     <ClInclude Include="Environment\Terrain.h" />
     <ClInclude Include="Environment\TerrainLOD.h" />
+    <ClInclude Include="Environment\Water.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Meshes\Mesh.h" />
     <ClInclude Include="Meshes\MeshCube.h" />
@@ -113,6 +117,8 @@
     <ClInclude Include="Objects\Frustum.h" />
     <ClInclude Include="Objects\PostProcess.h" />
     <ClInclude Include="Objects\Projector.h" />
+    <ClInclude Include="Objects\Reflection.h" />
+    <ClInclude Include="Objects\Refraction.h" />
     <ClInclude Include="Objects\Render2D.h" />
     <ClInclude Include="Objects\Shadow.h" />
     <ClInclude Include="Particle\Particle.h" />

@@ -69,6 +69,15 @@
     <ClCompile Include="ScaterringDemo.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="RefractionDemo.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="RefectionDemo.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterDemo.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -137,6 +146,15 @@
       <Filter>Culling</Filter>
     </ClInclude>
     <ClInclude Include="ScaterringDemo.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="RefractionDemo.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="RefectionDemo.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterDemo.h">
       <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>

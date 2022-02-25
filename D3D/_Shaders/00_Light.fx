@@ -10,6 +10,9 @@ TextureCube SkyCubeMap;
 Texture2D ProjectorMap;
 Texture2D ShadowMap;
 
+Texture2D RefractionMap;
+Texture2D ReflectionMap;
+
 //-----------------------------------------------------------------------------
 //Directional(Global) Light
 //-----------------------------------------------------------------------------

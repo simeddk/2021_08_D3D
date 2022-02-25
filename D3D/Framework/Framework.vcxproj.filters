@@ -185,6 +185,15 @@
     <ClCompile Include="Environment\Moon.cpp">
       <Filter>Environment\Scattering</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Refraction.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Reflection.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Water.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -376,6 +385,15 @@
     </ClInclude>
     <ClInclude Include="Environment\Moon.h">
       <Filter>Environment\Scattering</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Refraction.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Reflection.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Water.h">
+      <Filter>Environment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

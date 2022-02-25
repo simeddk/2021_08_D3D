@@ -23,11 +23,14 @@
 #include "TerrainLODDemo.h"
 #include "FrustumDemo.h"
 #include "ScaterringDemo.h"
+#include "RefractionDemo.h"
+#include "RefectionDemo.h"
+#include "WaterDemo.h"
 
 
 void Main::Initialize()
 {
-	Push(new ScaterringDemo());
+	Push(new WaterDemo());
 }
 
 

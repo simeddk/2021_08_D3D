@@ -8,9 +8,9 @@ void ScaterringDemo::Initialize()
 	((Freedom*)Context::Get()->GetCamera())->Speed(50, 2);
 	
 	shader = new Shader(L"49_Scattering.fxo");
-	
-	sky = new CubeSky(L"Environment/SunsetCube1024.dds", shader);
 	shadow = new Shadow(shader, Vector3(128, 0, 128), 128);
+	
+	sky = new Sky(shader);
 
 	terrain = new Terrain(shader, L"Terrain/Gray256.png");
 	terrain->BaseMap(L"Terrain/Cliff (Layered Rock).jpg");
@@ -52,8 +52,28 @@ void ScaterringDemo::Destroy()
 
 void ScaterringDemo::Update()
 {
-	//램버트 테스트
-	ImGui::SliderFloat3("LightDirection", Lighting::Get()->Direction(), -1, +1);
+	//Scaterring Test
+	{
+		static bool bRealTime = false;
+		static float speed = 1.0f;
+		ImGui::Checkbox("RealTime", &bRealTime);
+		ImGui::SliderFloat("Speed", &speed, 0.5f, 3.0f);
+		sky->RealTime(bRealTime, speed);
+	}
+
+	//Fog Test
+	{
+		ImGui::Separator();
+		static UINT type = Lighting::Get()->FogType();
+		ImGui::InputInt("Fog Type", (int*)&type);
+		type %= 3;
+		Lighting::Get()->FogType() = type;
+
+		ImGui::ColorEdit3("Fog Color", Lighting::Get()->FogColor());
+		ImGui::SliderFloat2("Fog Distance", Lighting::Get()->FogDistance(), 1, 200);
+		ImGui::SliderFloat("Fog Density", &Lighting::Get()->FogDensity(), 0, 5);
+		ImGui::Separator();
+	}
 
 	sky->Update();
 
@@ -100,11 +120,13 @@ void ScaterringDemo::PreRender()
 		terrain->Pass(3);
 		terrain->Render();
 	}
+
+	sky->PreRender();
 }
 
 void ScaterringDemo::Render()
 {
-	sky->Pass(3);
+	sky->Pass(8);
 	sky->Render();
 
 	Pass(4);
@@ -130,6 +152,7 @@ void ScaterringDemo::Render()
 
 void ScaterringDemo::PostRender()
 {
+	sky->PostRender();
 }
 
 void ScaterringDemo::Mesh()

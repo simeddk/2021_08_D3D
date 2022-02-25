@@ -51,6 +51,14 @@ private:
 		SpotLight Lights[MAX_POINT_LIGHTS];
 	} spotLightsDesc;
 
+	struct FogDesc
+	{
+		Color FogColor;
+		Vector2 FogDistance;
+		float FogDensity;
+		UINT FogType;
+	} fogDesc;
+
 private:
 	Shader* shader;
 
@@ -65,5 +73,8 @@ private:
 
 	ConstantBuffer* spotLightBuffer;
 	ID3DX11EffectConstantBuffer* sSpotLightBuffer;
+
+	ConstantBuffer* fogBuffer;
+	ID3DX11EffectConstantBuffer* sFogBuffer;
 };
 

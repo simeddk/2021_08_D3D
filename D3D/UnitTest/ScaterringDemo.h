@@ -28,7 +28,7 @@ private:
 	Shader* shader;
 	Shadow* shadow;
 
-	CubeSky* sky;
+	Sky* sky;
 
 	Material* floor;
 	Material* stone;

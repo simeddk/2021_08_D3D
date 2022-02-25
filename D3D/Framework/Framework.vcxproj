@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Environment\CubeSky.cpp" />
+    <ClCompile Include="Environment\Dome.cpp" />
+    <ClCompile Include="Environment\Moon.cpp" />
     <ClCompile Include="Environment\Rain.cpp" />
     <ClCompile Include="Environment\Scattering.cpp" />
     <ClCompile Include="Environment\Sky.cpp" />
@@ -84,6 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Environment\CubeSky.h" />
+    <ClInclude Include="Environment\Dome.h" />
+    <ClInclude Include="Environment\Moon.h" />
     <ClInclude Include="Environment\Rain.h" />
     <ClInclude Include="Environment\Scattering.h" />
     <ClInclude Include="Environment\Sky.h" />

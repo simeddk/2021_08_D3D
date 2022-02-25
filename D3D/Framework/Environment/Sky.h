@@ -48,6 +48,6 @@ private:
 	ID3DX11EffectShaderResourceVariable* sRayleighMap;
 	ID3DX11EffectShaderResourceVariable* sMieMap;
 
-
 	class Dome* dome;
+	class Moon* moon;
 };

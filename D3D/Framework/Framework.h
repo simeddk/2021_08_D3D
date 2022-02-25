@@ -111,12 +111,6 @@ typedef D3DXPLANE Plane;
 #include "Model/ModelClip.h"
 #include "Model/ModelAnimator.h"
 
-#include "Environment/Terrain.h"
-#include "Environment/CubeSky.h"
-#include "Environment/Rain.h"
-#include "Environment/Snow.h"
-#include "Environment/TerrainLOD.h"
-
 #include "Objects/Render2D.h"
 #include "Objects/Collider.h"
 #include "Objects/Billboard.h"
@@ -125,6 +119,13 @@ typedef D3DXPLANE Plane;
 #include "Objects/Projector.h"
 #include "Objects/Shadow.h"
 #include "Objects/Frustum.h"
+
+#include "Environment/Terrain.h"
+#include "Environment/CubeSky.h"
+#include "Environment/Rain.h"
+#include "Environment/Snow.h"
+#include "Environment/TerrainLOD.h"
+#include "Environment/Sky.h"
 
 #include "Particle/ParticleData.h"
 #include "Particle/Particle.h"

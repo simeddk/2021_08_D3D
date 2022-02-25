@@ -2,6 +2,7 @@
 #include "Sky.h"
 #include "Scattering.h"
 #include "Dome.h"
+#include "Moon.h"
 
 Sky::Sky(Shader * shader, Vector3 position, Vector3 scale)
 	: shader(shader)
@@ -24,6 +25,7 @@ Sky::Sky(Shader * shader, Vector3 position, Vector3 scale)
 
 
 	dome = new Dome(shader, position, scale);
+	moon = new Moon(shader);
 }
 
 Sky::~Sky()
@@ -32,18 +34,21 @@ Sky::~Sky()
 	SafeDelete(scatterBuffer);
 
 	SafeDelete(dome);
+	SafeDelete(moon);
 }
 
 void Sky::Pass(UINT scatteringPass, UINT domePass, UINT moonPass, UINT cloudPass)
 {
 	scattering->Pass(scatteringPass);
 	dome->Pass(domePass);
+	moon->Pass(moonPass);
 }
 
 void Sky::Pass(UINT pass)
 {
 	scattering->Pass(pass++);
 	dome->Pass(pass++);
+	moon->Pass(pass++);
 }
 
 void Sky::Update()
@@ -69,7 +74,7 @@ void Sky::Update()
 	else
 	{
 		ImGui::SliderFloat("Theta", &theta, -Math::PI, Math::PI);
-		ImGui::SliderFloat("Phi", &phi, -Math::PI, Math::PI);
+		ImGui::SliderFloat("SunYaw", &phi, -Math::PI, Math::PI);
 
 		///float x = sinf(theta);
 		///float y = cosf(theta);
@@ -82,6 +87,7 @@ void Sky::Update()
 	}
 
 	dome->Update();
+	moon->Update();
 
 	//scattering->Update();
 
@@ -108,6 +114,11 @@ void Sky::Render()
 		sMieMap->SetResource(scattering->MieRTV()->SRV());
 
 		dome->Render();
+	}
+
+	//Moon
+	{
+		moon->Render(theta);
 	}
 }
 

@@ -179,6 +179,12 @@
     <ClCompile Include="Environment\Scattering.cpp">
       <Filter>Environment\Scattering</Filter>
     </ClCompile>
+    <ClCompile Include="Environment\Dome.cpp">
+      <Filter>Environment\Scattering</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Moon.cpp">
+      <Filter>Environment\Scattering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -363,6 +369,12 @@
       <Filter>Environment\Scattering</Filter>
     </ClInclude>
     <ClInclude Include="Environment\Scattering.h">
+      <Filter>Environment\Scattering</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Dome.h">
+      <Filter>Environment\Scattering</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Moon.h">
       <Filter>Environment\Scattering</Filter>
     </ClInclude>
   </ItemGroup>

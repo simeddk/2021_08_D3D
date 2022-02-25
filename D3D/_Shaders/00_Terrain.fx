@@ -160,10 +160,10 @@ float4 PS_Terrain(MeshOutput input) : SV_Target
         color = lerp(color, colorMap, alpha);
 
     Material.Diffuse = color;
-    color += PS_Shadow(input.sPosition, PS_AllLight(input));
+    color = CalcualteFogColor(PS_Shadow(input.sPosition, PS_AllLight(input)), input.wPosition);
 
     color += GetBrushColor(input.wPosition);
     color += GetLineColor_FWidth(input.wPosition);
 
-    return color * 0.5f;
+    return color;
 }

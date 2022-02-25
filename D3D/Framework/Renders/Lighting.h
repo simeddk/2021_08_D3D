@@ -54,6 +54,12 @@ public:
 	Vector3& Position() { return position; }
 
 public:
+	Color& FogColor() { return fogColor; }
+	Vector2& FogDistance() { return fogDistance; }
+	float& FogDensity() { return fogDensity; }
+	UINT& FogType() { return fogType; }
+
+public:
 	void AddPointLight(PointLight& light);
 	UINT PointLights(OUT PointLight* lights);
 	UINT PointLightCount() { return pointLightCount; }
@@ -85,4 +91,10 @@ private: //SpotLight
 	UINT spotLightCount = 0;
 	SpotLight spotLights[MAX_SPOT_LIGHTS];
 	vector<Transform*> spotLightTransforms;
+
+private: //Fog
+	Color fogColor = Color(0.75f, 0.75f, 0.75f, 1);
+	Vector2 fogDistance = Vector2(1, 105);
+	float fogDensity = 0.25f/*0.5f*/;
+	UINT fogType = 2;
 };
